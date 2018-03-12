@@ -41,7 +41,6 @@
                     <thead>
                     <tr>
                         <th class="text-center">No</th>
-                        <th class="text-center">ID</th>
                         <th class="text-center">Judul</th>
                         <th class="text-center">Peg ID</th>
                         <th class="text-center">Unit Kerja</th>
@@ -62,7 +61,6 @@
                                 echo '
                                 <tr>
                                 <td>'.$i.'</td>
-                                <td>'.$r_aktif["item"][$i]["m_id"].'</td>
                                 <td>'.$r_aktif["item"][$i]["m_judul"].'</td>
                                 <td>'.$r_aktif["item"][$i]["m_peg_id"].'</td>
                                 <td>'.$r_aktif["item"][$i]["m_unitkerja"].'</td>                               
@@ -135,7 +133,7 @@
                             
                             <td>'.$r_red["item"][$i]["red_nama"].'</td>
                             
-                            <td><a href="'.$url.'/'.$page.'/'.$act.'/view/'.$r_red["item"][$i]["red_id"].'"><i class="fa fa-search text-success" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/'.$act.'/edit/'.$r_red["item"][$i]["red_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/'.$act.'/delete/'.$r_red["item"][$i]["red_id"].'" data-confirm="Apakah data ('.$r_red["item"][$i]["red_id"].') '.$r_red["item"][$i]["red_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+                            <td><a href="'.$url.'/'.$page.'/'.$act.'/edit/'.$r_red["item"][$i]["red_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/'.$act.'/delete/'.$r_red["item"][$i]["red_id"].'" data-confirm="Apakah data ('.$r_red["item"][$i]["red_id"].') '.$r_red["item"][$i]["red_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
                             </tr>';
 
                         }

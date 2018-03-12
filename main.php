@@ -24,7 +24,6 @@
     <link href="<?php echo $url; ?>/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-    <link href="<?php echo $url; ?>/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/plugins/select2/select2.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="<?php echo $url; ?>/img/bps.ico">
@@ -60,38 +59,38 @@
                  $link_aktif='class="active"';
                 ?>
 				 <li <?php if ($page=='') { echo $link_aktif; } ?>>
-                    <a href="index.php"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
+                    <a href="<?php echo $url; ?>"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
                 </li>
                 <li <?php if ($page=='kegiatan') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/kegiatan/"><i class="fa fa-th-large"></i> <span class="nav-label">Kegiatan</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
 						<li><a href="<?php echo $url; ?>/kegiatan/add">Tambah Kegiatan</a></li>
                         <li><a href="<?php echo $url; ?>/kegiatan">Semua</a></li>
-                        <li><a href="dashboard_2.html">Bidang/Bagian</a></li>
+                        <li><a href="<?php echo $url; ?>/kegiatan/bidang/">Bidang/Bagian</a></li>
                     </ul>
                 </li>
                
                 <li <?php if ($page=='unitkerja') { echo $link_aktif; } ?>>
-                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Unitkerja</span><span class="fa arrow"></span></a>
+                    <a href="<?php echo $url; ?>/unitkerja/"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Unitkerja</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="graph_flot.html">Provinsi</a></li>
-                        <li><a href="graph_morris.html">Kabupaten/Kota</a></li>
+                        <li><a href="<?php echo $url; ?>/unitkerja/">Provinsi</a></li>
+                        <li><a href="<?php echo $url; ?>/unitkerja/kabkota/">Kabupaten/Kota</a></li>
                     </ul>
                 </li>
                  <li <?php if ($page=='laporan') { echo $link_aktif; } ?>>
-                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Laporan</span><span class="fa arrow"></span></a>
+                    <a href="<?php echo $url; ?>/laporan/"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Laporan</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="graph_flot.html">Provinsi</a></li>
-                        <li><a href="graph_morris.html">Kabupaten/Kota</a></li>
+                        <li><a href="<?php echo $url; ?>/laporan/">Provinsi</a></li>
+                        <li><a href="<?php echo $url; ?>/laporan/kabkota/">Kabupaten/Kota</a></li>
                     </ul>
                 </li>
                 <?php if ($_SESSION['sesi_provkab']==1) { ?>
                 <li <?php if ($page=='absen') { echo $link_aktif; } ?>>
-                    <a href="<?php echo $url; ?>"><i class="fa fa-globe"></i> <span class="nav-label">Absen</span><span class="label label-info pull-right">NEW</span></a>
+                    <a href="<?php echo $url; ?>/absen/"><i class="fa fa-globe"></i> <span class="nav-label">Absen</span><span class="label label-info pull-right">NEW</span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="<?php echo $url; ?>/absen/add/">Tambah Absen</a></li>
                         <li><a href="<?php echo $url; ?>/absen/harian/">Rekap Harian</a></li>
-                        <li><a href="<?php echo $url; ?>/bulanan">Rekap Bulanan</a></li>
+                        <li><a href="<?php echo $url; ?>/absen/bulanan/">Rekap Bulanan</a></li>
                         <li><a href="<?php echo $url; ?>/absen/">Semua</a></li>
                         
                     </ul>
@@ -175,7 +174,7 @@
         <!--footer-->
             <div class="footer">
                 <div class="pull-right">
-                    versi <strong>1.4.4</strong>
+                    <strong>versi app : <?php echo $ver_app; ?> | versi db : <?php echo $ver_db; ?></strong>
                 </div>
                 <div>
                     <strong>Copyright</strong> Bidang IPDS &copy; 2017-<?php echo date('Y'); ?>
@@ -203,8 +202,7 @@
     <script src="<?php echo $url; ?>/js/plugins/validator/bootstrapValidator.min.js"></script>
     <!-- Select2 -->
     <script src="<?php echo $url; ?>/js/plugins/select2/select2.full.min.js"></script>
-    <script src="<?php echo $url; ?>/js/bpsntb.js"></script>
-    <!-- JSKnob -->
+       <!-- JSKnob -->
    <script src="<?php echo $url; ?>/js/plugins/jsKnob/jquery.knob.js"></script>
 
    <!-- Input Mask-->
@@ -240,8 +238,14 @@
     <!-- Tags Input -->
     <script src="<?php echo $url; ?>/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
+    <!-- Chosen -->
+    <script src="<?php echo $url; ?>/js/plugins/chosen/chosen.jquery.js"></script>
+
+<!-- Select2 -->
+    <script src="<?php echo $url; ?>/js/plugins/select2/select2.full.min.js"></script>
+
       <!-- Page-Level Scripts -->
-    
+     <script src="<?php echo $url; ?>/js/bpsntb.js"></script>
     <script>
         $(document).ready(function(){
             $('.dataPegawaiHonor').DataTable({
@@ -310,7 +314,10 @@
                 swal("Terhapus!", "Data sudah terdelete.", "success");
             });
         });
-
+        $('#jam_mulai').clockpicker({'default': '07:30'});
+        $('#jam_selesai').clockpicker({'default': 'now'});
+        $('.chosen-select').chosen({width: "100%"});
+        $('#aktif_nama_keg').chosen({width: "100%"});
     </script>
 
 </body>

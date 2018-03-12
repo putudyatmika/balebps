@@ -11,6 +11,16 @@ $(document).ready(function() {
 	});
 });
 
+$('#tanggal_data input').datepicker({
+    todayBtn: "linked",
+    keyboardNavigation: false,
+    forceParse: false,
+    calendarWeeks: true,
+     format: "yyyy-mm-dd",
+   todayHighlight: true,
+   autoclose: true
+
+});
 
 $(document).ready(function() {
     $('#formAddPegawaiAbsen').bootstrapValidator({
