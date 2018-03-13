@@ -11,8 +11,8 @@
 	elseif ($act=="unitkerja") {
 		include 'views/master/unitkerja/m_unitkerja.php';
 	}
-	elseif ($act=="aktifitas") {
-		include 'views/master/aktifitas/m_aktifitas.php';
+	elseif ($act=="aktivitas") {
+		include 'views/master/aktivitas/m_aktivitas.php';
 	}
 	else {
 		include 'views/master/m_master_list.php';

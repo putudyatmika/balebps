@@ -95,18 +95,19 @@
                         
                     </ul>
                 </li>
-				<li <?php if ($page=='aktifitas') { echo $link_aktif; } ?>>
-                    <a href="<?php echo $url; ?>/aktifitas/"><i class="fa fa-globe"></i> <span class="nav-label">Aktifitas Harian</span><span class="label label-warning pull-right">NEW</span></a>
+                <?php if ($_SESSION['sesi_peg_id']>0) { ?>
+				<li <?php if ($page=='aktivitas') { echo $link_aktif; } ?>>
+                    <a href="<?php echo $url; ?>/aktivitas/"><i class="fa fa-globe"></i> <span class="nav-label">Aktivitas Harian</span><span class="label label-warning pull-right">NEW</span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="<?php echo $url; ?>/aktifitas/add/">Tambah Data</a></li>
-                        <li><a href="<?php echo $url; ?>/aktifitas/harian/">Rekap Harian</a></li>
-                        <li><a href="<?php echo $url; ?>/aktifitas/bulanan/">Rekap Bulanan</a></li>
-                        <li><a href="<?php echo $url; ?>/aktifitas/">Semua</a></li>
+                        <li><a href="<?php echo $url; ?>/aktivitas/add/">Tambah Data</a></li>
+                        <li><a href="<?php echo $url; ?>/aktivitas/harian/">Rekap Harian</a></li>
+                        <li><a href="<?php echo $url; ?>/aktivitas/bulanan/">Rekap Bulanan</a></li>
+                        <li><a href="<?php echo $url; ?>/aktivitas/">Semua</a></li>
                         
                     </ul>
                 </li>
                 <?php } 
-
+                 }
                 if ($_SESSION['sesi_level']>=4) { ?>
                 <li <?php if ($page=='master') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/master/"><i class="fa fa-globe"></i> <span class="nav-label">Master</span></a>
@@ -135,7 +136,7 @@
                             </ul>
                         </li>
                         <li><a href="<?php echo $url; ?>/master/absen/">Absen</a></li>
-                         <li><a href="<?php echo $url; ?>/master/aktifitas/">Aktifitas</a></li>
+                         <li><a href="<?php echo $url; ?>/master/aktivitas/">Aktifitas</a></li>
                         <li><a href="<?php echo $url; ?>/master/">Semua</a></li>
                         
                     </ul>

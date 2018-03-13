@@ -17,6 +17,6 @@ require 'unitkerja/fungsi_unitkerja.php';
 //model users
 require 'users/fungsi_users.php';
 
-//model aktifitas
-require 'aktifitas/fungsi_aktifitas.php';
+//model aktivitas
+require 'aktivitas/fungsi_aktivitas.php';
 ?>

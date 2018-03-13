@@ -1,6 +1,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 	<div class="col-lg-10">
-	<h2>Data Master Aktifitas</h2>
+	<h2>Data Master Aktivitas</h2>
 	<ol class="breadcrumb">
 	<li>
 		<a href="<?php echo $url; ?>">Depan</a>
@@ -9,13 +9,13 @@
 		<a href="<?php echo $url; ?>/master/">Master</a>
 	</li>
 	<li class="active">
-		<strong>Aktifitas</strong>
+		<strong>Aktivitas</strong>
 	</li>
 	</ol>
 	</div>
 	<div class="col-lg-2">
          <div class="title-action">
-              <a href="<?php echo $url; ?>/master/aktifitas/add/" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+              <a href="<?php echo $url; ?>/master/aktivitas/add/" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         </div>
 	</div>
 </div>
@@ -24,7 +24,7 @@
                 <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Data Master Aktifitas</h5>
+                        <h5>Data Master Aktivitas</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -51,7 +51,7 @@
                     <tbody>
                     <?php 
                         //isi data pegawai
-                        $r_aktif=list_master_aktifitas(0,false,false);
+                        $r_aktif=list_master_aktivitas(0,false,false);
 
                         if ($r_aktif["error"]==false) {
                             $i=1;
@@ -98,7 +98,7 @@
         <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Data Redaksi Aktifitas</h5>
+                        <h5>Data Redaksi Aktivitas</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>

@@ -1,6 +1,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 	<div class="col-lg-10">
-	<h2>Data Master Aktifitas</h2>
+	<h2>Data Master Aktivitas</h2>
 	<ol class="breadcrumb">
 	<li>
 		<a href="<?php echo $url; ?>">Depan</a>
@@ -9,7 +9,7 @@
 		<a href="<?php echo $url; ?>/master/">Master</a>
 	</li>
 	<li>
-        <a href="<?php echo $url; ?>/master/aktifitas/">Aktifitas</a>
+        <a href="<?php echo $url; ?>/master/aktivitas/">Aktivitas</a>
     </li>
     <li class="active">
         <strong>Tambah data</strong>
@@ -41,7 +41,7 @@
                 <div class="col-lg-7 col-sm-7">
                     <div class="input-group margin-bottom-sm">
                 <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                    <input type="text" name="kata_redaksi" class="form-control" placeholder="redaksi aktifitas" required="" />
+                    <input type="text" name="kata_redaksi" class="form-control" placeholder="redaksi aktivitas" required="" />
                  </div>
                 </div>
         </div>

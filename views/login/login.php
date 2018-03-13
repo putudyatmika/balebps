@@ -39,6 +39,14 @@
                     $_SESSION['sesi_unitkerja']=$r_log["user_unitkerja"];
                     $_SESSION['sesi_nama_unitkerja']=get_nama_unit($r_log["user_unitkerja"]);
                     $_SESSION['sesi_provkab']=$r_log["user_provkab"];
+                    $r_user=list_pegawai_user($r_log["user_no"],true);
+                    if ($r_user["error"]==false) {
+                        //ada user
+                        $_SESSION['sesi_peg_id']=$r_user["item"][1]["peg_id"];
+                    }
+                    else {
+                        $_SESSION['sesi_peg_id']=0;
+                    }
                     print "<meta http-equiv=\"refresh\" content=\"2; URL=".$url."\">";
                 }
                 else {

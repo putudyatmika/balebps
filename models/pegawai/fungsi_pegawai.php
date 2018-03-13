@@ -4,7 +4,7 @@ function list_pegawai_user($user_no,$detil=false) {
 	$db_peg = new db();
 	$conn_peg = $db_peg->connect();
 	$r_peg = array("error"=>false);
-	if ($detil==false) {
+	if ($detil==true) {
 		//satu data pegawai saja
 		$sql_peg = $conn_peg -> query("select m_pegawai.*,unit_nama from m_pegawai inner join unitkerja on m_pegawai.peg_unitkerja=unitkerja.unit_kode where peg_jabatan<3 and peg_status=1 and peg_user_no='$user_no'") or die(mysqli_error($conn_peg));
 	}

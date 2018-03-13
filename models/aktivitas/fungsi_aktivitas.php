@@ -34,20 +34,42 @@ function list_redaksi($id,$detil=false) {
 	return $r_data;
 	$conn_aktif -> close();
 }
-function list_aktifitas_unitkerja($unit_kode,$tgl_aktif,$esIII=false) {
+function save_aktivitas_harian($redaksi,$peg_id,$tgl_aktif,$jam_awal,$jam_akhir,$target,$satuan,$aktif_unitkerja) {
+	$db_aktif = new db();
+	$conn_aktif = $db_aktif -> connect();
+	//simpan di master redaksi dulu
+	$sql_simpan_red=$conn_aktif->query("insert into m_aktivitas(judul,unitkerja,peg_id,status) values('$redaksi','$aktif_unitkerja','$peg_id','1')") or die(mysqli_error($conn_aktif));
+	$sql_cari_id=$conn_aktif->query("select id from m_aktivitas where judul='$redaksi' and unitkerja='$aktif_unitkerja' and peg_id='$peg_id' limit 1") or die(mysqli_error($conn_aktif));
+	$r=$sql_cari_id->fetch_object();
+	$m_id=$r->id;
+	$sql_input_aktivitas=$conn_aktif->query("insert into aktivitas(m_id,m_redaksi,peg_id,aktif_unitkerja,aktif_target,aktif_satuan,aktif_tgl,aktif_awal,aktif_akhir,aktif_status) values('$m_id','$redaksi','$peg_id','$aktif_unitkerja','$target','$satuan','$tgl_aktif','$jam_awal','$jam_akhir','1')") or die(mysqli_error($conn_aktif));
+	$status_input=array("error"=>false);
+	if ($sql_input_aktivitas) {
+		$status_input["error"]=false;
+		$status_input["pesan_error"]='(SUKSES) Data berhasil disimpan';
+	}
+	else {
+		$status_input["error"]=true;
+		$status_input["pesan_error"]='(ERROR) Data berhasil tidak disimpan';
+	}
+	return $status_input;
+	$conn_aktif->close();
+
+}
+function list_aktivitas_unitkerja($unit_kode,$tgl_aktif,$esIII=false) {
 
 } 
-function list_aktifitas_harian($id,$tgl_aktif,$detil=false,$peg_id) {
+function list_aktivitas_harian($id,$tgl_aktif,$detil=false,$peg_id) {
 	//$id bisa id aktifitas, peg_id, maupun unit_id
 	$db_aktif = new db();
 	$conn_aktif = $db_aktif -> connect();
 	if ($detil==false) {
 		//semua list aktifitas
-		$sql_list_aktifitas = $conn_aktif -> query() or die(mysqli_error($conn_aktif));
+		$sql_list_aktifitas = $conn_aktif -> query("select * from aktivitas inner join unitkerja on aktivitas.aktif_unitkerja=unitkerja.unit_kode where aktivitas.aktif_tgl='$tgl_aktif' and aktivitas.peg_id='$peg_id' order by aktif_awal asc") or die(mysqli_error($conn_aktif));
 	}
 	else {
 		//hanya 1 kegiatan saja
-		$sql_list_aktifitas = $conn_aktif -> query() or die(mysqli_error($conn_aktif));
+		$sql_list_aktifitas = $conn_aktif -> query("select * from aktivitas inner join unitkerja on aktivitas.aktif_unitkerja=unitkerja.unit_kode where aktivitas.aktif_id='$id' order by aktif_awal asc") or die(mysqli_error($conn_aktif));
 	}
 
 	$r_data=array("error"=>false);
@@ -59,7 +81,17 @@ function list_aktifitas_harian($id,$tgl_aktif,$detil=false,$peg_id) {
 		$i=1;
 		while ($r=$sql_list_aktifitas->fetch_object()) {
 			$r_data["item"][$i]=array(
-				
+				"aktif_id"=>$r->aktif_id,
+				"m_id"=>$r->m_id,
+				"m_redaksi"=>$r->m_redaksi,
+				"peg_id"=>$r->peg_id,
+				"aktif_unitkerja"=>$r->aktif_unitkerja,
+				"aktif_target"=>$r->aktif_target,
+				"aktif_satuan"=>$r->aktif_satuan,
+				"aktif_tgl"=>$r->aktif_tgl,
+				"aktif_awal"=>$r->aktif_awal,
+				"aktif_akhir"=>$r->aktif_akhir,
+				"aktif_status"=>$r->aktif_status
 			);
 			$i++;
 		}
@@ -73,7 +105,7 @@ function list_aktifitas_harian($id,$tgl_aktif,$detil=false,$peg_id) {
 	return $r_data;
 	$conn_aktif -> close();
 }
-function list_master_aktifitas($id,$detil=false,$unit=false) {
+function list_master_aktivitas($id,$detil=false,$unit=false) {
 	$unit_kode=$_SESSION['sesi_unitkerja'];
 	$db_aktif = new db();
 	$conn_aktif = $db_aktif -> connect();
