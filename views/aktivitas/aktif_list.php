@@ -12,7 +12,9 @@
 	</ol>
 	</div>
 	<div class="col-lg-2">
-
+       <div class="title-action">
+            <a href="<?php echo $url; ?>/aktivitas/add/" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        </div>
 	</div>
 </div>
 <div class="row wrapper wrapper-content animated fadeInRightBig">

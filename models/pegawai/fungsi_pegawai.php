@@ -6,11 +6,11 @@ function list_pegawai_user($user_no,$detil=false) {
 	$r_peg = array("error"=>false);
 	if ($detil==true) {
 		//satu data pegawai saja
-		$sql_peg = $conn_peg -> query("select m_pegawai.*,unit_nama from m_pegawai inner join unitkerja on m_pegawai.peg_unitkerja=unitkerja.unit_kode where peg_jabatan<3 and peg_status=1 and peg_user_no='$user_no'") or die(mysqli_error($conn_peg));
+		$sql_peg = $conn_peg -> query("select m_pegawai.*,unit_nama,unit_parent,unit_eselon from m_pegawai inner join unitkerja on m_pegawai.peg_unitkerja=unitkerja.unit_kode where peg_jabatan<3 and peg_status=1 and peg_user_no='$user_no'") or die(mysqli_error($conn_peg));
 	}
 	else {
 		//semua data pegawai
-		$sql_peg = $conn_peg -> query("select m_pegawai.*,unit_nama from m_pegawai inner join unitkerja on m_pegawai.peg_unitkerja=unitkerja.unit_kode where peg_jabatan<3 and peg_status=1") or die(mysqli_error($conn_peg));
+		$sql_peg = $conn_peg -> query("select m_pegawai.*,unit_nama,unit_parent,unit_eselon from m_pegawai inner join unitkerja on m_pegawai.peg_unitkerja=unitkerja.unit_kode where peg_jabatan<3 and peg_status=1") or die(mysqli_error($conn_peg));
 	}
 	
 	$cek=$sql_peg -> num_rows;
@@ -24,12 +24,14 @@ function list_pegawai_user($user_no,$detil=false) {
 				"peg_id"=>$r->peg_id,
 				"peg_nama"=>$r->peg_nama,
 				"peg_nip"=>$r->peg_nip,
-				"peg_nip"=>$r->peg_nip_lama,
+				"peg_nip_lama"=>$r->peg_nip_lama,
 				"peg_jk"=>$r->peg_jk,
 				"peg_unitkerja"=>$r->peg_unitkerja,
 				"peg_jabatan"=>$r->peg_jabatan,
 				"peg_status"=>$r->peg_status,
 				"unit_nama"=>$r->unit_nama,
+				"unit_parent"=>$r->unit_parent,
+				"unit_eselon"=>$r->unit_eselon,
 				"peg_dibuat_waktu"=>$r->peg_dibuat_waktu,
 				"peg_dibuat_oleh"=>$r->peg_dibuat_oleh,
 				"peg_diupdate_waktu"=>$r->peg_diupdate_waktu,

@@ -18,7 +18,7 @@
 
 	</div>
 </div>
-<div class="row wrapper wrapper-content animated fadeInRightBig">
+<div class="row wrapper wrapper-content animated fadeInUpBig">
     <div class="row">
         <div class="col-lg-7">
                 <div class="ibox float-e-margins">
@@ -99,9 +99,12 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-8">
-                              <button type="submit" id="submit_redaksi" name="submit_redaksi" value="save" class="btn btn-primary">SAVE</button>
+                              <button type="submit" id="submit_redaksi" name="submit_redaksi" value="save" class="btn btn-primary">UPDATE</button>
                             </div>
                         </div>
+                        <input type="hidden" name="aktif_id" value="<?php echo $aktif_id;?>" />
+                        <input type="hidden" name="m_id" value="<?php echo $r_keg["item"][1]["m_id"];?>" />
+                        <input type="hidden" name="aktif_tanggal" value="<?php echo $r_keg["item"][1]["aktif_tgl"]; ?>" />
                 </fieldset>
                 </form>
                 <?php }
@@ -116,15 +119,15 @@
         <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Daftar Aktivitas Hari Ini</h5>
+                        <h5>Daftar Aktivitas Hari</h5>
                         <div class="ibox-tools">
                             
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <h2><?php echo tgl_convert(1,$tanggal_hari_ini); ?></h2>
+                        <h2><?php echo tgl_convert(1,$r_keg["item"][1]["aktif_tgl"]); ?></h2>
                     <?php
-                    $tgl_aktif=date("Y-m-d");
+                    $tgl_aktif=$r_keg["item"][1]["aktif_tgl"];
                     $peg_id=$_SESSION["sesi_peg_id"];
                     $r_list=list_aktivitas_harian(0,$tgl_aktif,false,$peg_id);
                     ?>

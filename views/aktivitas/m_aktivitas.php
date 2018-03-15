@@ -15,10 +15,13 @@
 				include 'views/aktivitas/aktif_view.php';
 			}
 			elseif ($act=='delete') {
-				include 'views/aktif_delete.php';
+				include 'views/aktivitas/aktif_delete.php';
 			}
 			elseif ($act=='harian') {
 				include 'views/aktivitas/aktif_harian.php';
+			}
+			elseif ($act=='bulanan') {
+				include 'views/aktivitas/aktif_bulanan.php';
 			}
 			else {
 				include 'views/aktivitas/aktif_list.php';

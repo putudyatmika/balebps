@@ -43,9 +43,19 @@
                     if ($r_user["error"]==false) {
                         //ada user
                         $_SESSION['sesi_peg_id']=$r_user["item"][1]["peg_id"];
+                        $_SESSION['sesi_peg_unitkerja']=$r_user["item"][1]["peg_unitkerja"];
+                        $_SESSION['sesi_peg_jabatan']=$r_user["item"][1]["peg_jabatan"];
+                        $_SESSION['sesi_peg_unitnama']=$r_user["item"][1]["unit_nama"];
+                        $_SESSION['sesi_peg_unitparent']=$r_user["item"][1]["unit_parent"];
+                        $_SESSION['sesi_peg_uniteselon']=$r_user["item"][1]["unit_eselon"];
                     }
                     else {
                         $_SESSION['sesi_peg_id']=0;
+                        $_SESSION['sesi_peg_unitkerja']=0;
+                        $_SESSION['sesi_peg_jabatan']=0;
+                        $_SESSION['sesi_peg_unitnama']=0;
+                        $_SESSION['sesi_peg_unitparent']=0;
+                        $_SESSION['sesi_peg_uniteselon']=0;
                     }
                     print "<meta http-equiv=\"refresh\" content=\"2; URL=".$url."\">";
                 }

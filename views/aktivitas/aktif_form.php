@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <h2><?php echo tgl_convert(1,$tanggal_hari_ini); ?></h2>
+                    <h3><?php echo tgl_convert(1,$tanggal_hari_ini); ?></h3>
                     <?php
                     $tgl_aktif=date("Y-m-d");
                     $peg_id=$_SESSION["sesi_peg_id"];
@@ -200,6 +200,93 @@
                     </tbody>
                     </table>
                         </div>
+                    <!---hari kmrn-->
+                    <h3><?php 
+                    $tgl_kmrn=date("Y-m-d",strtotime('-1 day',strtotime($tgl_aktif)));
+                    echo tgl_convert(1,$tgl_kmrn); ?></h3>
+                    <?php
+                    //$tgl_aktif=date("Y-m-d");
+                    $peg_id=$_SESSION["sesi_peg_id"];
+                    $r_list=list_aktivitas_harian(0,$tgl_kmrn,false,$peg_id);
+                    ?>
+                    <div class="table-responsive">
+                    <table class="table table-striped table-hover" >
+                    <thead>
+                    <tr>
+                        <th class="text-center" width="15%">Waktu</th>
+                        <th class="text-center">Kegiatan</th>
+                        <th class="text-center">Target</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if ($r_list["error"]==false) {
+                        $max_data=$r_list["aktif_total"];
+                        for ($i=1;$i<=$max_data;$i++) {
+                            echo '
+                                <tr>
+                                    <td>'.date("H:i",strtotime($r_list["item"][$i]["aktif_awal"])).' - '.date("H:i",strtotime($r_list["item"][$i]["aktif_akhir"])).'</td>
+                                    <td>'.$r_list["item"][$i]["m_redaksi"].'</td>
+                                    <td>'.$r_list["item"][$i]["aktif_target"].' '.$r_list["item"][$i]["aktif_satuan"].'</td>
+                                    <td><a href="'.$url.'/'.$page.'/edit/'.$r_list["item"][$i]["aktif_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_list["item"][$i]["aktif_id"].'" data-confirm="Apakah data ('.$r_list["item"][$i]["aktif_id"].') '.$r_list["item"][$i]["m_redaksi"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+                                </tr>
+                            ';
+                        }
+                    }
+                    else {
+                        echo '<tr>
+                        <td colspan="4">Data tidak tersedia</td>
+                        </tr>';
+                    }
+                    ?>     
+                    </tbody>
+                    </table>
+                        </div>
+                        <!--2 hari yang lalu-->
+                        <h3><?php 
+                    $tgl_lusa=date("Y-m-d",strtotime('-1 day',strtotime($tgl_kmrn)));
+                    echo tgl_convert(1,$tgl_lusa); ?></h3>
+                    <?php
+                    //$tgl_aktif=date("Y-m-d");
+                    $peg_id=$_SESSION["sesi_peg_id"];
+                    $r_list=list_aktivitas_harian(0,$tgl_lusa,false,$peg_id);
+                    ?>
+                    <div class="table-responsive">
+                    <table class="table table-striped table-hover" >
+                    <thead>
+                    <tr>
+                        <th class="text-center" width="15%">Waktu</th>
+                        <th class="text-center">Kegiatan</th>
+                        <th class="text-center">Target</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if ($r_list["error"]==false) {
+                        $max_data=$r_list["aktif_total"];
+                        for ($i=1;$i<=$max_data;$i++) {
+                            echo '
+                                <tr>
+                                    <td>'.date("H:i",strtotime($r_list["item"][$i]["aktif_awal"])).' - '.date("H:i",strtotime($r_list["item"][$i]["aktif_akhir"])).'</td>
+                                    <td>'.$r_list["item"][$i]["m_redaksi"].'</td>
+                                    <td>'.$r_list["item"][$i]["aktif_target"].' '.$r_list["item"][$i]["aktif_satuan"].'</td>
+                                    <td><a href="'.$url.'/'.$page.'/edit/'.$r_list["item"][$i]["aktif_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_list["item"][$i]["aktif_id"].'" data-confirm="Apakah data ('.$r_list["item"][$i]["aktif_id"].') '.$r_list["item"][$i]["m_redaksi"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+                                </tr>
+                            ';
+                        }
+                    }
+                    else {
+                        echo '<tr>
+                        <td colspan="4">Data tidak tersedia</td>
+                        </tr>';
+                    }
+                    ?>     
+                    </tbody>
+                    </table>
+                        </div>
+
                     </div>
                 </div>
         </div>
