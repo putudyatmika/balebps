@@ -6,6 +6,7 @@
 	<meta name="author" content="Bli Mika - I Putu Dyatmika <pdyatmika@gmail.com>">
 	<meta name="language" content="id,en" />
     <title>Sistem Monitoring BPS Provinsi Nusa Tenggara Barat</title>
+    <script src="<?php echo $url; ?>/js/jquery-3.1.1.min.js"></script>
     <link href="<?php echo $url; ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/animate.css" rel="stylesheet">
@@ -110,7 +111,7 @@
                  }
                 if ($_SESSION['sesi_level']>=4) { ?>
                 <li <?php if ($page=='master') { echo $link_aktif; } ?>>
-                    <a href="<?php echo $url; ?>/master/"><i class="fa fa-globe"></i> <span class="nav-label">Master</span></a>
+                    <a href="<?php echo $url; ?>/master/"><i class="fa fa-asterisk"></i> <span class="nav-label">Master</span></a>
                     <ul class="nav nav-second-level collapse">
                        <li>
                             <a href="<?php echo $url; ?>/master/pegawai/">Pegawai <span class="fa arrow"></span></a>
@@ -187,7 +188,7 @@
 
 
     <!-- Mainly scripts -->
-    <script src="<?php echo $url; ?>/js/jquery-3.1.1.min.js"></script>
+    
     <script src="<?php echo $url; ?>/js/bootstrap.min.js"></script>
     <script src="<?php echo $url; ?>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="<?php echo $url; ?>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -242,8 +243,12 @@
     <!-- Chosen -->
     <script src="<?php echo $url; ?>/js/plugins/chosen/chosen.jquery.js"></script>
 
-<!-- Select2 -->
+    <!-- Select2 -->
     <script src="<?php echo $url; ?>/js/plugins/select2/select2.full.min.js"></script>
+
+    <!-- Highcharts -->
+    <script src="<?php echo $url; ?>/js/plugins/highcharts/highcharts.js"></script>
+    <script src="<?php echo $url; ?>/js/plugins/highcharts/exporting.js"></script>
 
       <!-- Page-Level Scripts -->
      <script src="<?php echo $url; ?>/js/bpsntb.js"></script>

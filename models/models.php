@@ -19,4 +19,7 @@ require 'users/fungsi_users.php';
 
 //model aktivitas
 require 'aktivitas/fungsi_aktivitas.php';
+
+//model aktivitas
+require 'kegiatan/fungsi_kegiatan.php';
 ?>

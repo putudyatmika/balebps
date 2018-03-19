@@ -82,9 +82,6 @@ else { $thn_pilih=date("Y"); }
                             <?php
                             $tgl_awalku = strtotime($thn_pilih.'-'.$bln_pilih.'-1');
                             $tgl_akhir = date("Y-m-t",$tgl_awalku);
-                            if ($tgl_akhir>$tanggal_hari_ini) {
-                                $tgl_akhir=$tanggal_hari_ini;
-                            }
                             $tgl_awal = date("Y-m-d",$tgl_awalku);
                             $tgl_n=date("d",strtotime($tgl_akhir));
                             $peg_id=$_SESSION["sesi_peg_id"];
@@ -99,7 +96,7 @@ else { $thn_pilih=date("Y"); }
                             //cek tgl hari dulu
                                     if (cek_hari_kerja($tgl_dipilih)==true) {
                                          echo '<tr>
-                                                <td colspan="4"><span class="label label-default">Hari Libur</span></td>
+                                                <td colspan="4"><span class="label label-primary">Hari Libur</span></td>
                                                 </tr>';
                                     }
                                     else {
@@ -169,9 +166,6 @@ else { $thn_pilih=date("Y"); }
                             <?php
                             $tgl_awalku = strtotime($thn_pilih.'-'.$bln_pilih.'-1');
                             $tgl_akhir = date("Y-m-t",$tgl_awalku);
-                            if ($tgl_akhir>$tanggal_hari_ini) {
-                                $tgl_akhir=$tanggal_hari_ini;
-                            }
                             $tgl_awal = date("Y-m-d",$tgl_awalku);
                             $tgl_n=date("d",strtotime($tgl_akhir));
                             $peg_id=$_SESSION["sesi_peg_id"];
