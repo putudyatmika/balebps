@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     <?php
-    $r_keg=list_kegiatan(0,false,true);
+    $r_keg=list_kegiatan(0,false,true,0);
     if ($r_keg["error"]==false) {
         $keg_total=$r_keg["keg_total"];
         for ($i=1;$i<=$keg_total;$i++) {

@@ -66,8 +66,8 @@
                     <a href="<?php echo $url; ?>/kegiatan/"><i class="fa fa-th-large"></i> <span class="nav-label">Kegiatan</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
 						<li><a href="<?php echo $url; ?>/kegiatan/add">Tambah Kegiatan</a></li>
-                        <li><a href="<?php echo $url; ?>/kegiatan">Semua</a></li>
                         <li><a href="<?php echo $url; ?>/kegiatan/bidang/">Bidang/Bagian</a></li>
+                        <li><a href="<?php echo $url; ?>/kegiatan">Semua</a></li>
                     </ul>
                 </li>
                

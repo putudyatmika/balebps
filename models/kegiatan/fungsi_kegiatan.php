@@ -1,19 +1,52 @@
 <?php
-function list_kegiatan($keg_id,$detil=false,$before=false) {
+function list_tahun_kegiatan() {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_kegiatan = $conn_keg -> query("select year(keg_start) as tahun from kegiatan group by year(keg_start) order by tahun asc") or die(mysqli_error($conn_keg));
+	$cek=$sql_kegiatan->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek > 0) {
+		$data_keg["error"]=false;
+		$data_keg["thn_total"]=$cek;
+		$i=1;
+		while ($r=$sql_kegiatan->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"thn_keg"=>$r->tahun
+			);
+			$i++;
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
+function list_kegiatan($keg_id,$detil=false,$before=false,$bulan_keg,$tahun_keg) {
 	$db_keg = new db();
 	$conn_keg = $db_keg -> connect();
 	if ($detil==false) {
 		//semua kegiatan
 		if ($before==false) {
-			//semua kegiatan
+			//semua kegiatan harus ada tahun kegiatan
+			if ($bulan_keg>0) {
+				//ada bulan kegiatan
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where month(keg_end)='$bulan_keg' and year(keg_end)='$tahun_keg' order by keg_end desc") or die(mysqli_error($conn_keg));
+			}
+			else {
+				//tanpa bulan
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' order by keg_end desc") or die(mysqli_error($conn_keg));
+			}
 		}
 		else {
 			//hanya list kegiatan mendekati waktu
-			$sql_kegiatan = $conn_keg -> query("select * from kegiatan where (keg_end BETWEEN date_add(now(), INTERVAL -2 day) and date_add(now(),INTERVAL 7 day)) order by keg_end asc") or die(mysqli_error($conn_keg));
+			$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where (keg_end BETWEEN date_add(now(), INTERVAL -2 day) and date_add(now(),INTERVAL 7 day)) order by keg_end asc") or die(mysqli_error($conn_keg));
 		}
 	}
 	else {
 		//satu detil kegiatan
+		$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where kegiatan.keg_id='$keg_id'") or die(mysqli_error($conn_keg));
 	}
 	$cek = $sql_kegiatan -> num_rows;
 	$data_keg=array("error"=>false);
@@ -36,7 +69,10 @@ function list_kegiatan($keg_id,$detil=false,$before=false) {
 				"keg_total_target"=>$r->keg_total_target,
 				"keg_target_satuan"=>$r->keg_target_satuan,
 				"keg_spj"=>$r->keg_spj,
-				"keg_info"=>$r->keg_info
+				"keg_info"=>$r->keg_info,
+				"keg_unitnama"=>$r->unit_nama,
+				"keg_unitjenis"=>$r->unit_jenis,
+				"keg_unitparent"=>$r->unit_parent
 			);
 			$i++;
 		}

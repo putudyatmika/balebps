@@ -1,27 +1,29 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-	<div class="col-lg-10">
-	<h2>Kegiatan</h2>
-	<ol class="breadcrumb">
-	<li>
-		<a href="index.php">Depan</a>
-	</li>
-	<li class="active">
-		<strong>Kegiatan</strong>
-	</li>
+<?php
+if (isset($_POST['bln_pilih'])) { $bln_pilih=$_POST['bln_pilih']; }
+else { $bln_pilih=0; }
 
-	</ol>
-	</div>
-	<div class="col-lg-2">
+if (isset($_POST['thn_pilih'])) { $thn_pilih=$_POST['thn_pilih']; }
+else { $thn_pilih=date("Y"); }
 
-	</div>
-</div>
-<div class="row wrapper wrapper-content animated fadeInRight">
-	<div class="middle-box text-center animated fadeInRightBig">
-    <h3 class="font-bold">This is page content</h3>
-    <div class="error-desc">
-        You can create here any grid layout you want. And any variation layout you imagine:) Check out
-        main dashboard and other site. It use many different layout.
-        <br/><a href="index.html" class="btn btn-primary m-t">Dashboard</a>
-    </div>
-	</div>
-</div>
+if ($act=='add') {
+	include 'views/kegiatan/keg_form.php';
+}
+elseif ($act=='save') {
+	include 'views/kegiatan/aktif_save.php';
+}
+elseif ($act=='edit') {
+	include 'views/kegiatan/keg_form_edit.php';
+}
+elseif ($act=='update') {
+	include 'views/kegiatan/keg_update.php';
+}
+elseif ($act=='view') {
+	include 'views/kegiatan/keg_view.php';
+}
+elseif ($act=='delete') {
+	include 'views/kegiatan/keg_delete.php';
+}
+else {
+	include 'views/kegiatan/keg_list.php';
+}
+?>

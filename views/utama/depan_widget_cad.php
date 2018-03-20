@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-2">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <span class="label label-success pull-right">Tahunan</span>
@@ -30,45 +30,50 @@
     <?php
     $r_terima=jumlah_keg_terima_kirim($tahun_keg);
     ?>
-    <div class="col-lg-3">
+    <div class="col-lg-2">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <span class="label label-info pull-right">Tahun <?php echo $tahun_keg;?></span>
-                <h5>Kegiatan</h5>
+                <h5>Pengiriman</h5>
             </div>
             <div class="ibox-content">
-                 <div class="row">
-                    <div class="col-md-6">
-                         <?php 
-                        if ($r_terima["error"]==false) {
-                            echo '
-                             <h1 class="no-margins">'.$r_terima["item"][1]["keg_jumlah"].'</h1>
-                            <div class="font-bold text-navy"><small>Pengiriman</small></div>
-                            ';
-                        }
-                        else {
-                            echo $r_terima["pesan_error"];
-                        }
-                        ?>
-                    </div>
-                    <div class="col-md-6">
-                        <?php 
-                            if ($r_terima["error"]==false) {
-                                echo '
-                                 <h1 class="no-margins">'.$r_terima["item"][2]["keg_jumlah"].'</h1>
-                                <div class="font-bold text-success"><small>Penerimaan</small></div>
-                                ';
-                            }
-                            else {
-                                echo $r_terima["pesan_error"];
-                            }
-                        ?>
-                    </div>
-                </div>
-                           
+                <?php 
+                if ($r_terima["error"]==false) {
+                    echo '
+                     <h1 class="no-margins">'.$r_terima["item"][1]["keg_jumlah"].'</h1>
+                <small>Kegiatan</small>
+                    ';
+                }
+                else {
+                    echo $r_terima["pesan_error"];
+                }
+                ?>
+               
             </div>
         </div>
     </div>
+    <div class="col-lg-2">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-primary pull-right">Tahun <?php echo $tahun_keg;?></span>
+                <h5>Penerimaan</h5>
+            </div>
+            <div class="ibox-content">
+                <?php 
+                if ($r_terima["error"]==false) {
+                    echo '
+                     <h1 class="no-margins">'.$r_terima["item"][2]["keg_jumlah"].'</h1>
+                <small>Kegiatan</small>
+                    ';
+                }
+                else {
+                    echo $r_terima["pesan_error"];
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -78,7 +83,7 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-lg-1 col-xs-2">
-                        <i class="fa fa-trophy fa-3x"></i>
+                        <i class="fa fa-trophy fa-4x"></i>
                     </div>
                     <div class="col-lg-11 col-xs-10">
                 <?php
