@@ -1,4 +1,7 @@
 <?php
+if (isset($_POST['pilih_bidang'])) { $pilih_bidang=$_POST['pilih_bidang']; }
+else { $pilih_bidang=0; }
+
 if (isset($_POST['bln_pilih'])) { $bln_pilih=$_POST['bln_pilih']; }
 else { $bln_pilih=0; }
 
@@ -22,6 +25,9 @@ elseif ($act=='view') {
 }
 elseif ($act=='delete') {
 	include 'views/kegiatan/keg_delete.php';
+}
+elseif ($act=='bidang') {
+	include 'views/kegiatan/keg_list_bidang.php';
 }
 else {
 	include 'views/kegiatan/keg_list.php';
