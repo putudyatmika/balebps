@@ -40,7 +40,7 @@
                             <label for="sdate">Pilih</label> <select name="pilih_bidang" class="form-control">
                                 <option value="">Pilih Bidang/Bagian</option>
                                 <?php
-                                $r_bidang=list_unitkerja(0,false,false,true);
+                                $r_bidang=list_unitkerja(0,false,false,true,0);
                                 if ($r_bidang["error"]==false) {
                                     $bnyk_es3=$r_bidang["unit_total"];
                                     for ($b=1;$b<=$bnyk_es3;$b++) {

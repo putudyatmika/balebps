@@ -115,6 +115,11 @@ $(document).ready(function () {
         container: "body"
     });
 
+     $('.tooltip-bps').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    });
+
 
     // Full height of sidebar
     function fix_height() {

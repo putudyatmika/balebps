@@ -22,7 +22,7 @@
         <?php } ?>
 	</div>
 </div>
-<div class="row wrapper wrapper-content animated fadeInRightBig">
+<div class="row wrapper wrapper-content animated fadeInRightBig tooltip-bps">
      <?php
         $keg_id=$lvl3;
         $r_keg=list_kegiatan($keg_id,true,false,0,0);
@@ -41,7 +41,7 @@
             ?>
             
             <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>View Kegiatan</h5>
@@ -159,7 +159,9 @@
                     </div>
                 </div>
         </div>
-        <div class="col-lg-7">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Rekap BPS Kabupaten/Kota</h5>
@@ -204,7 +206,7 @@
                                         $jml_kirim=$r_detil_kirim["detil_total"];
                                         $detil_target=0;
                                         for ($k=1;$k<=$jml_kirim;$k++) {
-                                            $detil_kirim .= '<p> <span class="label label-success" data-toggle="tooltip" data-placement="right" title="'.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="label label-info">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/editkirim/'.$r_detil_kirim["item"][$k]["detil_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></p>';
+                                            $detil_kirim .= '<p> <span class="label label-success" data-toggle="tooltip" data-placement="top" title="'.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="label label-info">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/editkirim/'.$r_detil_kirim["item"][$k]["detil_id"].'" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Pengiriman"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></p>';
                                             $detil_target+=$r_detil_kirim["item"][$k]["detil_jumlah"];
                                         }
                                         //label persentase rincian

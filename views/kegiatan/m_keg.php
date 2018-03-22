@@ -12,7 +12,7 @@ if ($act=='add') {
 	include 'views/kegiatan/keg_form.php';
 }
 elseif ($act=='save') {
-	include 'views/kegiatan/aktif_save.php';
+	include 'views/kegiatan/keg_save.php';
 }
 elseif ($act=='edit') {
 	include 'views/kegiatan/keg_form_edit.php';

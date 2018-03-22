@@ -31,7 +31,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content tooltip-bps">
                     	<form class="form-inline" method="post">
                           <div class="form-group">
                             <label for="sdate">Pilih</label>
@@ -72,12 +72,12 @@
                                 ?>
                             </select>
                           </div>
-                          <button type="submit" name="view_harian" class="btn btn-primary">View Data</button>
+                          <button type="submit" name="view_harian" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="View data sesuai bulan">View Data</button>
                         </form>
                     	 <div class="table-responsive">
                             <table class="table table-striped table-hover dataPegawaiPNS" >
                             <thead>
-                            <tr>
+                            <tr class="bg-success p-md">
                                 <th class="text-center" width="3%">No</th>
                                 <th class="text-center">Kegiatan</th>
                                 <th class="text-center">Unit Kerja</th>
@@ -103,7 +103,7 @@
 						                <td class="text-right">'.$r_keg["item"][$i]["keg_total_target"].'</td>
 						                <td>'.$r_keg["item"][$i]["keg_target_satuan"].'</td>
 						                <td>'.$StatusSPJ[$r_keg["item"][$i]["keg_spj"]].'</td>
-						                <td><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+						                <td><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
 						            </tr>
 						            ';
 						        }

@@ -401,4 +401,89 @@ function seksi_terbanyak_kegiatan($tahun_keg) {
 	return $data_keg;
 	$conn_keg->close();	
 }
+
+function get_id_kegiatan($NamaKegiatan,$waktu_save,$pembuat) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_id_keg = $conn_keg -> query("select * from kegiatan where keg_nama='$NamaKegiatan' and keg_dibuat_waktu='$waktu_save' and keg_dibuat_oleh='$pembuat'");
+	$cek=$sql_id_keg->num_rows;
+	if ($cek>0) {
+	   $id_keg='';
+	   $r=$sql_id_keg->fetch_object();
+	   $id_keg=$r->keg_id;
+	}
+	else {
+	 $id_keg='';
+	}
+	return $id_keg;
+	$conn_keg->close();
+	}
+
+function save_kegiatan($nama_kegiatan,$keg_unitkerja,$keg_tglmulai,$keg_tglakhir,$keg_jenis,$keg_t,$keg_satuan,$keg_spj) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_save_kegiatan=$conn_keg->query("insert into kegiatan(keg_nama, keg_unitkerja, keg_start, keg_end, keg_dibuat_oleh, keg_dibuat_waktu, keg_diupdate_oleh, keg_jenis, keg_total_target, keg_target_satuan, keg_spj) values('$nama_kegiatan', '$keg_unitkerja', '$keg_tglmulai', '$keg_tglakhir', '$created', '$waktu_lokal', '$created', '$keg_jenis', '$keg_t', '$keg_satuan','$keg_spj')") or die(mysqli_error($conn_keg));
+	$data_keg=array("error"=>false);
+	if ($sql_save_kegiatan) {
+		$data_keg["error"]=false;
+		$sql_id_keg = $conn_keg -> query("select keg_id from kegiatan where keg_nama='$nama_kegiatan' and keg_dibuat_waktu='$waktu_lokal' and keg_dibuat_oleh='$created' limit 1");
+		$cek=$sql_id_keg->num_rows;
+		if ($cek>0) {
+			//dapet keg_id
+			$r=$sql_id_keg->fetch_object();
+			$data_keg["keg_id"]=$r->keg_id;
+			$data_keg["pesan_error"]='Data kegiatan <strong>('.$r->keg_id.') '.$nama_kegiatan.'</strong> berhasil di simpan';
+		}
+		else {
+			//keg_id=error
+			$data_keg["keg_id"]=0;
+			$data_keg["pesan_error"]='Data kegiatan <strong>'.$nama_kegiatan.'</strong> berhasil di simpan';
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data kegiatan tidak tersimpan';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
+function save_target_kabkota($keg_id,$kabkota_id,$target_kabkota,$unit_nama) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_keg_kabkota = $conn_keg -> query("insert into keg_target(keg_id, keg_t_unitkerja, keg_t_target, keg_t_dibuat_oleh, keg_t_dibuat_waktu, keg_t_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_kabkota', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn_keg));
+	$data_keg=array("error"=>false);
+	if ($sql_keg_kabkota) {
+		$data_keg["error"]=false;
+		$data_keg["pesan_error"]='Data target <strong>'.$unit_nama.'</strong> sebanyak '.$target_kabkota.' tersimpan';
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data target kabupaten/kota tidak tersimpan';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
+
+function save_target_spj($keg_id,$kabkota_id,$target_spj,$unit_nama) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_keg_spj = $conn_keg -> query("insert into keg_spj(keg_id, keg_s_unitkerja, keg_s_target, keg_s_dibuat_oleh, keg_s_dibuat_waktu, keg_s_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_spj', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn_keg));
+	$data_keg=array("error"=>false);
+	if ($sql_keg_spj) {
+		$data_keg["error"]=false;
+		$data_keg["pesan_error"]='Data target spj <strong>'.$unit_nama.'</strong> sebanyak '.$target_spj.' tersimpan';
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data target spj kabupaten/kota tidak tersimpan';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
 ?>

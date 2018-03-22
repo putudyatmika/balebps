@@ -141,7 +141,7 @@ function update_unitkerja($unit_kode,$unit_nama,$unit_parent,$unit_jenis,$unit_e
     return $up_data;
 	$conn_unit->close();
 }
-function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false) {
+function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false,$kode_eselon) {
 	//$jenis false = provinsi, $jenis true = kabkota
 	//$eselon3 false = semua eselon di provinsi, $eselon3 true = semua eselon 3 provinsi
 	$db_unit = new db();
@@ -152,7 +152,13 @@ function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false) {
 	else {
 		if ($jenis==false) {
 			if ($eselon3==false) {
-				$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' order by unit_kode asc");
+				if ($kode_eselon>0) {
+					$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' and unit_eselon='$kode_eselon' order by unit_kode asc");
+				}
+				else {
+					$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' order by unit_kode asc");
+				}
+				
 			}
 			else {
 				$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' and unit_eselon='3' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc");	
