@@ -152,7 +152,7 @@
 						                <td class="text-right">'.$r_keg["item"][$i]["keg_total_target"].'</td>
 						                <td>'.$r_keg["item"][$i]["keg_target_satuan"].'</td>
 						                <td>'.$StatusSPJ[$r_keg["item"][$i]["keg_spj"]].'</td>
-                                        <td> <div class="progress progress-striped active m-b-sm">
+                                        <td class="bg-warning"> <div class="progress progress-striped active m-b-sm">
                                                 <div style="width: '.$progress_kirim.'%;" class="progress-bar"></div>
                                             </div></td>
 						                <td><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>

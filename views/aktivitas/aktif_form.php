@@ -44,6 +44,26 @@
                                 </div>
                         </div>
                         <div class="form-group">
+                            <label for="aktif_mulai" class="col-sm-2 control-label">Jam Mulai</label>
+
+                                <div class="col-lg-4 col-sm-4" id="jam_mulai" data-placement="top" data-align="bottom" data-autoclose="true">
+                                    <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                                    <input type="text" name="aktif_mulai" class="form-control" placeholder="Jam Mulai" required="" />
+                                </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="aktif_selesai" class="col-sm-2 control-label">Jam Selesai</label>
+
+                                <div class="col-lg-4 col-sm-4" id="jam_selesai" data-placement="top" data-align="bottom" data-autoclose="true">
+                                    <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                                    <input type="text" name="aktif_selesai" class="form-control" placeholder="Jam Selesai" required="" />
+                                </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
                             <label for="aktif_redaksi" class="col-sm-2 control-label">Judul Kegiatan</label>
                                 <div class="col-lg-10 col-sm-10">
                                     <div class="input-group margin-bottom-sm">
@@ -84,9 +104,6 @@
                                                  echo '<option value="'.$r_keg["item"][$i]["m_id"].';'.$r_keg["item"][$i]["m_judul"].'">'.$r_keg["item"][$i]["m_judul"].'</option>';
                                             }
                                         }
-                                        else {
-                                            echo '<option value="">'.$r_keg["pesan_error"].'</option>';
-                                        }
                                         ?>
                                         </select>
                                     </div>
@@ -104,7 +121,7 @@
                         <div class="form-group">
                             <label for="aktif_target" class="col-sm-2 control-label">Target</label>
 
-                                <div class="col-lg-3 col-sm-3">
+                                <div class="col-lg-4 col-sm-4">
                                     <div class="input-group margin-bottom-sm">
                                 <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
                                     <input type="text" name="aktif_target" class="form-control" placeholder="Target" required="" />
@@ -114,30 +131,10 @@
                         <div class="form-group">
                             <label for="aktif_satuan" class="col-sm-2 control-label">Satuan</label>
 
-                                <div class="col-lg-3 col-sm-3">
+                                <div class="col-lg-4 col-sm-4">
                                     <div class="input-group margin-bottom-sm">
                                 <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
                                     <input type="text" name="aktif_satuan" class="form-control" placeholder="Satuan" required="" />
-                                </div>
-                                </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="aktif_mulai" class="col-sm-2 control-label">Jam Mulai</label>
-
-                                <div class="col-lg-3 col-sm-3" id="jam_mulai" data-placement="top" data-align="bottom" data-autoclose="true">
-                                    <div class="input-group margin-bottom-sm">
-                                <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                                    <input type="text" name="aktif_mulai" class="form-control" placeholder="Jam Mulai" required="" />
-                                </div>
-                                </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="aktif_selesai" class="col-sm-2 control-label">Jam Selesai</label>
-
-                                <div class="col-lg-3 col-sm-3" id="jam_selesai" data-placement="top" data-align="bottom" data-autoclose="true">
-                                    <div class="input-group margin-bottom-sm">
-                                <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                                    <input type="text" name="aktif_selesai" class="form-control" placeholder="Jam Selesai" required="" />
                                 </div>
                                 </div>
                         </div>

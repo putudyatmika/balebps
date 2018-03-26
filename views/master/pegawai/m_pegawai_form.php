@@ -101,13 +101,19 @@
                         <select class="form-control" name="peg_user_no" id="peg_user_no" style="font-family:'FontAwesome', Arial;">
                         <option value="">Pilih User ID</option>
                         <?php
+                        $user_no=$lvl4;
                         $r_user=list_users(0,false);
                         if ($r_user["error"]==false) {
                             $i=1;
                             $max_users=$r_user["user_total"];
                             for ($i=1;$i<=$max_users;$i++)
                                 {
-                                    echo '<option value="'.$r_user["item"][$i]["user_no"].'">('.$r_user["item"][$i]["user_id"].') '.$r_user["item"][$i]["user_nama"].'</option>';
+                                    if ($r_user["item"][$i]["user_no"]==$user_no) {
+                                    $dipilih_user='selected="selected"';
+                                    }
+                                    else { $dipilih_user='';}
+
+                                    echo '<option value="'.$r_user["item"][$i]["user_no"].'" '.$dipilih_user.'>('.$r_user["item"][$i]["user_id"].') '.$r_user["item"][$i]["user_nama"].'</option>';
                                 }
                         }
                         else {
@@ -127,7 +133,7 @@
                         <select class="form-control" name="peg_unitkerja" id="peg_unitkerja" style="font-family:'FontAwesome', Arial;">
                         <option value="">Pilih Unitkerja</option>
                         <?php
-                        $r_unit=list_unitkerja(0,false,false);
+                        $r_unit=list_unitkerja(0,false,false,false,0);
                         if ($r_unit["error"]==false) {
                             $i=1;
                             $max_unit=$r_unit["unit_total"];

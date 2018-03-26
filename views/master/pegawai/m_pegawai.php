@@ -26,4 +26,4 @@
 			else {
 				include 'views/master/pegawai/m_pegawai_list.php';
 			}
-		?>
+?>

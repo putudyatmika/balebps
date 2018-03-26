@@ -156,8 +156,58 @@ function save_aktivitas_harian($redaksi,$peg_id,$tgl_aktif,$jam_awal,$jam_akhir,
 	$conn_aktif->close();
 
 }
-function list_aktivitas_unitkerja($unit_kode,$tgl_aktif,$esIII=false) {
+function list_aktivitas_unitkerja($unit_kode,$tgl_aktif,$detil=false) {
+	//staf unit hanya bisa liat semua kegiatan diseksinya termasuk kepala seksinya
+	//kepala seksi bisa lihat semua staf di bidangnya termasuk kepala bidangnya
+	//kepala bidang bisa lihat semua bidang / bagian 
+	$db_aktif = new db();
+	$conn_aktif = $db_aktif -> connect();
+	if ($detil==false) {
+		//semua list aktivitas di 1 bidang termasuk kepala bidang
+		$sql_list_aktivitas = $conn_aktif -> query("select aktivitas.*, unitkerja.unit_nama, unitkerja.unit_parent,m_pegawai.peg_nama, m_pegawai.peg_jabatan, m_pegawai.peg_nip from aktivitas inner join unitkerja on aktivitas.aktif_unitkerja=unitkerja.unit_kode inner join m_pegawai on m_pegawai.peg_id=aktivitas.peg_id where SUBSTRING(unitkerja.unit_kode,1,4)=SUBSTRING('$unit_kode',1,4) order by aktif_tgl desc, aktif_awal asc") or die(mysqli_error($conn_aktif));
+	}
+	else {
+		//hanya 1 seksi saja di 1 tanggal
+		$sql_list_aktivitas = $conn_aktif -> query("select aktivitas.*, unitkerja.unit_nama, unitkerja.unit_parent,m_pegawai.peg_nama, m_pegawai.peg_jabatan, m_pegawai.peg_nip from aktivitas inner join unitkerja on aktivitas.aktif_unitkerja=unitkerja.unit_kode inner join m_pegawai on m_pegawai.peg_id=aktivitas.peg_id where SUBSTRING(unitkerja.unit_kode,1,4)=SUBSTRING('$unit_kode',1,4) and aktif_tgl='$tgl_aktif' order by aktif_tgl desc, aktif_awal asc") or die(mysqli_error($conn_aktif));
+	}
 
+	$r_data=array("error"=>false);
+	$cek = $sql_list_aktivitas->num_rows;
+	if ($cek > 0) {
+		//ada isinya
+		$r_data["error"]=false;
+		$r_data["aktif_total"]=$cek;
+		$i=1;
+		while ($r=$sql_list_aktivitas->fetch_object()) {
+			$r_data["item"][$i]=array(
+				"aktif_id"=>$r->aktif_id,
+				"m_id"=>$r->m_id,
+				"m_redaksi"=>$r->m_redaksi,
+				"peg_id"=>$r->peg_id,
+				"aktif_unitkerja"=>$r->aktif_unitkerja,
+				"aktif_target"=>$r->aktif_target,
+				"aktif_satuan"=>$r->aktif_satuan,
+				"aktif_tgl"=>$r->aktif_tgl,
+				"aktif_awal"=>$r->aktif_awal,
+				"aktif_akhir"=>$r->aktif_akhir,
+				"aktif_status"=>$r->aktif_status,
+				"unit_nama"=>$r->unit_nama,
+				"unit_parent"=>$r->unit_parent,
+				"peg_nama"=>$r->peg_nama,
+				"peg_jabatan"=>$r->peg_jabatan,
+				"peg_nip"=>$r->peg_nip
+			);
+			$i++;
+		}
+
+	}
+	else {
+		$r_data["error"]=true;
+		$r_data["pesan_error"]="Data tidak tersedia";
+
+	}
+	return $r_data;
+	$conn_aktif -> close();
 } 
 function list_aktivitas_harian($id,$tgl_aktif,$detil=false,$peg_id) {
 	//$id bisa id aktifitas, peg_id, maupun unit_id

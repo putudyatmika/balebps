@@ -35,7 +35,7 @@
                     <div class="ibox-content">
                     <?php
                     $unit_kode=$lvl4;
-                    $r_prov=list_unitkerja($unit_kode,true,false,false);
+                    $r_prov=list_unitkerja($unit_kode,true,false,false,0);
                     if ($r_prov["error"]==false) {
                         $unit_nama=$r_prov["item"][1]["unit_nama"];
                         $unit_parent=$r_prov["item"][1]["unit_parent"];
