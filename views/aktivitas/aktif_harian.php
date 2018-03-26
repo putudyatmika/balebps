@@ -26,7 +26,13 @@ else { $thn_pilih=date("Y"); }
 </div>
 <div class="row wrapper wrapper-content animated fadeInRightBig">
     <div class="row">
-        <div class="col-lg-7">
+        <?php if ($_SESSION['sesi_peg_jabatan']>1) { 
+            echo '<div class="col-lg-10">';
+        }
+        else { 
+            echo '<div class="col-lg-7">';
+        } ?>
+       
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Harian</h5>
@@ -140,6 +146,9 @@ else { $thn_pilih=date("Y"); }
                     </div>
                 </div>
         </div>
+        <?php
+        if ($_SESSION['sesi_peg_jabatan']==1) {
+        ?>
         <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -203,5 +212,6 @@ else { $thn_pilih=date("Y"); }
                     </div>
                 </div>
         </div>
+        <?php } ?>
     </div>
 </div>

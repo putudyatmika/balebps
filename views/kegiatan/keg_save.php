@@ -62,6 +62,7 @@
                                     $target_spj=0;
                                     $target_kabkota=0;
                                     $unit_nama='';
+                                    $keg_target=0;
                                     echo '<div class="alert alert-success">';
                                     for ($u=1;$u<=$bnyk_unit;$u++) {
                                         $target_kabkota=$kabkota_target[$r_bidang["item"][$u]["unit_kode"]];
@@ -69,15 +70,25 @@
                                         $unit_nama=$r_bidang["item"][$u]["unit_nama"];
 
                                         if ($target_kabkota>0) {
-                                            $s_kabkota=save_target_kabkota($keg_id,$r_bidang["item"][$u]["unit_kode"],$target_kabkota,$unit_nama);
-                                            echo '<p>'.$s_kabkota["pesan_error"].'</p>';
+                                            $keg_target=$target_kabkota;
                                         }
-
-                                        if ($target_spj>0 and $keg_spj==1) {
-                                            $s_spj=save_target_spj($keg_id,$r_bidang["item"][$u]["unit_kode"],$target_spj,$unit_nama);
-                                            echo '<p>'.$s_spj["pesan_error"].'</p>';
+                                        else {
+                                            $keg_target=0;
+                                        }
+                                        $s_kabkota=save_target_kabkota($keg_id,$r_bidang["item"][$u]["unit_kode"],$keg_target,$unit_nama);
+                                        echo '<p>'.$s_kabkota["pesan_error"].'</p>';
+                                        
+                                        if ($target_spj>0) {
+                                            $spj_target=$target_spj;
+                                        }
+                                        else {
+                                            $spj_target=0;
                                         }
                                         
+                                        if ($keg_spj==1) {
+                                        $s_spj=save_target_spj($keg_id,$r_bidang["item"][$u]["unit_kode"],$spj_target,$unit_nama);
+                                        echo '<p>'.$s_spj["pesan_error"].'</p>';
+                                        }
                                         //echo 'Target Kabkota : '.$kabkota_target[$r_bidang["item"][$u]["unit_kode"]].'<br />';
                                         //echo 'Target SPJ : '.$kabkota_spj[$r_bidang["item"][$u]["unit_kode"]].'<br />';
                                     }

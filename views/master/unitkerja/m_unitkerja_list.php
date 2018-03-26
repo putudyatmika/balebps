@@ -47,7 +47,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    $r_prov=list_unitkerja(0,false,false,false);
+                    $r_prov=list_unitkerja(0,false,false,false,0);
                     if ($r_prov["error"]==false) {
                         $i=1;
                         $max_unit=$r_prov["unit_total"];
@@ -113,7 +113,7 @@
                     </thead>
                     <tbody>
                         <?php
-                    $r_prov=list_unitkerja(0,false,true,false);
+                    $r_prov=list_unitkerja(0,false,true,false,0);
                     if ($r_prov["error"]==false) {
                         $i=1;
                         $max_unit=$r_prov["unit_total"];

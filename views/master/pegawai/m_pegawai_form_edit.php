@@ -150,7 +150,7 @@
                         <select class="form-control" name="peg_unitkerja" id="peg_unitkerja" style="font-family:'FontAwesome', Arial;">
                         <option value="">Pilih Unitkerja</option>
                         <?php
-                        $r_unit=list_unitkerja(0,false,false);
+                        $r_unit=list_unitkerja(0,false,false,false,0);
                         if ($r_unit["error"]==false) {
                             $i=1;
                             $max_unit=$r_unit["unit_total"];

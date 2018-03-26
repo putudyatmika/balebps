@@ -24,7 +24,7 @@
 </div>
 <div class="row wrapper wrapper-content animated fadeInRightBig tooltip-bps">
      <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-7">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Form Input Kegiatan</h5>
@@ -42,7 +42,7 @@
                                     <div class="col-lg-10 col-sm-10">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                        <input type="text" name="keg_nama" class="form-control" placeholder="nama unit" />
+                                        <input type="text" name="keg_nama" id="keg_nama" class="form-control" placeholder="nama unit" />
                                      </div>
                                     </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <div class="col-lg-9 col-sm-9">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                        <select class="form-control" name="keg_unitkerja" id="keg_unitkerja" style="font-family:'FontAwesome', Arial;">
+                                        <select class="form-control" name="keg_unitkerja" id="keg_unitkerja">
                                             <option value="">Pilih</option>
                                             <?php
                                             $r_bidang=list_unitkerja(0,false,false,false,4);
@@ -71,7 +71,7 @@
                                     <div class="col-sm-4 col-lg-4">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                        <select class="form-control" name="keg_jenis" id="keg_jenis" style="font-family:'FontAwesome', Arial;">
+                                        <select class="form-control" name="keg_jenis" id="keg_jenis">
                                             <option value="">Pilih</option>
                                             <?php
                                             $i=0;
@@ -107,7 +107,7 @@
                                     <div class="col-sm-6">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                    <input type="text" name="keg_satuan" class="form-control" placeholder="Satuan Kegiatan" />
+                                    <input type="text" name="keg_satuan" id="keg_satuan" class="form-control" placeholder="Satuan Kegiatan" />
                                     </div>
                                     </div>
                             </div>
@@ -116,7 +116,7 @@
                                     <div class="col-sm-6">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                    <input type="text" name="keg_target" class="form-control target_total" placeholder="Total Target" />
+                                    <input type="text" name="keg_target" id="keg_target" class="form-control target_total" placeholder="Total Target" />
                                     </div>
                                     </div>
                             </div>
@@ -145,7 +145,7 @@
                 </div>
         </div>
     
-        <div class="col-lg-6">
+        <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Target BPS Kabupaten/Kota</h5>
@@ -156,13 +156,14 @@
                         </div>
                     </div>
                     <div class="ibox-content">
+                        <div class="alert alert-danger">Kegiatan yang target kosong diisikan angka 0 (nol)</div>
                         <div class="table-responsive">
                        <table class="table table-striped table-hover" >
                             <thead>
                             <tr class="bg-success p-md">
-                                <th class="text-center">Nama Unit</th>
-                                <th class="text-center">Kegiatan</th>
-                                <th class="text-center">SPJ</th>
+                                <th class="text-center col-xs-8">Nama Unit</th>
+                                <th class="text-center col-xs-2">Kegiatan</th>
+                                <th class="text-center col-xs-2">SPJ</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -173,9 +174,10 @@
                                     for ($u=1;$u<=$bnyk_unit;$u++) {
                                         echo '<tr>
                                             <td>'.$r_bidang["item"][$u]["unit_nama"].'</td>
-                                            <td><input type="text" name="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control target_total" placeholder="Target Kegiatan" /></td>
-                                            <td><input type="text" name="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control target_total" placeholder="Target SPJ" /></td>
-                                        </tr>';
+                                            <td><input type="text" name="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" id="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control input-sm" placeholder="Target" /></td>
+                                            <td><input type="text" name="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" id="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control input-sm" placeholder="Target" /></td>
+                                        </tr>
+                                        ';
                                     }
                                 }
                             ?>

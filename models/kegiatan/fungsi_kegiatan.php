@@ -143,11 +143,11 @@ function list_kegiatan($keg_id,$detil=false,$before=false,$bulan_keg,$tahun_keg)
 			//semua kegiatan harus ada tahun kegiatan
 			if ($bulan_keg>0) {
 				//ada bulan kegiatan
-				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where month(keg_end)='$bulan_keg' and year(keg_end)='$tahun_keg' order by keg_end desc") or die(mysqli_error($conn_keg));
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where month(keg_end)='$bulan_keg' and year(keg_end)='$tahun_keg' order by keg_dibuat_waktu desc") or die(mysqli_error($conn_keg));
 			}
 			else {
 				//tanpa bulan
-				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' order by keg_end desc") or die(mysqli_error($conn_keg));
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' order by keg_dibuat_waktu desc") or die(mysqli_error($conn_keg));
 			}
 		}
 		else {
@@ -202,11 +202,11 @@ function list_kegiatan_bidang($unit_kode,$bulan_keg,$tahun_keg) {
 		//kegiatan 1 bidang berdasarkan bulan
 			if ($bulan_keg>0) {
 				//ada bulan kegiatan
-				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where month(keg_end)='$bulan_keg' and year(keg_end)='$tahun_keg' and unit_parent='$unit_kode' order by keg_end desc") or die(mysqli_error($conn_keg));
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where month(keg_end)='$bulan_keg' and year(keg_end)='$tahun_keg' and unit_parent='$unit_kode' order by keg_dibuat_waktu desc") or die(mysqli_error($conn_keg));
 			}
 			else {
 				//tanpa bulan
-				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' and unit_parent='$unit_kode' order by keg_end desc") or die(mysqli_error($conn_keg));
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' and unit_parent='$unit_kode' order by keg_dibuat_waktu desc") or die(mysqli_error($conn_keg));
 			}
 		
 	}
@@ -218,7 +218,7 @@ function list_kegiatan_bidang($unit_kode,$bulan_keg,$tahun_keg) {
 			}
 			else {
 				//tanpa bulan
-				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' order by keg_end desc") or die(mysqli_error($conn_keg));
+				$sql_kegiatan = $conn_keg -> query("select kegiatan.*,unit_nama,unit_jenis,unit_parent from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode where year(keg_end)='$tahun_keg' order by keg_dibuat_waktu desc") or die(mysqli_error($conn_keg));
 			}
 	}
 	$cek = $sql_kegiatan -> num_rows;

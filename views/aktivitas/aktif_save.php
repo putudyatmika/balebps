@@ -50,7 +50,12 @@
                             $aktif_selesai =$_POST['aktif_selesai'];
                             $redaksi = trim($m_red.' '.$m_keg.' '.$aktif_nama_kegiatan);
                             $peg_id=$_SESSION['sesi_peg_id'];
-                            $aktif_unitkerja=$_SESSION['sesi_unitkerja'];
+                            if ($_SESSION['sesi_peg_unitkerja']==0) {
+                                $aktif_unitkerja=$_SESSION['sesi_unitkerja'];
+                            }
+                            else {
+                                $aktif_unitkerja=$_SESSION['sesi_peg_unitkerja'];
+                            }
                             $r_save=save_aktivitas_harian($redaksi,$peg_id,$aktif_tanggal,$aktif_mulai,$aktif_selesai,$aktif_target,$aktif_satuan,$aktif_unitkerja);
                             if ($r_save["error"]==false) {
                                 echo '<div class="alert alert-success">
