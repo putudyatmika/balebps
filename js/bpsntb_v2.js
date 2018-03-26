@@ -69,19 +69,38 @@ $(document).ready(function(){
 $(document).ready(function(){
      $("#formKegBaru").validate({
          rules: {
-             keg_nama: "required",
+             keg_nama: {
+                required: true,
+                minlength: 10 },
              keg_unitkerja: "required",
              keg_jenis: "required",
              keg_tglmulai: "required",
              keg_tglakhir: "required",
              keg_satuan: "required",
-             keg_target: "required",
+             keg_target: {
+                required: true,
+                number: true
+             },
              keg_spj: "required",
              keg_kabkota: "required",
              spj_kabkota: "required"
          },
          messages: {
-                
+                keg_nama: {
+                    required: "Silakan isi nama kegiatan",
+                    minlength: "Minimal 10 karakter" 
+                },
+                keg_target: {
+                    required: "Silakan isi target kegiatan",
+                    number: "isian harus berupa angka"
+                },
+                keg_unitkerja: "Silakan pilih salah satu",
+                keg_jenis: "Silakan pilih salah satu",
+                keg_tglmulai: "Silakan isi tanggal mulai",
+                keg_tglakhir: "silakan isi tanggal selesai",
+                keg_satuan: "Silakan isi satuan kegiatan",
+                keg_spj: "Silakan pilih salah satu"
+
             }
 
      });

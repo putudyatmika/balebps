@@ -134,6 +134,91 @@ function list_target_keg_kabkota($keg_id,$unit_kode,$detil=false) {
 	return $data_keg;
 	$conn_keg->close();
 }
+function list_target_spj_kabkota($keg_id,$unit_kode,$detil=false) {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	if ($detil==false) {
+		//semua untuk 1 kegiatan
+		$sql_kegiatan = $conn_keg -> query("select keg_spj.*, unitkerja.unit_nama from keg_spj inner join unitkerja on keg_spj.keg_s_unitkerja=unitkerja.unit_kode where keg_id='$keg_id' and keg_s_target>0 order by keg_spj.keg_s_unitkerja asc") or die(mysqli_error($conn_keg));
+	}
+	else {
+		//1 keg 1 kabkota saja
+		$sql_kegiatan = $conn_keg -> query("select keg_spj.*, unitkerja.unit_nama from keg_spj inner join unitkerja on keg_spj.keg_s_unitkerja=unitkerja.unit_kode where keg_id='$keg_id' and keg_s_unitkerja='$unit_kode' and keg_s_target>0 ") or die(mysqli_error($conn_keg));
+	}
+	$cek=$sql_kegiatan->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek > 0) {
+		$data_keg["error"]=false;
+		$data_keg["spj_total"]=$cek;
+		$i=1;
+		while ($r=$sql_kegiatan->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"keg_id"=>$r->keg_id,
+				"spj_id"=>$r->keg_s_id,
+				"spj_unitkerja"=>$r->keg_s_unitkerja,
+				"spj_unitnama"=>$r->unit_nama,
+				"spj_jumlah"=>$r->keg_s_target,
+				"spj_dibuat_oleh"=>$r->keg_s_dibuat_oleh,
+				"spj_dibuat_waktu"=>$r->keg_s_dibuat_waktu,
+				"spj_diupdate_oleh"=>$r->keg_s_diupdate_oleh,
+				"spj_diupdate_waktu"=>$r->keg_s_diupdate_waktu,
+				"spj_poin_waktu"=>$r->keg_s_point_waktu,
+				"spj_poin_jumlah"=>$r->keg_s_point_jumlah,
+				"spj_poin_total"=>$r->keg_s_point
+			);
+			$i++;
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
+function list_spj_detil_kabkota($keg_id,$unit_kode,$keg_jenis,$detil=false) {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	if ($detil==false) {
+		//semua spj untuk 1 kegiatan
+		$sql_kegiatan = $conn_keg -> query("select spj_detil.*,unit_nama from spj_detil inner join unitkerja on spj_detil.spj_d_unitkerja=unitkerja.unit_kode where keg_id='$keg_id' and spj_d_jenis='$keg_jenis' order by spj_d_tgl asc") or die(mysqli_error($conn_keg));
+	}
+	else {
+		//1 spj 1 kabkota saja
+		$sql_kegiatan = $conn_keg -> query("select spj_detil.*,unit_nama from spj_detil inner join unitkerja on spj_detil.spj_d_unitkerja=unitkerja.unit_kode where keg_id='$keg_id' and spj_d_jenis='$keg_jenis' and spj_d_unitkerja='$unit_kode' order by spj_d_tgl asc") or die(mysqli_error($conn_keg));
+	}
+	$cek=$sql_kegiatan->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek > 0) {
+		$data_keg["error"]=false;
+		$data_keg["spj_bnyk"]=$cek;
+		$i=1;
+		while ($r=$sql_kegiatan->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"keg_id"=>$r->keg_id,
+				"spj_id"=>$r->spj_d_id,
+				"spj_unitkerja"=>$r->spj_d_unitkerja,
+				"spj_unitnama"=>$r->unit_nama,
+				"spj_tanggal"=>$r->spj_d_tgl,
+				"spj_jumlah"=>$r->spj_d_jumlah,
+				"spj_dibuat_oleh"=>$r->spj_d_dibuat_oleh,
+				"spj_dibuat_waktu"=>$r->spj_d_dibuat_waktu,
+				"spj_diupdate_oleh"=>$r->spj_d_diupdate_oleh,
+				"spj_diupdate_waktu"=>$r->spj_d_diupdate_waktu,
+				"spj_jenis"=>$r->spj_d_jenis,
+				"spj_link_laci"=>$r->spj_d_link_laci,
+				"spj_ket"=>$r->spj_d_ket
+			);
+			$i++;
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
 function list_kegiatan($keg_id,$detil=false,$before=false,$bulan_keg,$tahun_keg) {
 	$db_keg = new db();
 	$conn_keg = $db_keg -> connect();

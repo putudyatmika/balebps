@@ -101,6 +101,7 @@
                             
                         }
                         ?>
+                        <a href="<?php echo $url; ?>/kegiatan/add/" class="btn btn-primary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>
                     </div>
                 </div>
         </div>
