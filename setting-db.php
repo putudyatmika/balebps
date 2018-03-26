@@ -1,7 +1,7 @@
 <?php
-//$url='http://192.168.1.9/balentb';
+$url='http://192.168.1.9/balebps';
 //$url='http://10.52.17.93/balentb';
-$url='http://10.52.6.31/balebps';
+//$url='http://10.52.6.31/balebps';
 //$url='http://localhost/balentb';
 //Setting Database
 

@@ -41,7 +41,7 @@
             ?>
             
             <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>View Kegiatan</h5>
@@ -56,8 +56,8 @@
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-condensed">
                             <tr>
-                                <td class="col-xs-3"><strong>Unit kerja</strong></td>
-                                <td class="col-xs-9"><?php echo $r_keg["item"][1]["keg_unitnama"]; ?></td>
+                                <td class="col-lg-2 col-xs-3"><strong>Unit kerja</strong></td>
+                                <td class="col-lg-10 col-xs-9"><?php echo $r_keg["item"][1]["keg_unitnama"]; ?></td>
                             </tr>
                             <tr>
                                 <td><strong>Jenis Kegiatan</strong></td>
@@ -159,7 +159,9 @@
                     </div>
                 </div>
         </div>
-        <div class="col-lg-7">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Rekap BPS Kabupaten/Kota</h5>
@@ -248,10 +250,10 @@
                                             <td class="text-right">'.$r_target["item"][$i]["target_jumlah"].'</td>
                                             <td class="text-right">'.$detil_kirim.'</td>
                                             <td class="text-right">'.$k_persen.'</td>
-                                            <td class="text-center"><a href="#"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a></td>
+                                            <td class="text-center"><a href="#" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
                                             <td class="text-right">'.$detil_terima.'</td>
                                             <td class="text-right">'.$t_persen.'</td>
-                                            <td class="text-center"><a href="#"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a></td>
+                                            <td class="text-center"><a href="#" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
                                             <td class="text-right">'.$r_target["item"][$i]["target_poin_total"].'</td>
                                         </tr>
                                     ';
@@ -295,7 +297,162 @@
                 </div>
         </div>
     </div>
+    <?php
+    if ($r_keg["item"][1]["keg_spj"]==1) {
+    ?>
+    <div class="row">
+        <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Rekap SPJ BPS Kabupaten/Kota</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                       <div class="table-responsive">
+                            <table class="table table-striped table-hover" >
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2">No</th>
+                                <th class="text-center" rowspan="2">Unit Kerja</th>
+                                <th class="text-center" rowspan="2">Target</th>
+                                <th class="text-center" colspan="3">Pengiriman</th>
+                                <th class="text-center" colspan="3">Penerimaan</th>
+                                <th class="text-center" rowspan="2">Nilai</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Rincian</th>
+                                <th class="text-center">%</th>
+                                <th class="text-center">&nbsp;</th>
+                                <th class="text-center">Rincian</th>
+                                <th class="text-center">%</th>
+                                <th class="text-center">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php 
+                            $r_spj=list_target_spj_kabkota($keg_id,0,false);
+                            if ($r_spj["error"]==false) {
+                                //pengulangan unitkerja
+                                $total_target_spj=0;
+                                $rekap_spj_kirim=0;
+                                $rekap_spj_terima=0;
+                                $bnyk_unit_spj=$r_spj["spj_total"];
+                                for ($s=1;$s<=$bnyk_unit_spj;$s++) {
+                                    //ngulang unit kerja satu2
+                                    //pengiriman
+                                    $r_spj_kirim=list_spj_detil_kabkota($keg_id,$r_spj["item"][$s]["spj_unitkerja"],1,true);
+                                    if ($r_spj_kirim["error"]==false) {
+                                        //spj detil kirim ada isian
+                                        $total_r_kirim=$r_spj_kirim["spj_bnyk"]; //banyak record pengiriman
+                                        $total_kirim_spj=0;
+                                        $link_kirim_spj='';
+                                        for ($k=1;$k<=$total_r_kirim;$k++) {
+                                            $link_kirim_spj .= tgl_convert_pendek_bulan(1,$r_spj_kirim["item"][$k]["spj_tanggal"]).' | '.$r_spj_kirim["item"][$k]["spj_jumlah"];
+                                            $total_kirim_spj += $r_spj_kirim["item"][$k]["spj_jumlah"];
+                                        }
+                                        //progress spj per kabkota
+                                        $progress_spj_kirim=($total_kirim_spj/$r_spj["item"][$s]["spj_jumlah"])*100;
+                                    }
+                                    else {
+                                        //bila spj detil kirim kosong / belum dikirim
+                                        $total_kirim_spj=0;
+                                        $link_kirim_spj='';
+                                        $progress_spj_kirim=0;
+                                    }
+                                    
+
+                                    //penerimaan
+                                    $r_spj_terima=list_spj_detil_kabkota($keg_id,$r_spj["item"][$s]["spj_unitkerja"],2,true);
+                                    if ($r_spj_terima["error"]==false) {
+                                        //spj detil kirim ada isian
+                                        $total_r_terima=$r_spj_terima["spj_bnyk"]; //banyak record pengiriman
+                                        $total_terima_spj=0;
+                                        $link_terima_spj='';
+                                        for ($t=1;$t<=$total_r_terima;$t++) {
+                                            $link_terima_spj .= tgl_convert_pendek_bulan(1,$r_spj_terima["item"][$t]["spj_tanggal"]).' | '.$r_spj_terima["item"][$t]["spj_jumlah"];
+                                            $total_terima_spj += $r_spj_terima["item"][$t]["spj_jumlah"];
+                                        }
+                                        //progress spj per kabkota
+                                        $progress_spj_terima=($total_terima_spj/$r_spj["item"][$s]["spj_jumlah"])*100;
+                                    }
+                                    else {
+                                        //bila spj detil kirim kosong / belum dikirim
+                                        $total_terima_spj=0;
+                                        $link_terima_spj='';
+                                        $progress_spj_terima=0;
+                                    }
+
+
+                                    //tampilan pengiriman dan penerimaan
+                                    echo '
+                                        <tr>
+                                            <td>'.$s.'</td>
+                                            <td>'.$r_spj["item"][$s]["spj_unitnama"].'</td>
+                                            <td class="text-right">'.$r_spj["item"][$s]["spj_jumlah"].'</td>
+                                            <td class="text-right">'.$link_kirim_spj.'</td>
+                                            <td class="text-right">'.$progress_spj_kirim.'</td>
+                                            <td class="text-center"><a href="#" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+                                            <td class="text-right">'.$link_terima_spj.'</td>
+                                            <td class="text-right">'.$progress_spj_terima.'</td>
+                                            <td class="text-center"><a href="#" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+                                            <td class="text-right">'.$r_spj["item"][$s]["spj_poin_total"].'</td>
+                                        </tr>
+                                    ';
+                                    //batasnya
+                                    $total_target_spj += $r_spj["item"][$s]["spj_jumlah"];
+                                    $rekap_spj_kirim += $total_kirim_spj; //rekap realisasi pengiriman spj
+                                    $rekap_spj_terima += $total_terima_spj; //rekap realisasi penerimaan spj
+
+                                }
+                                $pro_rekap_kirim=($rekap_spj_kirim/$total_target_spj)*100;
+                                $pro_rekap_terima=($rekap_spj_terima/$total_target_spj)*100;
+
+                                //warna-warni untuk pengiriman
+                                $pro_kirim=''; //inisiasi dulu
+                                if ($pro_rekap_kirim > 85) { $pro_kirim='<span class="label label-primary">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
+                                elseif ($pro_rekap_kirim > 75) { $pro_kirim='<span class="label label-warning">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
+                                else { $pro_kirim='<span class="label label-danger">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
+
+                                 //warna-warni untuk penerimaan
+                                $pro_terima=''; //inisiasi dulu
+                                if ($pro_rekap_terima > 85) { $pro_terima='<span class="label label-primary">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
+                                elseif ($pro_rekap_terima > 75) { $pro_terima='<span class="label label-warning">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
+                                else { $pro_terima='<span class="label label-danger">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
+                                
+                                echo 
+                                    '<tr>
+                                        <td colspan="2" class="text-center">Total</td>
+                                        <td class="text-right">'.$total_target_spj.'</td>
+                                        <td class="text-right">'.$rekap_spj_kirim.'</td>
+                                        <td class="text-right">'.$pro_kirim.'</td>
+                                        <td></td>
+                                        <td class="text-right">'.$rekap_spj_terima.'</td>
+                                        <td class="text-right">'.$pro_terima.'</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>';
+                            }
+                            else {
+                                echo '
+                                    <tr>
+                                        <td colspan="10">'.$r_spj["pesan_error"].'</td>
+                                    </tr>
+                                ';
+                            }
+                            ?>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
         <?php
+    }
         }
         else {
             echo '<span class="alert alert-danger">'.$r_keg["pesan_error"].'</span>';

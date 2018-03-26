@@ -68,7 +68,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="keg_jenis" class="col-sm-2 control-label">Jenis Kegiatan</label>
-                                    <div class="col-sm-4 col-lg-4">
+                                    <div class="col-sm-5 col-lg-5">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
                                         <select class="form-control" name="keg_jenis" id="keg_jenis">
@@ -121,7 +121,7 @@
                                     </div>
                             </div>
                             <div class="form-group">
-                                <label for="keg_spj" class="col-sm-2 control-label">Laporan SPJ Provinsi</label>
+                                <label for="keg_spj" class="col-sm-2 control-label">Laporan SPJ</label>
                                     <div class="col-sm-6">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
@@ -174,8 +174,8 @@
                                     for ($u=1;$u<=$bnyk_unit;$u++) {
                                         echo '<tr>
                                             <td>'.$r_bidang["item"][$u]["unit_nama"].'</td>
-                                            <td><input type="text" name="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" id="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control input-sm" placeholder="Target" /></td>
-                                            <td><input type="text" name="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" id="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control input-sm" placeholder="Target" /></td>
+                                            <td><input type="text" name="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" id="keg_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control input-sm" placeholder="....." /></td>
+                                            <td><input type="text" name="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" id="spj_kabkota['.$r_bidang["item"][$u]["unit_kode"].']" class="form-control input-sm" placeholder="....." /></td>
                                         </tr>
                                         ';
                                     }
