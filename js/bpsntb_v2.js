@@ -43,7 +43,7 @@ $(document).ready(function(){
                 user_unitkerja: "Pilih salah satu",
                 user_level: "Pilih salah satu",
                 user_id: {
-                    required: "silakan isi",
+                    required: "silakan isi user id",
                     minlength: "minimal 3 karakter"
                 },
                 user_passwd: {
@@ -57,7 +57,7 @@ $(document).ready(function(){
                 },
                 user_email: "Masukkan email yang valid",
                 user_nama: {
-                    required: "silakan isi",
+                    required: "silakan isi nama",
                     minlength: "minimal 3 karakter"
                 },
                 user_status: "silakan pilih salah satu"
@@ -65,7 +65,42 @@ $(document).ready(function(){
 
      });
 });
+$(document).ready(function(){
+     $("#formEditUser").validate({
+         rules: {
+             user_id: {
+                 required: true,
+                 minlength: 3
+             },
+             user_nama: {
+                 required: true,
+                 minlength: 3
+             },
+             user_email: {
+                 required: true,
+                 email: true
+             },
+             user_unitkerja: "required",
+             user_level: "required",
+             user_status: "required"
+         },
+         messages: {
+                user_unitkerja: "Pilih salah satu",
+                user_level: "Pilih salah satu",
+                user_id: {
+                    required: "silakan isikan user id",
+                    minlength: "minimal 3 karakter"
+                },
+                user_email: "Masukkan email yang valid",
+                user_nama: {
+                    required: "silakan isikan nama",
+                    minlength: "minimal 3 karakter"
+                },
+                user_status: "silakan pilih salah satu"
+            }
 
+     });
+});
 $(document).ready(function(){
      $("#formKegBaru").validate({
          rules: {

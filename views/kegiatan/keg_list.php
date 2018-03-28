@@ -85,7 +85,8 @@
                                 <th class="text-center">Target</th>
                                 <th class="text-center">Satuan</th>
                                 <th class="text-center">SPJ</th>
-                                <th>&nbsp;</th>
+                                <th class="text-center" width="5%">Progress Kirim</th>
+                                <th width="5%">&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -94,6 +95,36 @@
                             if ($r_keg["error"]==false) {
                             	$keg_total=$r_keg["keg_total"];
 						        for ($i=1;$i<=$keg_total;$i++) {
+                                    //progress bar 1 kegiatan
+                                    $progress_kirim=0;
+                                    $progress_terima=0;
+                                    $r_jenis=progress_kegiatan($r_keg["item"][$i]["keg_id"]);
+                                    if ($r_jenis["error"]==false) {
+                                        if ($r_jenis["jenis_total"]==1) {
+                                            if ($r_jenis["item"][1]["jenis_id"]==1) {
+                                                $jumlah_kirim=$r_jenis["item"][1]["jenis_jumlah"];
+                                                $jumlah_terima=0;
+                                            }
+                                            else {
+                                                $jumlah_kirim=0;
+                                                $jumlah_terima=$r_jenis["item"][1]["jenis_jumlah"];
+                                            }
+                                        }
+                                        else {
+                                            $jumlah_kirim=$r_jenis["item"][1]["jenis_jumlah"];
+                                            $jumlah_terima=$r_jenis["item"][2]["jenis_jumlah"];
+                                        }
+                                        
+                                    }
+                                    else {
+                                        $jumlah_kirim=0;
+                                        $jumlah_terima=0;
+                                    }
+                                    $progress_kirim=($jumlah_kirim/$r_keg["item"][$i]["keg_total_target"])*100;
+                                    $progress_terima=($jumlah_terima/$r_keg["item"][$i]["keg_total_target"])*100;
+                                    $progress_kirim=number_format($progress_kirim,2,".",",");
+                                    $progress_terima=number_format($progress_terima,2,".",",");
+                                    //batasnya
 						            echo '
 						            <tr>
 						                <td class="text-center"><span class="label label-success">'.$i.'</span></td>
@@ -103,7 +134,10 @@
 						                <td class="text-right">'.$r_keg["item"][$i]["keg_total_target"].'</td>
 						                <td>'.$r_keg["item"][$i]["keg_target_satuan"].'</td>
 						                <td>'.$StatusSPJ[$r_keg["item"][$i]["keg_spj"]].'</td>
-						                <td><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
+                                        <td class="bg-warning"> <div class="progress progress-striped active m-b-sm">
+                                                <div style="width: '.$progress_kirim.'%;" class="progress-bar"></div>
+                                            </div></td>
+						                <td class="text-center"><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
 						            </tr>
 						            ';
 						        }
@@ -124,6 +158,7 @@
                                 <th class="text-center">Target</th>
                                 <th class="text-center">Satuan</th>
                                 <th class="text-center">SPJ</th>
+                                <th class="text-center">Progress Kirim</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </tfoot>

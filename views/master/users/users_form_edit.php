@@ -40,7 +40,7 @@ $r_user=list_users($user_no,true);
                     <?php
                     if ($r_user["error"]==false) {
                     ?>
-                        <form id="formAddUser" name="formAddUser" action="<?php echo $url.'/'.$page.'/'.$act;?>/update/"  method="post" class="form-horizontal" role="form">
+                        <form id="formEditUser" name="formEditUser" action="<?php echo $url.'/'.$page.'/'.$act;?>/update/"  method="post" class="form-horizontal" role="form">
                         <fieldset>
                         <div class="form-group">
                             <label for="user_id" class="col-sm-2 control-label">ID</label>
