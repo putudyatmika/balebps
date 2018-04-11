@@ -113,15 +113,15 @@
                             ?>
                             <tr>
                                 <td rowspan="2"><strong>Progress</strong></td>
-                                <td><h5>Pengiriman <?php echo $progress_kirim;?> %</h5>
+                                <td><h5>Pengiriman</h5>
                                     <div class="progress progress-striped active m-b-sm">
-                                                <div style="width: <?php echo $progress_kirim;?>%;" class="progress-bar"></div>
+                                                <div style="width: <?php echo $progress_kirim;?>%;" class="progress-bar"><?php echo $progress_kirim;?>%</div>
                                             </div></td>
                             </tr>
                             <tr>
-                                <td><h5>Penerimaan <?php echo $progress_terima;?> %</h5>
+                                <td><h5>Penerimaan</h5>
                                     <div class="progress progress-striped active">
-                                                <div style="width: <?php echo $progress_terima;?>%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" role="progressbar" class="progress-bar progress-bar-success"></div>
+                                                <div style="width: <?php echo $progress_terima;?>%;" aria-valuemax="100" aria-valuemin="<?php echo $progress_terima;?>" role="progressbar" class="progress-bar progress-bar-success"><?php echo $progress_terima;?>%</div>
                                             </div></td>
                             </tr>
                             <?php
