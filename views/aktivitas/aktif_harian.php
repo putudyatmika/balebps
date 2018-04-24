@@ -130,7 +130,7 @@ else { $thn_pilih=date("Y"); }
                                             }
                                             else {
                                                 echo '<tr>
-                                                <td colspan="4"><span class="label label-danger">Tanpa keterangan</span></td>
+                                                <td colspan="4"><span class="label label-danger">'.$r_list["pesan_error"].'</span></td>
                                                 </tr>';
                                                 }
                                         }
@@ -173,11 +173,21 @@ else { $thn_pilih=date("Y"); }
                             </thead>
                             <tbody>
                             <?php
+                            $unit_kode=$_SESSION['sesi_peg_unitkerja'];
+                            $unit_eselon=$_SESSION['sesi_peg_uniteselon'];
+                            if ($_SESSION['sesi_peg_jabatan']==1 and $_SESSION['sesi_peg_uniteselon']<=3) {
+                                //kepala bidang/bps 
+                                $r_peg=list_bawahan_pegawai($unit_kode,false,$unit_eselon);
+                            }
+                            else {
+                                //untuk kasie
+                                $r_peg=list_bawahan_pegawai($unit_kode,true,$unit_eselon);
+                            }
                             $tgl_awalku = strtotime($thn_pilih.'-'.$bln_pilih.'-1');
                             $tgl_akhir = date("Y-m-t",$tgl_awalku);
                             $tgl_awal = date("Y-m-d",$tgl_awalku);
                             $tgl_n=date("d",strtotime($tgl_akhir));
-                            $peg_id=$_SESSION["sesi_peg_id"];
+                            //$peg_id=$_SESSION["sesi_peg_id"];
                             for ($j = 0; $j < $tgl_n; $j++) {
                                     //$timestamp = time();
                                     $timestamp = strtotime($tgl_akhir);
@@ -201,7 +211,34 @@ else { $thn_pilih=date("Y"); }
                                                 </tr>';
                                         }
                                         else {
-                                           
+                                           //ada hari kerja dan kegiatan
+                                            //check error bawahannya
+                                            if ($r_peg["error"]==false) {
+                                                $jml_peg=$r_peg["peg_total"];
+                                                for ($p=1;$p<=$jml_peg;$p++) {
+                                                    $r_keg_peg=list_aktivitas_harian(0,$tgl_dipilih,false,$r_peg["item"][$p]["peg_id"]);
+                                                    if ($r_keg_peg["error"]==false) {
+                                                        $total_keg='<span class="label label-primary">'.$r_keg_peg["aktif_total"].'</span>';
+                                                    }
+                                                    else {
+                                                        $total_keg='<span class="label label-danger">0</span>';
+                                                    }
+                                                     echo '<tr>
+                                                        <td>'.$r_peg["item"][$p]["peg_nama"].'</td>
+                                                        <td>'.$JenisJabatan[$r_peg["item"][$p]["peg_jabatan"]].' '.$r_peg["item"][$p]["unit_nama"].'</td>
+                                                        <td>'.$total_keg.'</td>
+                                                        <td></td>
+                                                        </tr>';   
+                                                }
+                                                
+                                            }
+                                            else {
+                                                //tidak ada bawahan
+                                                echo '<tr>
+                                                <td colspan="4"><span class="label label-danger">'.$r_peg["pesan_error"].'</span></td>
+                                                </tr>';
+                                            }
+                                            
                                         }
                                     }
                             }

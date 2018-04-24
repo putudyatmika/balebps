@@ -102,7 +102,7 @@
                     <ul class="nav nav-second-level collapse">
                         <li><a href="<?php echo $url; ?>/aktivitas/add/">Tambah Data</a></li>
                         <li><a href="<?php echo $url; ?>/aktivitas/harian/">Rekap Harian</a></li>
-                        <li><a href="<?php echo $url; ?>/aktivitas/bulanan/">Rekap Pegawai</a></li>
+                        <?php if ($_SESSION['sesi_peg_jabatan']==1) { ?><li><a href="<?php echo $url; ?>/aktivitas/bulanan/">Rekap Pegawai</a></li> <?php } ?>
                         <li><a href="<?php echo $url; ?>/aktivitas/">Semua</a></li>
                         
                     </ul>
