@@ -1,7 +1,7 @@
 <?php
 //$url='http://192.168.1.9/balebps';
-$url='http://10.52.6.31/balebps';
-//$url='http://localhost/balentb';
+//$url='http://10.52.6.31/balebps';
+$url='http://localhost/balebps';
 //Setting Database
 
 define('db_name','ntbkeg');

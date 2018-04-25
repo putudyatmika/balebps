@@ -75,7 +75,13 @@ $_SESSION['sesi_passwd_ori'] .'<br />'.
 $_SESSION['sesi_nama'] .'<br />'.
 $_SESSION['sesi_level'] .'<br />'.
 $_SESSION['sesi_unitkerja'].'<br />'.
-$_SESSION['sesi_provkab'];
+$_SESSION['sesi_provkab'].'<br />'.
+$_SESSION['sesi_peg_id'].'<br />'.
+'sesi_peg_unitkerja : '.$_SESSION['sesi_peg_unitkerja'].'<br />'.
+'sesi_peg_jabatan : '.$_SESSION['sesi_peg_jabatan'].'<br />'.
+'sesi_peg_unitnama : '.$_SESSION['sesi_peg_unitnama'].'<br />'.
+'sesi_peg_unitparent : '.$_SESSION['sesi_peg_unitparent'].'<br />'.
+'sesi_peg_uniteselon : '.$_SESSION['sesi_peg_uniteselon'];
 echo '<br />';
 echo 'URL asli : '.$_SERVER["REQUEST_URI"];
 echo '<br />Url DB : '.$url_db[2].'<br />URL server : '.$_SERVER['HTTP_HOST'];
