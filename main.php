@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Bli Mika - I Putu Dyatmika <pdyatmika@gmail.com>">
 	<meta name="language" content="id,en" />
-    <title>Sistem Monitoring BPS Provinsi Nusa Tenggara Barat</title>
+    <title>Sistem Monitoring Kegiatan Online - BPS Provinsi Nusa Tenggara Barat</title>
     <link href="<?php echo $url; ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/animate.css" rel="stylesheet">
@@ -85,45 +85,12 @@
                         <li><a href="<?php echo $url; ?>/laporan/kabkota/">Kabupaten/Kota</a></li>
                     </ul>
                 </li>
-                <?php if ($_SESSION['sesi_provkab']==1) { ?>
-                <li <?php if ($page=='absen') { echo $link_aktif; } ?>>
-                    <a href="<?php echo $url; ?>/absen/"><i class="fa fa-address-book-o"></i> <span class="nav-label">Absen</span><span class="label label-info pull-right">NEW</span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="<?php echo $url; ?>/absen/add/">Tambah Absen</a></li>
-                        <li><a href="<?php echo $url; ?>/absen/harian/">Rekap Harian</a></li>
-                        <li><a href="<?php echo $url; ?>/absen/bulanan/">Rekap Bulanan</a></li>
-                        <li><a href="<?php echo $url; ?>/absen/">Semua</a></li>
-                        
-                    </ul>
-                </li>
-                <?php if ($_SESSION['sesi_peg_id']>0) { ?>
-				<li <?php if ($page=='aktivitas') { echo $link_aktif; } ?>>
-                    <a href="<?php echo $url; ?>/aktivitas/"><i class="fa fa-briefcase"></i> <span class="nav-label">Aktivitas Harian</span><span class="label label-warning pull-right">NEW</span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="<?php echo $url; ?>/aktivitas/add/">Tambah Data</a></li>
-                        <li><a href="<?php echo $url; ?>/aktivitas/harian/">Rekap Harian</a></li>
-                        <?php if ($_SESSION['sesi_peg_jabatan']==1) { ?><li><a href="<?php echo $url; ?>/aktivitas/bulanan/">Rekap Pegawai</a></li> <?php } ?>
-                        <li><a href="<?php echo $url; ?>/aktivitas/">Semua</a></li>
-                        
-                    </ul>
-                </li>
-                <?php } 
-                 }
+                <?php 
                 if ($_SESSION['sesi_level']>=4) { ?>
                 <li <?php if ($page=='master') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/master/"><i class="fa fa-asterisk"></i> <span class="nav-label">Master</span></a>
                     <ul class="nav nav-second-level collapse">
-                       <li>
-                            <a href="<?php echo $url; ?>/master/pegawai/">Pegawai <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="<?php echo $url; ?>/master/pegawai/add/">Tambah data</a>
-                                </li>
-                                 <li>
-                                    <a href="<?php echo $url; ?>/master/pegawai/">List data</a>
-                                </li>
-                            </ul>
-                        </li>
+                       
                         <li>
                             <a href="<?php echo $url; ?>/master/users/">Users <span class="fa arrow"></span></a> 
                             <ul class="nav nav-third-level">
@@ -146,8 +113,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="<?php echo $url; ?>/master/absen/">Absen</a></li>
-                         <li><a href="<?php echo $url; ?>/master/aktivitas/">Aktifitas</a></li>
+                       
                         <li><a href="<?php echo $url; ?>/master/">Semua</a></li>
                         
                     </ul>
@@ -167,7 +133,7 @@
             </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Sistem Monitoring BPS Provinsi Nusa Tenggara Barat</span>
+                    <span class="m-r-sm text-muted welcome-message">Sistem Monitoring Kegiatan Online - BPS Provinsi Nusa Tenggara Barat</span>
                 </li>
                 
                 <li>

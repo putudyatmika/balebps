@@ -56,8 +56,16 @@
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-condensed">
                             <tr>
-                                <td class="col-lg-2 col-xs-3"><strong>Unit kerja</strong></td>
+                                <td class="col-lg-2 col-xs-3"><strong>Bidang/Bagian</strong></td>
+                                <td class="col-lg-10 col-xs-9"><?php echo get_nama_unit($r_keg["item"][1]["keg_unitparent"]); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-2 col-xs-3"><strong>Seksi Unit kerja</strong></td>
                                 <td class="col-lg-10 col-xs-9"><?php echo $r_keg["item"][1]["keg_unitnama"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tipe Kegiatan</strong></td>
+                                <td><?php echo $KegiatanTipe[$r_keg["item"][1]["keg_tipe"]]; ?></td>
                             </tr>
                             <tr>
                                 <td><strong>Jenis Kegiatan</strong></td>

@@ -313,7 +313,8 @@ function list_kegiatan($keg_id,$detil=false,$before=false,$bulan_keg,$tahun_keg)
 				"keg_info"=>$r->keg_info,
 				"keg_unitnama"=>$r->unit_nama,
 				"keg_unitjenis"=>$r->unit_jenis,
-				"keg_unitparent"=>$r->unit_parent
+				"keg_unitparent"=>$r->unit_parent,
+				"keg_tipe"=>$r->keg_tipe
 			);
 			$i++;
 		}
@@ -375,7 +376,8 @@ function list_kegiatan_bidang($unit_kode,$bulan_keg,$tahun_keg) {
 				"keg_info"=>$r->keg_info,
 				"keg_unitnama"=>$r->unit_nama,
 				"keg_unitjenis"=>$r->unit_jenis,
-				"keg_unitparent"=>$r->unit_parent
+				"keg_unitparent"=>$r->unit_parent,
+				"keg_tipe"=>$r->keg_tipe
 			);
 			$i++;
 		}
@@ -549,12 +551,12 @@ function get_id_kegiatan($NamaKegiatan,$waktu_save,$pembuat) {
 	$conn_keg->close();
 	}
 
-function save_kegiatan($nama_kegiatan,$keg_unitkerja,$keg_tglmulai,$keg_tglakhir,$keg_jenis,$keg_t,$keg_satuan,$keg_spj) {
+function save_kegiatan($nama_kegiatan,$keg_unitkerja,$keg_tglmulai,$keg_tglakhir,$keg_jenis,$keg_t,$keg_satuan,$keg_spj,$keg_tipe) {
 	$waktu_lokal=date("Y-m-d H:i:s");
     $created=$_SESSION['sesi_user_id'];
 	$db_keg = new db();
 	$conn_keg = $db_keg -> connect();
-	$sql_save_kegiatan=$conn_keg->query("insert into kegiatan(keg_nama, keg_unitkerja, keg_start, keg_end, keg_dibuat_oleh, keg_dibuat_waktu, keg_diupdate_oleh, keg_jenis, keg_total_target, keg_target_satuan, keg_spj) values('$nama_kegiatan', '$keg_unitkerja', '$keg_tglmulai', '$keg_tglakhir', '$created', '$waktu_lokal', '$created', '$keg_jenis', '$keg_t', '$keg_satuan','$keg_spj')") or die(mysqli_error($conn_keg));
+	$sql_save_kegiatan=$conn_keg->query("insert into kegiatan(keg_nama, keg_unitkerja, keg_start, keg_end, keg_dibuat_oleh, keg_dibuat_waktu, keg_diupdate_oleh, keg_jenis, keg_total_target, keg_target_satuan, keg_spj,keg_tipe) values('$nama_kegiatan', '$keg_unitkerja', '$keg_tglmulai', '$keg_tglakhir', '$created', '$waktu_lokal', '$created', '$keg_jenis', '$keg_t', '$keg_satuan','$keg_spj','$keg_tipe')") or die(mysqli_error($conn_keg));
 	$data_keg=array("error"=>false);
 	if ($sql_save_kegiatan) {
 		$data_keg["error"]=false;

@@ -30,6 +30,7 @@ $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
 $TahunDefault=date('Y');
 $StatusSPJ=array(1=>'<span class="label label-success">Ya</span',2=>'<span class="label label-danger">Tidak</span>');
 $JudulPage=array("kegiatan"=>"Semua Kegiatan","unitkerja"=>"Kegiatan Menurut Unit Kerja","laporan"=>"Laporan Kegiatan","master"=>"Master Sistem","logout"=>"Logout dari Sistem","absen"=>"Absensi Pegawai","aktivitas"=>"Aktivitas Harian Pegawai");
+$KegiatanTipe=array(1=>'Provinsi',2=>'Kabupaten');
 //pengaturan absen
 $JamMasuk='07:30:00';
 $JamPulang='16:00:00';

@@ -138,7 +138,33 @@
                                     </div>
                                     </div>
                             </div>
-                           
+                            <div class="form-group">
+                                <label for="keg_target_spj" class="col-sm-2 control-label">Total Target SPJ</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+                                    <input type="text" name="keg_target_spj" id="keg_target_spj" class="form-control spj_target_total" placeholder="Total Target SPJ" />
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="keg_tipe" class="col-sm-2 control-label">Tipe Kegiatan</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+                                    <select class="form-control" name="keg_tipe" id="keg_tipe">
+                                            <option value="">Pilih</option>
+                                            <?php
+                                            $i=0;
+                                            for ($i=1;$i<=2;$i++)
+                                                {
+                                                    echo '<option value="'.$i.'">'.$KegiatanTipe[$i].'</option>';
+                                                }
+                                            ?>
+                                            </select>
+                                    </div>
+                                    </div>
+                            </div>
                             
                     
                     </div>
