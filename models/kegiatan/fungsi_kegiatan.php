@@ -618,4 +618,131 @@ function save_target_spj($keg_id,$kabkota_id,$target_spj,$unit_nama) {
 	return $data_keg;
 	$conn_keg->close();	
 }
+function save_konfirmasi_pengiriman($keg_id,$kabkota_id,$tgl_kirim,$jumlah_kirim,$ket_kirim,$link_kirim) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$created=$_SESSION['sesi_user_id'];
+	$unit_nama=get_nama_unit($kabkota_id);
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	//cek id kegiatan dulu
+	$sql_cek_keg_id=$conn_keg -> query("select * from kegiatan where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+	$cek_keg=$sql_cek_keg_id->num_rows;
+	if ($cek_keg>0) {
+		//keg_id tersedia
+		$sql_keg_kabkota = $conn_keg -> query("insert into keg_detil(keg_id, keg_d_unitkerja, keg_d_tgl, keg_d_jumlah, keg_d_jenis, keg_d_ket, keg_d_dibuat_oleh, keg_d_dibuat_waktu, keg_d_diupdate_oleh,keg_d_link_laci) value('$keg_id', '$kabkota_id', '$tgl_kirim', '$jumlah_kirim', '1', '$ket_kirim', '$created', '$waktu_lokal', '$created','$link_kirim')") or die(mysqli_error($conn_keg));
+		if ($sql_keg_kabkota) {
+			$data_keg["error"]=false;
+			$data_keg["pesan_error"]='Data konfirmasi pengiriman dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$jumlah_kirim.'</strong> tersimpan';
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='Data konfirmasi pengiriman tidak tersimpan';
+		}
+	}
+	else {
+		//keg_id tidak tersedia
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data kegiatan ini tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
+function save_konfirmasi_penerimaan($keg_id,$keg_d_unitkerja,$keg_d_tgl,$keg_d_jumlah) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$created=$_SESSION['sesi_user_id'];
+	$unit_nama=get_nama_unit($keg_d_unitkerja);
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	//cek id kegiatan dulu
+	$sql_cek_keg_id=$conn_keg -> query("select * from kegiatan where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+	$cek_keg=$sql_cek_keg_id->num_rows;
+	if ($cek_keg>0) {
+		//keg_id tersedia
+		$sql_keg_kabkota = $conn_keg -> query("insert into keg_detil(keg_id, keg_d_unitkerja, keg_d_tgl, keg_d_jumlah, keg_d_jenis, keg_d_dibuat_oleh, keg_d_dibuat_waktu, keg_d_diupdate_oleh, keg_d_ket) value('$keg_id', '$keg_d_unitkerja', '$keg_d_tgl', '$keg_d_jumlah', '2', '$created', '$waktu_lokal', '$created','$created')") or die(mysqli_error($conn_keg));
+		if ($sql_keg_kabkota) {
+			$r_nilai=get_nilai_kegiatan($keg_id,$keg_d_unitkerja);
+			if ($r_nilai["error"]==false) {
+				$data_keg["error"]=false;
+				$data_keg["error_nilai"]=false;
+				$data_keg["pesan_error"]='Data konfirmasi pengiriman dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> tersimpan';
+				$data_keg["pesan_error_nilai"]='Data nilai dari <strong>'.$unit_nama.'</strong> berhasil diupdate';
+			}
+			else {
+				$data_keg["error"]=false;
+				$data_keg["error_nilai"]=true;
+				$data_keg["pesan_error"]='Data konfirmasi pengiriman dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> tersimpan';
+				$data_keg["pesan_error_nilai"]='Data nilai dari <strong>'.$unit_nama.'</strong> tidak berhasil diupdate';
+			}
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='Data konfirmasi pengiriman tidak tersimpan';
+		}
+	}
+	else {
+		//keg_id tidak tersedia
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data kegiatan ini tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
+function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select * from keg_detil left join kegiatan on kegiatan.keg_id=keg_detil.keg_id where kegiatan.keg_id='$keg_id' and keg_detil.keg_d_unitkerja='$keg_unitkerja' and keg_d_jenis=2 order by keg_d_tgl asc") or die(mysqli_error($conn_keg));
+	$cek=$sql_d_keg->num_rows;
+	$keg_nilai=array("error"=>false);
+	if ($cek>0) {
+		$nilai_waktu=0;
+		$nilai_volume=0;
+		$nilai_vol=0;
+		$keg_nilai["error"]=false;
+		
+		while ($r=$sql_d_keg->fetch_object()) {
+			$nilai_vol+=$r->keg_d_jumlah;
+			$target_waktu = new DateTime($r->keg_end);
+			$pengiriman = new DateTime($r->keg_d_tgl);
+			$interval = $pengiriman->diff($target_waktu);
+			$int=$interval->format('%r%a');
+
+			if ($int>=1) $nilai_wkt=5;
+			elseif ($int>=0) $nilai_wkt=4;
+			elseif ($int>=-1) $nilai_wkt=3;
+			elseif ($int>=-2) $nilai_wkt=2;
+			elseif ($int>=-3) $nilai_wkt=1;
+			else $nilai_wkt=0;
+
+			$nilai_waktu+=$nilai_wkt;
+		}
+		$sql_ambil_target = $conn_keg -> query("select * from keg_target where keg_id='$keg_id' and keg_t_unitkerja='$keg_unitkerja'") or die(mysqli_error($conn_keg));
+		$t=$sql_ambil_target->fetch_object();
+		//hitungannya
+		$nilai_waktu=($nilai_waktu/$cek);
+		$persen_vol=($nilai_vol/$t->keg_t_target)*100;
+		if ($persen_vol>94) $nilai_volume=5;
+		elseif ($persen_vol>89) $nilai_volume=3;
+		elseif ($persen_vol>85) $nilai_volume=1;
+		else $nilai_volume=0;
+		$nilai_total=($nilai_volume*0.70)+($nilai_waktu*0.30);
+		//$keg_nilai=array($nilai_waktu,$nilai_volume,$nilai_total);
+		$sql_update_nilai=$conn_keg -> query("update keg_target set keg_t_point_waktu='$nilai_waktu', keg_t_point_jumlah='$nilai_volume', keg_t_point='$nilai_total' where keg_id='$keg_id' and keg_t_unitkerja='$keg_unitkerja'") or die(mysqli_error($conn_keg));
+		if ($sql_update_nilai) {
+			$keg_nilai["error"]=false;
+			$keg_nilai["pesan_error"]='Data nilai <strong>berhasil</strong> di update';
+		}
+		else {
+			$keg_nilai["error"]=false;
+			$keg_nilai["pesan_error"]='Data nilai <strong>tidak berhasil</strong> di update';
+		}		
+	}
+	else {
+		$keg_nilai["error"]=true;
+		$keg_nilai["pesan_error"]='Data nilai tidak tersedia';
+	}
+	return $keg_nilai;
+	$conn_keg->close();
+}
 ?>

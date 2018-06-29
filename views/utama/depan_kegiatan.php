@@ -6,6 +6,8 @@
         <th class="text-center">Kegiatan</th>
         <th class="text-center">Target</th>
         <th class="text-center">Batas Waktu</th>
+        <th class="text-center">Kirim</th>
+        <th class="text-center">Terima</th>
     </tr>
     </thead>
     <tbody>
@@ -19,7 +21,9 @@
                 <td class="text-center"><span class="label label-success">'.$i.'</span></td>
                 <td class="text-left"><a href="'.$url.'/kegiatan/view/'.$r_keg["item"][$i]["keg_id"].'">'.$r_keg["item"][$i]["keg_nama"].'</a></td>
                 <td class="text-right">'.$r_keg["item"][$i]["keg_total_target"].' '.$r_keg["item"][$i]["keg_target_satuan"].'</td>
-                <td class="text-right"><span class="label label-primary">'.tgl_convert_pendek_bulan(1,$r_keg["item"][$i]["keg_end"]).'</span></td>
+                <td class="text-right">'.tgl_convert_bln(1,$r_keg["item"][$i]["keg_end"]).'</td>
+                <td></td>
+                <td></td>
             </tr>
             ';
         }

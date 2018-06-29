@@ -5,7 +5,7 @@ $tahun_keg=date('Y');
 <div class="wrapper wrapper-content">
 	<?php include 'views/utama/depan_widget.php'; ?>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-success pull-right"></span>
@@ -16,6 +16,8 @@ $tahun_keg=date('Y');
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-lg-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">

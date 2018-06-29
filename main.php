@@ -28,6 +28,9 @@
     <link href="<?php echo $url; ?>/css/plugins/select2/select2.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="<?php echo $url; ?>/img/bps.ico">
     <script src="<?php echo $url; ?>/js/jquery-3.1.1.min.js"></script>
+    <style>
+        .modal_tanggal {z-index:1600 !important;}
+    </style>
 </head>
 
 <body>
@@ -65,9 +68,9 @@
                 <li <?php if ($page=='kegiatan') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/kegiatan/"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Kegiatan</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-						<li><a href="<?php echo $url; ?>/kegiatan/add">Tambah Kegiatan</a></li>
+						<li><a href="<?php echo $url; ?>/kegiatan/add/">Tambah Kegiatan</a></li>
                         <li><a href="<?php echo $url; ?>/kegiatan/bidang/">Bidang/Bagian</a></li>
-                        <li><a href="<?php echo $url; ?>/kegiatan">Semua</a></li>
+                        <li><a href="<?php echo $url; ?>/kegiatan/">Semua</a></li>
                     </ul>
                 </li>
                
@@ -284,16 +287,7 @@
             });
 
         });
-        $('#tanggal_data input').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-             format: "yyyy-mm-dd",
-           todayHighlight: true,
-           autoclose: true
-
-        });
+        
 
          $('.deletesaja').click(function () {
             swal({

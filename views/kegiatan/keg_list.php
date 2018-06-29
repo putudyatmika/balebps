@@ -140,14 +140,14 @@
 						                <td class="text-left"><a href="'.$url.'/kegiatan/view/'.$r_keg["item"][$i]["keg_id"].'">'.$r_keg["item"][$i]["keg_nama"].'</a></td>
                                         <td>'.$r_keg["item"][$i]["keg_unitnama"].'</td>
                                         <td>'.$kegiatan_tipe.'</td>
-						                <td class="text-right"><span class="label label-primary">'.tgl_convert_pendek_bulan(1,$r_keg["item"][$i]["keg_end"]).'</span></td>
+						                <td class="text-right">'.tgl_convert_bln(1,$r_keg["item"][$i]["keg_end"]).'</td>
 						                <td class="text-right">'.$r_keg["item"][$i]["keg_total_target"].'</td>
 						                <td>'.$r_keg["item"][$i]["keg_target_satuan"].'</td>
 						                <td>'.$StatusSPJ[$r_keg["item"][$i]["keg_spj"]].'</td>
                                         <td class="bg-warning"> <div class="progress progress-striped active m-b-sm">
                                                 <div style="width: '.$progress_kirim.'%;" class="progress-bar"></div>
                                             </div></td>
-						                <td class="text-center"><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
+						                <td class="text-center"><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
 						            </tr>
 						            ';
 						        }

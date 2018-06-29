@@ -98,6 +98,7 @@
                                 <th class="text-center">Kegiatan</th>
                                 <th class="text-center">Bidang/Bagian</th>
                                 <th class="text-center">Seksi</th>
+                                <th class="text-center">Tipe</th>
                                 <th class="text-center">Tanggal Berakhir</th>
                                 <th class="text-center">Target</th>
                                 <th class="text-center">Satuan</th>
@@ -142,13 +143,23 @@
                                     $progress_kirim=number_format($progress_kirim,2,".",",");
                                     $progress_terima=number_format($progress_terima,2,".",",");
                                     //batasnya
+                                     //tipe kegiatan
+                                     if ($r_keg["item"][$i]["keg_tipe"]==1) {
+                                        //provinsi
+                                        $kegiatan_tipe='<span class="label label-primary">'.$KegiatanTipe[$r_keg["item"][$i]["keg_tipe"]].'</span>';
+                                    }
+                                    else {
+                                        $kegiatan_tipe='<span class="label label-danger">'.$KegiatanTipe[$r_keg["item"][$i]["keg_tipe"]].'</span>';
+                                    }
+                                    //batasnya
 						            echo '
 						            <tr>
 						                <td class="text-center"><span class="label label-success">'.$i.'</span></td>
 						                <td class="text-left"><a href="'.$url.'/kegiatan/view/'.$r_keg["item"][$i]["keg_id"].'">'.$r_keg["item"][$i]["keg_nama"].'</a></td>
 						                <td>'.get_nama_unit($r_keg["item"][$i]["keg_unitparent"]).'</td>
                                         <td>'.$r_keg["item"][$i]["keg_unitnama"].'</td>
-						                <td class="text-right"><span class="label label-primary">'.tgl_convert_pendek_bulan(1,$r_keg["item"][$i]["keg_end"]).'</span></td>
+                                        <td>'.$kegiatan_tipe.'</td>
+						                <td class="text-right">'.tgl_convert_bln(1,$r_keg["item"][$i]["keg_end"]).'</td>
 						                <td class="text-right">'.$r_keg["item"][$i]["keg_total_target"].'</td>
 						                <td>'.$r_keg["item"][$i]["keg_target_satuan"].'</td>
 						                <td>'.$StatusSPJ[$r_keg["item"][$i]["keg_spj"]].'</td>
@@ -169,13 +180,16 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th class="text-center">No</th>
+                            <th class="text-center" width="3%">No</th>
                                 <th class="text-center">Kegiatan</th>
-                                <th class="text-center">Unit Kerja</th>
+                                <th class="text-center">Bidang/Bagian</th>
+                                <th class="text-center">Seksi</th>
+                                <th class="text-center">Tipe</th>
                                 <th class="text-center">Tanggal Berakhir</th>
                                 <th class="text-center">Target</th>
                                 <th class="text-center">Satuan</th>
                                 <th class="text-center">SPJ</th>
+                                <th class="text-center">Progress</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </tfoot>

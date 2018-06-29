@@ -89,7 +89,7 @@
                                     <div class="col-sm-5" id="tanggal_data">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                    <input type="text" name="keg_tglmulai" id="keg_tglmulai" class="form-control" placeholder="Format : YYYY-MM-DD" />
+                                    <input type="text" name="keg_tglmulai" id="keg_tglmulai" class="form-control" autocomplete="off" placeholder="Format : YYYY-MM-DD" />
                                     </div>
                                     </div>
                             </div>
@@ -98,7 +98,7 @@
                                     <div class="col-sm-5" id="tanggal_data">
                                         <div class="input-group margin-bottom-sm">
                                     <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                    <input type="text" name="keg_tglakhir" id="keg_tglakhir" class="form-control" placeholder="Format : YYYY-MM-DD" />
+                                    <input type="text" name="keg_tglakhir" id="keg_tglakhir" class="form-control" autocomplete="off" placeholder="Format : YYYY-MM-DD" />
                                     </div>
                                     </div>
                             </div>
