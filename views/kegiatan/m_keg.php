@@ -29,6 +29,18 @@ elseif ($act=='delete') {
 elseif ($act=='bidang') {
 	include 'views/kegiatan/keg_list_bidang.php';
 }
+elseif ($act=='savekirim') {
+	include 'views/kegiatan/keg_save_kirim.php';
+}
+elseif ($act=='saveterima') {
+	include 'views/kegiatan/keg_save_terima.php';
+}
+elseif ($act=='updatekirim') {
+	include 'views/kegiatan/keg_update_kirim.php';
+}
+elseif ($act=="deletedetil" and $_SESSION['sesi_level'] > 1) {
+	include 'views/kegiatan/keg_delete_detil.php';
+}
 else {
 	include 'views/kegiatan/keg_list.php';
 }

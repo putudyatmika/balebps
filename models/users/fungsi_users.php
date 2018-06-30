@@ -211,10 +211,10 @@ function list_users($user_no,$detil=false) {
 	$db_users = new db();
 	$conn_users = $db_users -> connect();
 	if ($detil==true) {
-		$sql_users = $conn_users -> query("select users.*, unitkerja.unit_nama,unitkerja.unit_jenis,m_pegawai.peg_id,m_pegawai.peg_no from users left join unitkerja on users.user_unitkerja=unitkerja.unit_kode left join m_pegawai on users.user_no=m_pegawai.peg_user_no where user_no='".$user_no."'");
+		$sql_users = $conn_users -> query("select users.*, unitkerja.unit_nama,unitkerja.unit_jenis from users left join unitkerja on users.user_unitkerja=unitkerja.unit_kode where user_no='".$user_no."'");
 	}
 	else {
-		$sql_users = $conn_users -> query("select users.*, unitkerja.unit_nama,unitkerja.unit_jenis,m_pegawai.peg_id,m_pegawai.peg_no from users left join unitkerja on users.user_unitkerja=unitkerja.unit_kode left join m_pegawai on users.user_no=m_pegawai.peg_user_no order by users.user_unitkerja asc, users.user_lastlogin desc");
+		$sql_users = $conn_users -> query("select users.*, unitkerja.unit_nama,unitkerja.unit_jenis from users left join unitkerja on users.user_unitkerja=unitkerja.unit_kode order by users.user_unitkerja asc, users.user_lastlogin desc");
 	}
 	$cek_users = $sql_users->num_rows;
 	$users_list=array("error"=>false);
@@ -239,9 +239,7 @@ function list_users($user_no,$detil=false) {
 				"user_diupdate_oleh"=>$r->user_diupdate_oleh,
 				"user_level"=>$r->user_level,
 				"unit_nama"=>$r->unit_nama,
-				"unit_jenis"=>$r->unit_jenis,
-				"peg_id"=>$r->peg_id,
-				"peg_no"=>$r->peg_no
+				"unit_jenis"=>$r->unit_jenis
 			);
 			$i++;
 		}

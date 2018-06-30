@@ -52,12 +52,20 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                    <?php echo  '<h2>'.$r_keg["item"][1]["keg_nama"].'</h2>'; ?>
+                    <?php echo  '<h2><strong>'.$r_keg["item"][1]["keg_nama"].'</strong></h2>'; ?>
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-condensed">
                             <tr>
-                                <td class="col-lg-2 col-xs-3"><strong>Unit kerja</strong></td>
-                                <td class="col-lg-10 col-xs-9"><?php echo $r_keg["item"][1]["keg_unitnama"]; ?></td>
+                                <td class="col-lg-2 col-xs-3"><strong>Bidang/Bagian</strong></td>
+                                <td class="col-lg-10 col-xs-9"><?php echo '['.$r_keg["item"][1]["keg_unitparent"].'] '.get_nama_unit($r_keg["item"][1]["keg_unitparent"]); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-2 col-xs-3"><strong>Seksi Unit kerja</strong></td>
+                                <td class="col-lg-10 col-xs-9"><?php echo '['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tipe Kegiatan</strong></td>
+                                <td><?php echo $KegiatanTipe[$r_keg["item"][1]["keg_tipe"]]; ?></td>
                             </tr>
                             <tr>
                                 <td><strong>Jenis Kegiatan</strong></td>
@@ -147,8 +155,8 @@
                                 echo '
                                   <tr>
                                         <td></td>
-                                        <td><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][1]["keg_id"].'"><i class="fa fa-2x fa-pencil-square text-info" aria-hidden="true"></i></a>
-                                         <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][1]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?"><i class="fa fa-2x fa-trash-o text-danger" aria-hidden="true"></i></a>
+                                        <td><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][1]["keg_id"].'" class="btn btn-success btn-rounded btn-sm" data-toggle="tooltip" data-placement="top" title="Edit kegiatan"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+                                         <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][1]["keg_id"].'" class="btn btn-danger btn-rounded btn-sm" data-confirm="Apakah data ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus kegiatan ini"><i class="fa fa-trash-o" aria-hidden="true"></i> Hapus</a>
 
                                         </td>
                                     </tr>';
@@ -206,7 +214,10 @@
                                         $jml_kirim=$r_detil_kirim["detil_total"];
                                         $detil_target=0;
                                         for ($k=1;$k<=$jml_kirim;$k++) {
-                                            $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="'.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="label label-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/editkirim/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-toggle="tooltip" data-placement="top" title="Edit Pengiriman"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Pengiriman"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></p>';
+                                            $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="'.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="label label-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/updatekirim/" data-toggle="tooltip" data-placement="top" title="Edit Pengiriman" class="btn btn-primary btn-rounded btn-xs" 
+                                            data-editkirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'.$r_detil_kirim["item"][$k]["detil_id"].';'.$r_detil_kirim["item"][$k]["detil_jumlah"].';'.$r_detil_kirim["item"][$k]["detil_tanggal"].';'.$r_detil_kirim["item"][$k]["detil_ket"].';'.$r_detil_kirim["item"][$k]["detil_link_laci"].'">
+                                            
+                                            <i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Pengiriman" class="btn btn-danger btn-rounded btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i></a></p>';
                                             $detil_target+=$r_detil_kirim["item"][$k]["detil_jumlah"];
                                         }
                                         //label persentase rincian
@@ -218,6 +229,7 @@
                                     else {
                                         $detil_kirim='';
                                         $d_k_persen=0;
+                                        $detil_target=0;
                                         $k_persen='<span class="label label-danger">'.number_format($d_k_persen,2,".",",").' %</span>';
                                     }
 
@@ -240,6 +252,7 @@
                                     else {
                                         $detil_terima='';
                                         $d_t_persen=0;
+                                        $detil_target_terima=0;
                                         $t_persen='<span class="label label-danger">'.number_format($d_t_persen,2,".",",").' %</span>';
                                     }
 
@@ -250,10 +263,10 @@
                                             <td class="text-right">'.$r_target["item"][$i]["target_jumlah"].'</td>
                                             <td class="text-right">'.$detil_kirim.'</td>
                                             <td class="text-right">'.$k_persen.'</td>
-                                            <td class="text-center"><a href="#" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+                                            <td class="text-center"><a href="'.$url.'/'.$page.'/savekirim/" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman" data-kirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target.'"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
                                             <td class="text-right">'.$detil_terima.'</td>
                                             <td class="text-right">'.$t_persen.'</td>
-                                            <td class="text-center"><a href="#" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+                                            <td class="text-center"><a href="'.$url.'/'.$page.'/saveterima/" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan" data-terima="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target_terima.'"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
                                             <td class="text-right">'.$r_target["item"][$i]["target_poin_total"].'</td>
                                         </tr>
                                     ';

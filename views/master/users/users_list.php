@@ -47,7 +47,6 @@
                         <th class="text-center">Status</th>
                         <th class="text-center">Login</th>
                         <th class="text-center">IP</th>
-                        <th class="text-center">Peg ID</th>
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
@@ -63,18 +62,7 @@
                             else {
                                 $lastlog_user=tgl_convert_waktu_pendek(1,$r_user["item"][$i]["user_lastlogin"]);
                             }
-                            if ($r_user["item"][$i]["unit_jenis"]==1) {
-                                if ($r_user["item"][$i]["peg_id"]==NULL) {
-                                    $link_peg_id='<a href="'.$url.'/master/pegawai/add/'.$r_user["item"][$i]["user_no"].'" class="btn btn-success btn-xs">Add</a>';
-                                }
-                                else {
-                                    //ada peg_id
-                                    $link_peg_id='<a href="'.$url.'/master/pegawai/view/'.$r_user["item"][$i]["peg_no"].'" class="btn btn-primary btn-xs">'.$r_user["item"][$i]["peg_id"].'</a>';
-                                }
-                            }
-                            else {
-                                 $link_peg_id='';
-                            }   
+                            
                             echo '
                                 <tr>
                                     <td>'.$r_user["item"][$i]["user_id"].'</td>
@@ -84,7 +72,6 @@
                                     <td>'.$status_umum[$r_user["item"][$i]["user_status"]].'</td>
                                     <td>'.$lastlog_user.'</td>
                                     <td>'.$r_user["item"][$i]["user_lastip"].'</td>
-                                    <td>'.$link_peg_id.'</td>
                                     <td><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/'.$act.'/view/'.$r_user["item"][$i]["user_no"].'" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="View User '.$r_user["item"][$i]["user_nama"].'"><i class="fa fa-search" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/'.$act.'/edit/'.$r_user["item"][$i]["user_no"].'" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Edit User '.$r_user["item"][$i]["user_nama"].'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/'.$act.'/delete/'.$r_user["item"][$i]["user_no"].'" data-confirm="Apakah data ('.$r_user["item"][$i]["user_id"].') '.$r_user["item"][$i]["user_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus User '.$r_user["item"][$i]["user_nama"].'"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
                                 </tr>
                             ';
@@ -104,7 +91,6 @@
                         <th class="text-center">Status</th>
                         <th class="text-center">Login</th>
                         <th class="text-center">IP</th>
-                        <th class="text-center">Peg ID</th>
                         <th>&nbsp;</th>
                     </tr>
                     </tfoot>
