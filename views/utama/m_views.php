@@ -22,7 +22,7 @@ $tahun_keg=date('Y');
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">Max 5 poin</span>
-                    <h5>Nilai Bulan Maret 2018</h5>
+                    <h5>Nilai Bulan <?php echo $nama_bulan_panjang[$bulan_keg].' '.$tahun_keg; ?></h5>
                 </div>
                 <div class="ibox-content">
                     <?php include 'views/utama/depan_grafik_nilai.php'; ?>

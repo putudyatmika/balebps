@@ -92,10 +92,104 @@ function list_keg_detil_kabkota($keg_id,$unit_kode,$keg_jenis,$detil=false) {
 	return $data_keg;
 	$conn_keg->close();
 }
-function list_target_keg_spj_kabkota($keg_id) {
+function hapus_keg_detil($detil_id) {
+	global $JenisDetilKegiatan;
 	$db_keg = new db();
 	$conn_keg = $db_keg -> connect();
-	$sql_target= $conn_keg -> query("select unit.unit_kode, unit.unit_nama, unit.unit_parent, keg_unit.*, keg_spj.* from (select * from unitkerja where unit_jenis='2') as unit left join (select * from keg_target where keg_id='$keg_id') as keg_unit on unit.unit_kode=keg_unit.keg_t_unitkerja LEFT join keg_spj on keg_spj.keg_id=keg_unit.keg_id and keg_spj.keg_s_unitkerja=unit.unit_kode order by unit.unit_kode asc") or die(mysqli_error($conn_keg));
+	$sql_kegiatan = $conn_keg -> query("select keg_detil.*,unit_nama from keg_detil inner join unitkerja on keg_detil.keg_d_unitkerja=unitkerja.unit_kode where keg_d_id='$detil_id'") or die(mysqli_error($conn_keg));
+	
+	$cek=$sql_kegiatan->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek > 0) {
+		$data_keg["error"]=false;
+		$r=$sql_kegiatan->fetch_object();
+		//sql hapus kegiatan detil
+		$sql_hapus_detil = $conn_keg -> query("delete from keg_detil where keg_d_id='$detil_id'") or die(mysqli_error($conn_keg));
+		if ($sql_hapus_detil) {
+			//berhasil dihapus
+			$data_keg["error"]=false;
+			$data_keg["pesan_error"]='<strong>'.$JenisDetilKegiatan[$r->keg_d_jenis].'</strong> kegiatan detil dari <strong>['.$r->keg_d_unitkerja.'] '. $r->unit_nama .'</strong> tanggal <strong>'. tgl_convert_pendek(1,$r->keg_d_tgl) .'</strong> sebanyak <strong>'. $r->keg_d_jumlah .'</strong> berhasil dihapus';
+			if ($r->keg_d_jenis==2) {
+				$r_nilai=get_nilai_kegiatan($r->keg_id,$r->keg_d_unitkerja);
+				$data_keg["pesan_error"]='<strong>'.$JenisDetilKegiatan[$r->keg_d_jenis].'</strong> kegiatan detil dari <strong>['.$r->keg_d_unitkerja.'] '. $r->unit_nama .'</strong> tanggal <strong>'. tgl_convert_pendek(1,$r->keg_d_tgl) .'</strong> sebanyak <strong>'. $r->keg_d_jumlah .'</strong> berhasil dihapus dan '. $r_nilai["pesan_error"];
+			}
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='Kegiatan detil tidak dapat dihapus';
+		}
+		
+		
+		/*
+		while ($r=$sql_kegiatan->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"keg_id"=>$r->keg_id,
+				"detil_id"=>$r->keg_d_id,
+				"detil_unitkerja"=>$r->keg_d_unitkerja,
+				"detil_unitnama"=>$r->unit_nama,
+				"detil_tanggal"=>$r->keg_d_tgl,
+				"detil_jumlah"=>$r->keg_d_jumlah,
+				"detil_dibuat_oleh"=>$r->keg_d_dibuat_oleh,
+				"detil_dibuat_waktu"=>$r->keg_d_dibuat_waktu,
+				"detil_diupdate_oleh"=>$r->keg_d_diupdate_oleh,
+				"detil_diupdate_waktu"=>$r->keg_d_diupdate_waktu,
+				"detil_jenis"=>$r->keg_d_jenis,
+				"detil_link_laci"=>$r->keg_d_link_laci,
+				"detil_ket"=>$r->keg_d_ket
+			);
+			$i++;
+		}
+		*/
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
+
+function view_keg_detil($detil_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_kegiatan = $conn_keg -> query("select keg_detil.*,unit_nama from keg_detil inner join unitkerja on keg_detil.keg_d_unitkerja=unitkerja.unit_kode where keg_d_id='$detil_id'") or die(mysqli_error($conn_keg));
+	
+	$cek=$sql_kegiatan->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek > 0) {
+		$data_keg["error"]=false;
+		$data_keg["detil_total"]=$cek;
+		$i=1;
+		while ($r=$sql_kegiatan->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"keg_id"=>$r->keg_id,
+				"detil_id"=>$r->keg_d_id,
+				"detil_unitkerja"=>$r->keg_d_unitkerja,
+				"detil_unitnama"=>$r->unit_nama,
+				"detil_tanggal"=>$r->keg_d_tgl,
+				"detil_jumlah"=>$r->keg_d_jumlah,
+				"detil_dibuat_oleh"=>$r->keg_d_dibuat_oleh,
+				"detil_dibuat_waktu"=>$r->keg_d_dibuat_waktu,
+				"detil_diupdate_oleh"=>$r->keg_d_diupdate_oleh,
+				"detil_diupdate_waktu"=>$r->keg_d_diupdate_waktu,
+				"detil_jenis"=>$r->keg_d_jenis,
+				"detil_link_laci"=>$r->keg_d_link_laci,
+				"detil_ket"=>$r->keg_d_ket
+			);
+			$i++;
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
+function list_target_keg_spj_kabkota($keg_id,$keg_tipe) {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_target= $conn_keg -> query("select unit.unit_kode, unit.unit_nama, unit.unit_parent, keg_unit.*, keg_spj.* from (select * from unitkerja where unit_jenis='$keg_tipe' and unit_eselon='3') as unit left join (select * from keg_target where keg_id='$keg_id') as keg_unit on unit.unit_kode=keg_unit.keg_t_unitkerja LEFT join keg_spj on keg_spj.keg_id=keg_unit.keg_id and keg_spj.keg_s_unitkerja=unit.unit_kode order by unit.unit_kode asc") or die(mysqli_error($conn_keg));
 	$cek=$sql_target->num_rows;
 	$data_keg=array("error"=>false);
 	if ($cek>0) {
@@ -310,6 +404,7 @@ function list_kegiatan($keg_id,$detil=false,$before=false,$bulan_keg,$tahun_keg)
 				"keg_total_target"=>$r->keg_total_target,
 				"keg_target_satuan"=>$r->keg_target_satuan,
 				"keg_spj"=>$r->keg_spj,
+				"keg_spj_target"=>$r->keg_spj_target,
 				"keg_info"=>$r->keg_info,
 				"keg_unitnama"=>$r->unit_nama,
 				"keg_unitjenis"=>$r->unit_jenis,
@@ -666,19 +761,19 @@ function save_konfirmasi_penerimaan($keg_id,$keg_d_unitkerja,$keg_d_tgl,$keg_d_j
 			if ($r_nilai["error"]==false) {
 				$data_keg["error"]=false;
 				$data_keg["error_nilai"]=false;
-				$data_keg["pesan_error"]='Data konfirmasi pengiriman dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> tersimpan';
+				$data_keg["pesan_error"]='Data konfirmasi penerimaan dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> tersimpan';
 				$data_keg["pesan_error_nilai"]='Data nilai dari <strong>'.$unit_nama.'</strong> berhasil diupdate';
 			}
 			else {
 				$data_keg["error"]=false;
 				$data_keg["error_nilai"]=true;
-				$data_keg["pesan_error"]='Data konfirmasi pengiriman dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> tersimpan';
+				$data_keg["pesan_error"]='Data konfirmasi penerimaan dari <strong>'.$unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> tersimpan';
 				$data_keg["pesan_error_nilai"]='Data nilai dari <strong>'.$unit_nama.'</strong> tidak berhasil diupdate';
 			}
 		}
 		else {
 			$data_keg["error"]=true;
-			$data_keg["pesan_error"]='Data konfirmasi pengiriman tidak tersimpan';
+			$data_keg["pesan_error"]='Data konfirmasi penerimaan tidak tersimpan';
 		}
 	}
 	else {
@@ -689,18 +784,79 @@ function save_konfirmasi_penerimaan($keg_id,$keg_d_unitkerja,$keg_d_tgl,$keg_d_j
 	return $data_keg;
 	$conn_keg->close();	
 }
+function update_konfirmasi_pengiriman($keg_d_id,$keg_d_tgl,$keg_d_jumlah,$keg_d_ket,$keg_d_link) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	//cek id kegiatan detil dulu
+	$sql_cek_keg_detil=$conn_keg -> query("select keg_detil.*,unit_nama from keg_detil inner join unitkerja on keg_detil.keg_d_unitkerja=unitkerja.unit_kode where keg_d_id='$keg_d_id'") or die(mysqli_error($conn_keg));
+	$cek_keg=$sql_cek_keg_detil->num_rows;
+	if ($cek_keg>0) {
+		//keg_d_id tersedia
+		$r=$sql_cek_keg_detil->fetch_object();
+		$sql_update_terima = $conn_keg -> query("update keg_detil set keg_d_tgl='$keg_d_tgl', keg_d_jumlah='$keg_d_jumlah', keg_d_diupdate_oleh='$created', keg_d_ket='$created',keg_d_link_laci='$keg_d_link',keg_d_ket='$keg_d_ket' where keg_d_id='$keg_d_id'") or die(mysqli_error($conn_keg));
+		if ($sql_update_terima) {
+			$data_keg["error"]=false;
+			$data_keg["pesan_error"]='Data konfirmasi penerimaan dari <strong>'.$r->unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> berhasil diupdate';
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='Data konfirmasi penerimaan tidak tersimpan';
+		}
+	}
+	else {
+		//keg_id tidak tersedia
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data detil kegiatan ini tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
+function update_konfirmasi_terima($keg_d_id,$keg_d_tgl,$keg_d_jumlah) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	//cek id kegiatan detil dulu
+	$sql_cek_keg_detil=$conn_keg -> query("select keg_detil.*,unit_nama from keg_detil inner join unitkerja on keg_detil.keg_d_unitkerja=unitkerja.unit_kode where keg_d_id='$keg_d_id'") or die(mysqli_error($conn_keg));
+	$cek_keg=$sql_cek_keg_detil->num_rows;
+	if ($cek_keg>0) {
+		//keg_d_id tersedia
+		$r=$sql_cek_keg_detil->fetch_object();
+		$sql_update_terima = $conn_keg -> query("update keg_detil set keg_d_tgl='$keg_d_tgl', keg_d_jumlah='$keg_d_jumlah', keg_d_diupdate_oleh='$created', keg_d_ket='$created' where keg_d_id='$keg_d_id'") or die(mysqli_error($conn_keg));
+		if ($sql_update_terima) {
+			$r_nilai=get_nilai_kegiatan($r->keg_id,$r->keg_d_unitkerja);
+			$data_keg["error"]=false;
+			$data_keg["pesan_error"]='Data konfirmasi penerimaan dari <strong>'.$r->unit_nama.'</strong> sebanyak <strong>'.$keg_d_jumlah.'</strong> berhasil diupdate dan '.$r_nilai["pesan_error"];
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='Data konfirmasi penerimaan tidak tersimpan';
+		}
+	}
+	else {
+		//keg_id tidak tersedia
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data detil kegiatan ini tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+}
 function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
 	$sql_d_keg = $conn_keg -> query("select * from keg_detil left join kegiatan on kegiatan.keg_id=keg_detil.keg_id where kegiatan.keg_id='$keg_id' and keg_detil.keg_d_unitkerja='$keg_unitkerja' and keg_d_jenis=2 order by keg_d_tgl asc") or die(mysqli_error($conn_keg));
 	$cek=$sql_d_keg->num_rows;
 	$keg_nilai=array("error"=>false);
+	$nilai_waktu=0;
+	$nilai_volume=0;
+	$nilai_vol=0;
+	$nilai_total=0;
 	if ($cek>0) {
-		$nilai_waktu=0;
-		$nilai_volume=0;
-		$nilai_vol=0;
 		$keg_nilai["error"]=false;
-		
 		while ($r=$sql_d_keg->fetch_object()) {
 			$nilai_vol+=$r->keg_d_jumlah;
 			$target_waktu = new DateTime($r->keg_end);
@@ -739,10 +895,152 @@ function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
 		}		
 	}
 	else {
+		$sql_update_nilai=$conn_keg -> query("update keg_target set keg_t_point_waktu='$nilai_waktu', keg_t_point_jumlah='$nilai_volume', keg_t_point='$nilai_total' where keg_id='$keg_id' and keg_t_unitkerja='$keg_unitkerja'") or die(mysqli_error($conn_keg));
 		$keg_nilai["error"]=true;
-		$keg_nilai["pesan_error"]='Data nilai tidak tersedia';
+		$keg_nilai["pesan_error"]='Data nilai direset ke nol';
 	}
 	return $keg_nilai;
 	$conn_keg->close();
+}
+function hapus_kegiatan($keg_id) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	$r_keg=list_kegiatan($keg_id,true,false,0,0);
+	if ($r_keg["error"]==false) {
+		if ($_SESSION['sesi_level'] > 2) {
+			if ($_SESSION['sesi_level']==3) {
+				if ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitkerja"]) {
+					$data_keg["error"]=false;
+					$sql_hapus_keg=$conn_keg -> query("delete from kegiatan where keg_id='$keg_id'");
+					$sql_hapus_keg_detil=$conn_keg -> query("delete from keg_detil where keg_id='$keg_id'");
+					$sql_hapus_keg_target=$conn_keg -> query("delete from keg_target where keg_id='$keg_id'");
+					$data_keg["pesan_error"]='Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil dihapus';
+				}
+				elseif ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitparent"]) {
+					$data_keg["error"]=false;
+					$sql_hapus_keg=$conn_keg -> query("delete from kegiatan where keg_id='$keg_id'");
+					$sql_hapus_keg_detil=$conn_keg -> query("delete from keg_detil where keg_id='$keg_id'");
+					$sql_hapus_keg_target=$conn_keg -> query("delete from keg_target where keg_id='$keg_id'");
+					$data_keg["pesan_error"]='Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil dihapus';
+				}
+				else {
+					$data_keg["error"]=true;
+					$data_keg["pesan_error"]='hak akses level user tidak bisa menghapus master kegiatan ini';
+				}
+			}
+			else {
+				//admin dan superadmin bisa langsung delete
+				$data_keg["error"]=false;
+				$sql_hapus_keg=$conn_keg -> query("delete from kegiatan where keg_id='$keg_id'");
+				$sql_hapus_keg_detil=$conn_keg -> query("delete from keg_detil where keg_id='$keg_id'");
+				$sql_hapus_keg_target=$conn_keg -> query("delete from keg_target where keg_id='$keg_id'");
+				$data_keg["pesan_error"]='Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil dihapus';
+			}
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='hak akses level user tidak bisa menghapus master kegiatan ini';
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data kegiatan tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();	
+
+}
+function save_keg_info($keg_id,$keg_info) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	$r_keg=list_kegiatan($keg_id,true,false,0,0);
+	$keg_info_html = htmlentities($keg_info, ENT_QUOTES);
+	if ($r_keg["error"]==false) {
+		if ($_SESSION['sesi_level'] > 2) {
+			if ($_SESSION['sesi_level']==3) {
+				if ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitkerja"]) {
+					$data_keg["error"]=false;
+					$sql_keg = $conn_keg ->query("update kegiatan set keg_info='$keg_info_html', keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+					$data_keg["pesan_error"]='Info lanjutan pada Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil diupdate';
+				}
+				elseif ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitparent"]) {
+					$data_keg["error"]=false;
+					$sql_keg = $conn_keg ->query("update kegiatan set keg_info='$keg_info_html', keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+					$data_keg["pesan_error"]='Info lanjutan pada Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil diupdate';
+					}
+				else {
+					$data_keg["error"]=true;
+					$data_keg["pesan_error"]='hak akses level user tidak bisa update info lanjutan pada master kegiatan ini';
+				}
+			}
+			else {
+				//admin dan superadmin bisa langsung delete
+				$data_keg["error"]=false;
+				$sql_keg = $conn_keg ->query("update kegiatan set keg_info='$keg_info_html', keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+				$data_keg["pesan_error"]='Info lanjutan pada Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil diupdate';
+			}
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='hak akses level user tidak bisa update info lanjutan pada master kegiatan ini';
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data kegiatan tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
+function hapus_keg_info($keg_id) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$data_keg=array("error"=>false);
+	$r_keg=list_kegiatan($keg_id,true,false,0,0);
+	if ($r_keg["error"]==false) {
+		if ($_SESSION['sesi_level'] > 2) {
+			if ($_SESSION['sesi_level']==3) {
+				if ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitkerja"]) {
+					$data_keg["error"]=false;
+					$sql_keg = $conn_keg ->query("update kegiatan set keg_info=NULL, keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+					$data_keg["pesan_error"]='Info lanjutan pada Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil dihapus';
+				}
+				elseif ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitparent"]) {
+					$data_keg["error"]=false;
+					$sql_keg = $conn_keg ->query("update kegiatan set keg_info=NULL, keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+					$data_keg["pesan_error"]='Info lanjutan pada Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil dihapus';
+					}
+				else {
+					$data_keg["error"]=true;
+					$data_keg["pesan_error"]='hak akses level user tidak bisa hapus info lanjutan pada master kegiatan ini';
+				}
+			}
+			else {
+				//admin dan superadmin bisa langsung delete
+				$data_keg["error"]=false;
+				$sql_keg = $conn_keg ->query("update kegiatan set keg_info=NULL, keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn_keg));
+				$data_keg["pesan_error"]='Info lanjutan pada Master kegiatan <strong>('.$keg_id.') '. $r_keg["item"][1]["keg_nama"].'</strong> dari <strong>['.$r_keg["item"][1]["keg_unitkerja"].'] '.$r_keg["item"][1]["keg_unitnama"].'</strong> berhasil dihapus';
+			}
+		}
+		else {
+			$data_keg["error"]=true;
+			$data_keg["pesan_error"]='hak akses level user tidak bisa hapus info lanjutan pada master kegiatan ini';
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data kegiatan tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+
 }
 ?>

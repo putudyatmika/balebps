@@ -28,16 +28,81 @@
         $r_keg=list_kegiatan($keg_id,true,false,0,0);
         if ($r_keg["error"]==false) {
             $keg_total=$r_keg["keg_total"]; 
-            if ($r_keg["item"][1]["keg_info"]=="") {
-                $keg_info='Belum ada ';
-                $add_info='<p>&nbsp; <a href="'.$url.'/'.$page.'/addinfo/'.$r_keg["item"][1]["keg_id"].'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a></p>';
-             }
-             else {
-                $keg_info=$r_keg["item"][1]["keg_info"];
-                $add_info='<p>&nbsp; <a href="'.$url.'/'.$page.'/editinfo/'.$r_keg["item"][1]["keg_id"].'"><i class="fa fa-pencil-square text-success" aria-hidden="true"></i></a> 
-                <a href="'.$url.'/'.$page.'/deleteinfo/'.$r_keg["item"][1]["keg_id"].'" data-confirm="Apakah info lanjutan ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></p>';
-             }
-
+            //kegiatan info lanjutan
+            if ($_SESSION['sesi_level'] > 2 ) {
+                if ($_SESSION['sesi_level'] > 3 ) {
+                    if ($r_keg["item"][1]["keg_info"]=="") {
+                        $keg_info='- <br /> ';
+                        $add_info='<p><a href="'.$url.'/'.$page.'/addinfo/" class="btn btn-success btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah info lanjutan" data-addinfo="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_keg["item"][1]["keg_unitkerja"].';'.$r_keg["item"][1]["keg_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_keg["item"][1]["keg_total_target"].' '. $r_keg["item"][1]["keg_target_satuan"].'"><i class="fa fa-plus" aria-hidden="true"></i></a></p>';
+                     }
+                     else {
+                        $keg_info=$r_keg["item"][1]["keg_info"];
+                        $add_info='<p>&nbsp; <a href="'.$url.'/'.$page.'/addinfo/" class="btn btn-success btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="edit info lanjutan" data-editinfo="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_keg["item"][1]["keg_unitkerja"].';'.$r_keg["item"][1]["keg_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_keg["item"][1]["keg_total_target"].' '. $r_keg["item"][1]["keg_target_satuan"].';'.html_entity_decode($keg_info).'"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+                        <a href="'.$url.'/'.$page.'/deleteinfo/'.$r_keg["item"][1]["keg_id"].'" data-confirm="Apakah info lanjutan ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="hapus info lanjutan"><i class="fa fa-trash" aria-hidden="true"></i></a></p>';
+                     } 
+                     $tr_keg_info='<tr>
+                         <td rowspan="2"><strong>Info Lanjutan</strong></td>
+                         <td>'.html_entity_decode($keg_info).'</td>
+                            </tr>
+                            <tr>
+                             <td>'.$add_info.'</td>
+                         </tr>';       
+                }
+                else {
+                    //level operator prov
+                    if (($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitkerja"]) or ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitparent"])) {
+                        if ($r_keg["item"][1]["keg_info"]=="") {
+                            $keg_info='- <br /> ';
+                            $add_info='<p><a href="'.$url.'/'.$page.'/addinfo/" class="btn btn-success btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah info lanjutan" data-addinfo="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_keg["item"][1]["keg_unitkerja"].';'.$r_keg["item"][1]["keg_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_keg["item"][1]["keg_total_target"].' '. $r_keg["item"][1]["keg_target_satuan"].'"><i class="fa fa-plus" aria-hidden="true"></i></a></p>';
+                         }
+                         else {
+                            $keg_info=$r_keg["item"][1]["keg_info"];
+                            $add_info='<p>&nbsp; <a href="'.$url.'/'.$page.'/addinfo/" class="btn btn-success btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="edit info lanjutan" data-editinfo="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_keg["item"][1]["keg_unitkerja"].';'.$r_keg["item"][1]["keg_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_keg["item"][1]["keg_total_target"].' '. $r_keg["item"][1]["keg_target_satuan"].';'.html_entity_decode($keg_info).'"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+                            <a href="'.$url.'/'.$page.'/deleteinfo/'.$r_keg["item"][1]["keg_id"].'" data-confirm="Apakah info lanjutan ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="hapus info lanjutan"><i class="fa fa-trash" aria-hidden="true"></i></a></p>';
+                         }
+                         $tr_keg_info='<tr>
+                         <td rowspan="2"><strong>Info Lanjutan</strong></td>
+                         <td>'.html_entity_decode($keg_info).'</td>
+                            </tr>
+                            <tr>
+                             <td>'.$add_info.'</td>
+                         </tr>';       
+                    }
+                    else {
+                        //level operator prov lain bidang/seksi
+                        if ($r_keg["item"][1]["keg_info"]=="") {
+                            $keg_info='- <br /> ';
+                            $add_info='';
+                         }
+                         else {
+                            $keg_info=$r_keg["item"][1]["keg_info"];
+                            $add_info='';
+                         } 
+                         //satu baris saja
+                         $tr_keg_info='<tr>
+                         <td><strong>Info Lanjutan</strong></td>
+                         <td>'.html_entity_decode($keg_info).'</td>
+                     </tr>';  
+                    }
+                }                     
+            }
+            else {
+                //level pemantau dan operator kab
+                if ($r_keg["item"][1]["keg_info"]=="") {
+                    $keg_info='- <br /> ';
+                    $add_info='';
+                 }
+                 else {
+                    $keg_info=$r_keg["item"][1]["keg_info"];
+                    $add_info='';
+                 } 
+                 $tr_keg_info='<tr>
+                 <td><strong>Info Lanjutan</strong></td>
+                 <td>'.html_entity_decode($keg_info).'</td>
+             </tr>';  
+            }
+            
+            
             ?>
             
             <div class="row">
@@ -87,11 +152,9 @@
                                 <td><strong>Tagihan SPJ</strong></td>
                                 <td><?php echo $StatusSPJ[$r_keg["item"][1]["keg_spj"]]; ?></td>
                             </tr>
-                             <tr>
-                                <td><strong>Info Lanjutan</strong></td>
-                                <td><?php echo html_entity_decode($keg_info); if ($_SESSION['sesi_level'] > 2) {  echo $add_info; } ?></td>
-                            </tr>
                             <?php
+                            //tampilan info lanjutan
+                            echo  $tr_keg_info;
                             $r_jenis=progress_kegiatan($keg_id);
                             if ($r_jenis["error"]==false) {
                                 if ($r_jenis["jenis_total"]==1) {
@@ -118,18 +181,63 @@
                             $progress_terima=($jumlah_terima/$r_keg["item"][1]["keg_total_target"])*100;
                             $progress_kirim=number_format($progress_kirim,2,".",",");
                             $progress_terima=number_format($progress_terima,2,".",",");
+                            //bar kirim
+                            if ($progress_kirim<3) {
+                                $bar_kirim=3;
+                                $bar_color='class="progress-bar progress-bar-danger"';
+                            }
+                            elseif ($progress_kirim<70) {
+                                $bar_kirim=$progress_kirim;
+                                $bar_color='class="progress-bar progress-bar-danger"';
+                            }
+                            elseif ($progress_kirim<90) {
+                                $bar_kirim=$progress_kirim;
+                                $bar_color='class="progress-bar progress-bar-warning"';
+                            }
+                            elseif ($progress_kirim<=100) {
+                                $bar_kirim=$progress_kirim;
+                                $bar_color='class="progress-bar progress-bar-primary"';
+                            }
+                            else {
+                                //lebih dari 100
+                                $bar_kirim=100;
+                                $bar_color='class="progress-bar progress-bar-primary"';
+                            }
+
+                            //bar terima
+                            if ($progress_terima<3) {
+                                $bar_terima=3;
+                                $bar_color_terima='class="progress-bar progress-bar-danger"';
+                            }
+                            elseif ($progress_terima<70) {
+                                $bar_terima=$progress_terima;
+                                $bar_color_terima='class="progress-bar progress-bar-danger"';
+                            }
+                            elseif ($progress_terima<90) {
+                                $bar_terima=$progress_terima;
+                                $bar_color_terima='class="progress-bar progress-bar-warning"';
+                            }
+                            elseif ($progress_terima<=100) {
+                                $bar_terima=$progress_terima;
+                                $bar_color_terima='class="progress-bar progress-bar-primary"';
+                            }
+                            else {
+                                //lebih dari 100
+                                $bar_terima=100;
+                                $bar_color_terima='class="progress-bar progress-bar-primary"';
+                            }
                             ?>
                             <tr>
                                 <td rowspan="2"><strong>Progress</strong></td>
                                 <td><h5>Pengiriman</h5>
                                     <div class="progress progress-striped active m-b-sm">
-                                                <div style="width: <?php echo $progress_kirim;?>%;" class="progress-bar"><?php echo $progress_kirim;?>%</div>
+                                                <div style="width: <?php echo $bar_kirim;?>%;" role="progressbar" aria-valuenow="<?php echo $bar_kirim;?>" <?php echo $bar_color;?> aria-valuemax="100"><?php echo $progress_kirim;?>%</div>
                                             </div></td>
                             </tr>
                             <tr>
                                 <td><h5>Penerimaan</h5>
                                     <div class="progress progress-striped active">
-                                                <div style="width: <?php echo $progress_terima;?>%;" aria-valuemax="100" aria-valuemin="<?php echo $progress_terima;?>" role="progressbar" class="progress-bar progress-bar-success"><?php echo $progress_terima;?>%</div>
+                                                <div style="width: <?php echo $bar_terima;?>%;" <?php echo $bar_color_terima;?> aria-valuemax="100" aria-valuemin="<?php echo $progress_terima;?>" role="progressbar" class="progress-bar progress-bar-danger"><?php echo $progress_terima;?>%</div>
                                             </div></td>
                             </tr>
                             <?php
@@ -151,15 +259,28 @@
                                         <td><strong>Diupdate tanggal</strong></td>
                                         <td>'.tgl_convert(1,$r_keg["item"][1]["keg_diupdate_waktu"]).'</td>
                                     </tr>'; }
-                                  if ($_SESSION['sesi_level'] > 2) {
-                                echo '
-                                  <tr>
+                                  if ($_SESSION['sesi_level'] > 2 ) {
+                                    if ($_SESSION['sesi_level']==3) {
+                                        if (($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitkerja"]) or ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitparent"])) {
+                                            echo '<tr>
+                                            <td></td>
+                                            <td><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][1]["keg_id"].'" class="btn btn-success btn-rounded btn-sm" data-toggle="tooltip" data-placement="top" title="Edit kegiatan"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+                                             <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][1]["keg_id"].'" class="btn btn-danger btn-rounded btn-sm" data-confirm="Apakah data ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus kegiatan ini"><i class="fa fa-trash-o" aria-hidden="true"></i> Hapus</a>
+    
+                                            </td>
+                                        </tr>';
+                                        }
+                                        
+                                    }
+                                    else {
+                                    echo '<tr>
                                         <td></td>
                                         <td><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][1]["keg_id"].'" class="btn btn-success btn-rounded btn-sm" data-toggle="tooltip" data-placement="top" title="Edit kegiatan"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
                                          <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][1]["keg_id"].'" class="btn btn-danger btn-rounded btn-sm" data-confirm="Apakah data ('.$r_keg["item"][1]["keg_id"].') '.$r_keg["item"][1]["keg_nama"].' ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus kegiatan ini"><i class="fa fa-trash-o" aria-hidden="true"></i> Hapus</a>
 
                                         </td>
                                     </tr>';
+                                    }
                                 }
                             ?>
                         </table>
@@ -181,23 +302,25 @@
                     </div>
                     <div class="ibox-content">
                        <div class="table-responsive">
-                            <table class="table table-striped table-hover" >
+                            <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th class="text-center" rowspan="2">No</th>
                                 <th class="text-center" rowspan="2">Unit Kerja</th>
                                 <th class="text-center" rowspan="2">Target</th>
-                                <th class="text-center" colspan="3">Pengiriman</th>
-                                <th class="text-center" colspan="3">Penerimaan</th>
+                                <th class="text-center bg-info" colspan="4">Pengiriman</th>
+                                <th class="text-center bg-primary" colspan="4">Penerimaan</th>
                                 <th class="text-center" rowspan="2">Nilai</th>
                             </tr>
                             <tr>
-                                <th class="text-center">Rincian</th>
-                                <th class="text-center">%</th>
-                                <th class="text-center">&nbsp;</th>
-                                <th class="text-center">Rincian</th>
-                                <th class="text-center">%</th>
-                                <th class="text-center">&nbsp;</th>
+                                <th class="text-center bg-info">Rincian</th>
+                                <th class="text-center bg-info">Jml</th>
+                                <th class="text-center bg-info">%</th>
+                                <th class="text-center bg-info">&nbsp;</th>
+                                <th class="text-center bg-primary">Rincian</th>
+                                <th class="text-center bg-primary">Jml</th>
+                                <th class="text-center bg-primary">%</th>
+                                <th class="text-center bg-primary">&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -214,10 +337,30 @@
                                         $jml_kirim=$r_detil_kirim["detil_total"];
                                         $detil_target=0;
                                         for ($k=1;$k<=$jml_kirim;$k++) {
-                                            $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="'.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="label label-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/updatekirim/" data-toggle="tooltip" data-placement="top" title="Edit Pengiriman" class="btn btn-primary btn-rounded btn-xs" 
+                                            if ($_SESSION['sesi_level']==2) {
+                                                if ($_SESSION['sesi_unitkerja']==$r_detil_kirim["item"][$k]["detil_unitkerja"]) {
+                                                    $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="dikirim via : '.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/updatekirim/" data-toggle="tooltip" data-placement="top" title="Edit Pengiriman" class="btn btn-primary btn-rounded btn-xs" 
+                                                    data-editkirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'.$r_detil_kirim["item"][$k]["detil_id"].';'.$r_detil_kirim["item"][$k]["detil_jumlah"].';'.$r_detil_kirim["item"][$k]["detil_tanggal"].';'.$r_detil_kirim["item"][$k]["detil_ket"].';'.$r_detil_kirim["item"][$k]["detil_link_laci"].'">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["keg_id"].'/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Pengiriman" class="btn btn-danger btn-rounded btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i></a></p>';
+                                                }
+                                                else {
+                                                    //selain operator kabkota yg lain hanya jumlah dan tanggal
+                                                    $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="dikirim via : '.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span>';
+                                                }
+                                            }
+                                            else {
+                                                if ($_SESSION['sesi_level'] > 3) {
+                                                    //admin dan superadmin
+                                                    $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="dikirim via : '.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/updatekirim/" data-toggle="tooltip" data-placement="top" title="Edit Pengiriman" class="btn btn-primary btn-rounded btn-xs" 
                                             data-editkirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'.$r_detil_kirim["item"][$k]["detil_id"].';'.$r_detil_kirim["item"][$k]["detil_jumlah"].';'.$r_detil_kirim["item"][$k]["detil_tanggal"].';'.$r_detil_kirim["item"][$k]["detil_ket"].';'.$r_detil_kirim["item"][$k]["detil_link_laci"].'">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["keg_id"].'/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Pengiriman" class="btn btn-danger btn-rounded btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i></a></p>';
+                                                }
+                                                else {
+                                                    $detil_kirim .= '<p><span class="label label-success" data-toggle="tooltip" data-placement="top" title="dikirim via : '.$r_detil_kirim["item"][$k]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_kirim["item"][$k]["detil_tanggal"]).'</span> | <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Jumlah yg dikirim">'.$r_detil_kirim["item"][$k]["detil_jumlah"].'</span>';
+                                                }
+                                            }
+                                           
                                             
-                                            <i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_kirim["item"][$k]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_kirim["item"][$k]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Pengiriman" class="btn btn-danger btn-rounded btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i></a></p>';
                                             $detil_target+=$r_detil_kirim["item"][$k]["detil_jumlah"];
                                         }
                                         //label persentase rincian
@@ -240,13 +383,13 @@
                                         $jml_terima=$r_detil_terima["detil_total"];
                                         $detil_target_terima=0;
                                         for ($t=1;$t<=$jml_terima;$t++) {
-                                            $detil_terima .= '<p><span class="label label-warning" data-toggle="tooltip" data-placement="top" title="'.$r_detil_terima["item"][$t]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_terima["item"][$t]["detil_tanggal"]).'</span> | <span class="label label-success">'.$r_detil_terima["item"][$t]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/editkirim/'.$r_detil_terima["item"][$t]["detil_id"].'" data-toggle="tooltip" data-placement="top" title="Edit Penerimaan"><i class="fa fa-pencil-square" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_terima["item"][$t]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_terima["item"][$t]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Penerimaan"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></p>';
+                                            $detil_terima .= '<p><span class="label label-warning" data-toggle="tooltip" data-placement="top" title="diterima oleh : '.$r_detil_terima["item"][$t]["detil_ket"].'">'.tgl_convert_pendek_bulan(1,$r_detil_terima["item"][$t]["detil_tanggal"]).'</span> | <span class="badge badge-success" data-toggle="tooltip" data-placement="top" title="Jumlah yg diterima">'.$r_detil_terima["item"][$t]["detil_jumlah"].'</span> | <a href="'.$url.'/'.$page.'/updateterima/" data-toggle="tooltip" data-placement="top" title="Edit Penerimaan" class="btn btn-success btn-rounded btn-xs" data-editterima="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'.$r_detil_terima["item"][$t]["detil_id"].';'.$r_detil_terima["item"][$t]["detil_jumlah"].';'.$r_detil_terima["item"][$t]["detil_tanggal"].'"><i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r_detil_terima["item"][$t]["keg_id"].'/'.$r_detil_terima["item"][$t]["detil_id"].'" data-confirm="Apakah data ('.$r_detil_terima["item"][$t]["detil_id"].') ini akan di hapus?" data-toggle="tooltip" data-placement="top" title="Hapus Penerimaan" class="btn btn-danger btn-rounded btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i></a></p>';
                                             $detil_target_terima+=$r_detil_terima["item"][$t]["detil_jumlah"];
                                         }
                                         //label persentase rincian
                                         $d_t_persen=($detil_target_terima/$r_target["item"][$i]["target_jumlah"])*100;
                                         if ($d_t_persen > 85) { $t_persen='<span class="label label-primary">'.number_format($d_t_persen,2,".",",").' %</span>'; }
-                                        elseif ($d_t_persen > 75) { $t_persen='<span class="label label-warning">'.number_format($d_t_persen,2,".",",").' %</span>'; }
+                                        elseif ($d_t_persen > 70) { $t_persen='<span class="label label-warning">'.number_format($d_t_persen,2,".",",").' %</span>'; }
                                         else { $t_persen='<span class="label label-danger">'.number_format($d_t_persen,2,".",",").' %</span>'; }
                                     }
                                     else {
@@ -255,18 +398,52 @@
                                         $detil_target_terima=0;
                                         $t_persen='<span class="label label-danger">'.number_format($d_t_persen,2,".",",").' %</span>';
                                     }
-
+                                    //link pengiriman dan penerimaan
+                                    if (($_SESSION['sesi_level'] > 1) && ($r_keg["item"][1]["keg_start"] <= $tanggal_hari_ini)) {
+                                        if ($_SESSION['sesi_level']>3) {
+                                            $link_tambah_pengiriman='<a href="'.$url.'/'.$page.'/savekirim/" class="btn btn-info btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman" data-kirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target.'"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                            $link_tambah_penerimaan='<a href="'.$url.'/'.$page.'/saveterima/" class="btn btn-primary btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan" data-terima="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target_terima.'"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                        }
+                                        elseif ($_SESSION['sesi_level']==2) {
+                                            if ($_SESSION['sesi_unitkerja']==$r_target["item"][$i]["target_unitkerja"]) {
+                                                $link_tambah_pengiriman='<a href="'.$url.'/'.$page.'/savekirim/" class="btn btn-info btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman" data-kirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target.'"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                            }
+                                            else {
+                                                $link_tambah_pengiriman='';
+                                            }
+                                            $link_tambah_penerimaan='';
+                                        }
+                                        else {
+                                            //operator provinsi 
+                                            if (($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitkerja"]) or ($_SESSION['sesi_unitkerja']==$r_keg["item"][1]["keg_unitparent"])) {
+                                                $link_tambah_pengiriman='';
+                                                $link_tambah_penerimaan='<a href="'.$url.'/'.$page.'/saveterima/" class="btn btn-primary btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan" data-terima="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target_terima.'"><i class="fa fa-plus" aria-hidden="true"></i></a>';    
+                                            }
+                                            else {
+                                                $link_tambah_pengiriman='';
+                                                $link_tambah_penerimaan='';
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                    else {
+                                        $link_tambah_pengiriman='';
+                                        $link_tambah_penerimaan='';
+                                    }
                                     echo '
                                         <tr>
                                             <td>'.$i.'</td>
                                             <td>'.$r_target["item"][$i]["target_unitnama"].'</td>
                                             <td class="text-right">'.$r_target["item"][$i]["target_jumlah"].'</td>
                                             <td class="text-right">'.$detil_kirim.'</td>
+                                            <td class="text-right">'.$detil_target.'</td>
                                             <td class="text-right">'.$k_persen.'</td>
-                                            <td class="text-center"><a href="'.$url.'/'.$page.'/savekirim/" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Pengiriman" data-kirim="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target.'"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+                                            <td class="text-center">'.$link_tambah_pengiriman.'</td>
                                             <td class="text-right">'.$detil_terima.'</td>
+                                            <td class="text-right">'.$detil_target_terima.'</td>
                                             <td class="text-right">'.$t_persen.'</td>
-                                            <td class="text-center"><a href="'.$url.'/'.$page.'/saveterima/" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Tambah Penerimaan" data-terima="'.$r_keg["item"][1]["keg_id"].';'.$r_keg["item"][1]["keg_nama"].';'.$r_target["item"][$i]["target_unitkerja"].';'.$r_target["item"][$i]["target_unitnama"].';'.tgl_convert(1,$r_keg["item"][1]["keg_end"]).';'.$r_target["item"][$i]["target_jumlah"].';'. $detil_target_terima.'"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+                                            <td class="text-center">'.$link_tambah_penerimaan.'</td>
                                             <td class="text-right">'.$r_target["item"][$i]["target_poin_total"].'</td>
                                         </tr>
                                     ';
@@ -274,19 +451,21 @@
                                 }
                                 $pro_kirim=0;
                                 if ($progress_kirim > 85) { $pro_kirim='<span class="label label-primary">'.number_format($progress_kirim,2,".",",").' %</span>'; }
-                                elseif ($progress_kirim > 75) { $pro_kirim='<span class="label label-warning">'.number_format($progress_kirim,2,".",",").' %</span>'; }
+                                elseif ($progress_kirim > 70) { $pro_kirim='<span class="label label-warning">'.number_format($progress_kirim,2,".",",").' %</span>'; }
                                 else { $pro_kirim='<span class="label label-danger">'.number_format($progress_kirim,2,".",",").' %</span>'; }
 
                                 $pro_terima=0;
                                 if ($progress_terima > 85) { $pro_terima='<span class="label label-primary">'.number_format($progress_terima,2,".",",").' %</span>'; }
-                                elseif ($progress_terima > 75) { $pro_terima='<span class="label label-warning">'.number_format($progress_terima,2,".",",").' %</span>'; }
+                                elseif ($progress_terima > 70) { $pro_terima='<span class="label label-warning">'.number_format($progress_terima,2,".",",").' %</span>'; }
                                 else { $pro_terima='<span class="label label-danger">'.number_format($progress_terima,2,".",",").' %</span>'; }
                                 echo '
                                         <tr>
                                             <td colspan="2" class="text-center">Total</td>
                                             <td class="text-right">'.$t_total.'</td>
+                                            <td></td>
                                             <td class="text-right">'.$jumlah_kirim.'</td>
                                             <td class="text-right">'.$pro_kirim.'</td>
+                                            <td></td>
                                             <td></td>
                                             <td class="text-right">'.$jumlah_terima.'</td>
                                             <td class="text-right">'.$pro_terima.'</td>
@@ -427,13 +606,13 @@
                                 //warna-warni untuk pengiriman
                                 $pro_kirim=''; //inisiasi dulu
                                 if ($pro_rekap_kirim > 85) { $pro_kirim='<span class="label label-primary">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
-                                elseif ($pro_rekap_kirim > 75) { $pro_kirim='<span class="label label-warning">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
+                                elseif ($pro_rekap_kirim > 70) { $pro_kirim='<span class="label label-warning">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
                                 else { $pro_kirim='<span class="label label-danger">'.number_format($pro_rekap_kirim,2,".",",").' %</span>'; }
 
                                  //warna-warni untuk penerimaan
                                 $pro_terima=''; //inisiasi dulu
                                 if ($pro_rekap_terima > 85) { $pro_terima='<span class="label label-primary">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
-                                elseif ($pro_rekap_terima > 75) { $pro_terima='<span class="label label-warning">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
+                                elseif ($pro_rekap_terima > 70) { $pro_terima='<span class="label label-warning">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
                                 else { $pro_terima='<span class="label label-danger">'.number_format($pro_rekap_terima,2,".",",").' %</span>'; }
                                 
                                 echo 

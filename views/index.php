@@ -14,14 +14,14 @@ elseif ($page=="unitkerja") {
 elseif ($page=="laporan") {
         include 'views/laporan/m_laporan.php';
     }
-elseif (($page=="absen") && ($_SESSION['sesi_provkab'] == 1)) {
-        include 'views/absen/m_absen.php';
-    }
-elseif (($page=="aktivitas") && ($_SESSION['sesi_provkab'] == 1)) {
-        include 'views/aktivitas/m_aktivitas.php';
-}
 elseif ($page=="logout") {
     include 'views/login/logout.php';
+}
+elseif ($page=="profile") {
+    include 'views/profile/m_profile.php';
+}
+elseif ($page=="gantipass") {
+    include 'views/profile/gantipass.php';
 }
 elseif ($page=="users") {
     include 'views/users/m_users.php';

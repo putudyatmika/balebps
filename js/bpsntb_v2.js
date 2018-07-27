@@ -42,6 +42,17 @@ $(document).on("click", ".modal-body",function(){
         autoclose: true
         });
     });
+$(document).on("click", ".modal-body",function(){
+    $('#tanggal_modal_editterima').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+            format: "yyyy-mm-dd",
+        todayHighlight: true,
+        autoclose: true
+        });
+});
 $(document).ready(function() {
     $('a[data-confirm]').click(function(ev) {
         var href = $(this).attr('href');
@@ -54,7 +65,160 @@ $(document).ready(function() {
         return false;
     });
 });
-
+$(document).ready(function() {
+    $('a[data-addinfo]').click(function(ev) {
+        var href = $(this).attr('href');
+        var dataAddInfo = $(this).attr('data-addinfo');
+        if (!$('#dataInfoModal').length) {
+            $('body').append('<div id="dataInfoModal" class="modal inmodal" tabindex="-1" role="dialog" aria-labelledby="dataInfoModal" aria-hidden="true">\
+                <div class="modal-dialog">\
+                    <div class="modal-content animated bounceInRight">\
+                        <div class="modal-header">\
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+                            <i class="fa fa-info-circle modal-icon"></i>\
+                            <h4 id="dataKirimLabel" class="modal-title">Tambah Info Lanjutan</h4>\
+                        </div>\
+                        <div class="modal-body">\
+                        <form id="formAddInfo" name="formAddInfo" action="' + href + '"  method="post" class="form-horizontal" role="form">\
+                        <div class="form-group">\
+                            <label for="keg_nama" class="col-sm-3 control-label">Nama Kegiatan</label>\
+                                <div class="col-lg-9 col-sm-9 keg_nama_value"></div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_nama" class="col-sm-3 control-label">Batas Waktu</label>\
+                                <div class="col-lg-9 col-sm-9 keg_waktu_value"></div>\
+                        </div>\
+                        <div class="form-group">\
+                        <label for="keg_unitkerja" class="col-sm-3 control-label">Unit Kerja</label>\
+                                <div class="col-sm-9 unit_kerja"></div>\
+                        </div>\
+                            <div class="form-group">\
+                            <label for="keg_t_target" class="col-sm-3 control-label">Target</label>\
+                                <div class="col-sm-5">\
+                                <div class="input-group margin-bottom-sm">\
+                            <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                            <input type="text" class="form-control" id="keg_t_target_nilai" value="" disabled="" />\
+                            </div>\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_ket" class="col-sm-3 control-label">Pesan</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <textarea name="keg_info" cols="8" rows="5" class="form-control"></textarea>\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <input type="hidden" name="keg_id" id="keg_id" value="" />\
+                        <div class="form-group">\
+                            <div class="col-sm-offset-3 col-sm-9">\
+                            <button type="submit" id="submit_keg" name="submit_keg" value="kirim" class="btn btn-primary">KIRIM</button>\
+                            </div>\
+                        </div>\
+                        </form>\
+                        </div>\
+                        <div class="modal-footer">\
+                            <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">close</button>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>');
+        }
+        var dataAddInfoNilai = dataAddInfo.split(";");
+        var kodeKegiatan = dataAddInfoNilai[0];
+        var namaKegiatan = dataAddInfoNilai[1];
+        var kodeUnitKerja = dataAddInfoNilai[2];
+        var unitKegiatan = dataAddInfoNilai[3];
+        var waktuKegiatan = dataAddInfoNilai[4];
+        var targetKegiatan = dataAddInfoNilai[5];
+        $('#dataInfoModal').find('.keg_nama_value').text('['+kodeKegiatan+'] '+ namaKegiatan);
+        $('#dataInfoModal').find('.keg_waktu_value').text(waktuKegiatan);
+        $('#dataInfoModal').find('.unit_kerja').text('['+kodeUnitKerja+'] '+ unitKegiatan);
+        $('#dataInfoModal').find('#keg_t_target_nilai').val(targetKegiatan);
+        $('#dataInfoModal').find('#keg_id').val(kodeKegiatan);
+        $('#dataInfoModal').modal({show:true});
+        return false;
+    });
+});
+$(document).ready(function() {
+    $('a[data-editinfo]').click(function(ev) {
+        var href = $(this).attr('href');
+        var dataEditInfo = $(this).attr('data-editinfo');
+        if (!$('#dataEditInfoModal').length) {
+            $('body').append('<div id="dataEditInfoModal" class="modal inmodal" tabindex="-1" role="dialog" aria-labelledby="dataEditInfoModal" aria-hidden="true">\
+                <div class="modal-dialog">\
+                    <div class="modal-content animated bounceInRight">\
+                        <div class="modal-header">\
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+                            <i class="fa fa-info-circle modal-icon"></i>\
+                            <h4 id="dataKirimLabel" class="modal-title">Tambah Info Lanjutan</h4>\
+                        </div>\
+                        <div class="modal-body">\
+                        <form id="formAddInfo" name="formAddInfo" action="' + href + '"  method="post" class="form-horizontal" role="form">\
+                        <div class="form-group">\
+                            <label for="keg_nama" class="col-sm-3 control-label">Nama Kegiatan</label>\
+                                <div class="col-lg-9 col-sm-9 keg_nama_value"></div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_nama" class="col-sm-3 control-label">Batas Waktu</label>\
+                                <div class="col-lg-9 col-sm-9 keg_waktu_value"></div>\
+                        </div>\
+                        <div class="form-group">\
+                        <label for="keg_unitkerja" class="col-sm-3 control-label">Unit Kerja</label>\
+                                <div class="col-sm-9 unit_kerja"></div>\
+                        </div>\
+                            <div class="form-group">\
+                            <label for="keg_t_target" class="col-sm-3 control-label">Target</label>\
+                                <div class="col-sm-5">\
+                                <div class="input-group margin-bottom-sm">\
+                            <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                            <input type="text" class="form-control" id="keg_t_target_nilai" value="" disabled="" />\
+                            </div>\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_ket" class="col-sm-3 control-label">Pesan</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <textarea name="keg_info" cols="8" rows="5" class="form-control" id="textInfo"></textarea>\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <input type="hidden" name="keg_id" id="keg_id" value="" />\
+                        <div class="form-group">\
+                            <div class="col-sm-offset-3 col-sm-9">\
+                            <button type="submit" id="submit_keg" name="submit_keg" value="kirim" class="btn btn-primary">UPDATE INFO</button>\
+                            </div>\
+                        </div>\
+                        </form>\
+                        </div>\
+                        <div class="modal-footer">\
+                            <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">close</button>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>');
+        }
+        var dataEditInfoNilai = dataEditInfo.split(";");
+        var kodeKegiatan = dataEditInfoNilai[0];
+        var namaKegiatan = dataEditInfoNilai[1];
+        var kodeUnitKerja = dataEditInfoNilai[2];
+        var unitKegiatan = dataEditInfoNilai[3];
+        var waktuKegiatan = dataEditInfoNilai[4];
+        var targetKegiatan = dataEditInfoNilai[5];
+        var textInfo = dataEditInfoNilai[6];
+        $('#dataEditInfoModal').find('.keg_nama_value').text('['+kodeKegiatan+'] '+ namaKegiatan);
+        $('#dataEditInfoModal').find('.keg_waktu_value').text(waktuKegiatan);
+        $('#dataEditInfoModal').find('.unit_kerja').text('['+kodeUnitKerja+'] '+ unitKegiatan);
+        $('#dataEditInfoModal').find('#keg_t_target_nilai').val(targetKegiatan);
+        $('#dataEditInfoModal').find('#keg_id').val(kodeKegiatan);
+        $('#dataEditInfoModal').find('#textInfo').val(textInfo);
+        $('#dataEditInfoModal').modal({show:true});
+        return false;
+    });
+});
 $(document).ready(function() {
     $('a[data-kirim]').click(function(ev) {
         var href = $(this).attr('href');
@@ -102,20 +266,20 @@ $(document).ready(function() {
                             </div>\
                         </div>\
                         <div class="form-group">\
-                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal pengiriman</label>\
-                                <div class="col-lg-9 col-sm-9">\
-                                    <div class="input-group margin-bottom-sm">\
-                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
-                                <input type="text" name="keg_d_tgl" id="tanggal_modal" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
-                                </div>\
-                                </div>\
-                        </div>\
-                        <div class="form-group">\
                             <label for="keg_d_jumlah" class="col-sm-3 control-label">Jumlah</label>\
                                 <div class="col-lg-9 col-sm-9">\
                                     <div class="input-group margin-bottom-sm">\
                                 <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
                                 <input type="text" name="keg_d_jumlah" class="form-control" placeholder="Jumlah Kirim" />\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal pengiriman</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <input type="text" name="keg_d_tgl" id="tanggal_modal" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
                                 </div>\
                                 </div>\
                         </div>\
@@ -214,20 +378,20 @@ $(document).ready(function() {
                             </div>\
                         </div>\
                         <div class="form-group">\
-                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal pengiriman</label>\
-                                <div class="col-lg-9 col-sm-9">\
-                                    <div class="input-group margin-bottom-sm">\
-                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
-                                <input type="text" name="keg_d_tgl" id="tanggal_modal_editkirim" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
-                                </div>\
-                                </div>\
-                        </div>\
-                        <div class="form-group">\
                             <label for="keg_d_jumlah" class="col-sm-3 control-label">Jumlah</label>\
                                 <div class="col-lg-9 col-sm-9">\
                                     <div class="input-group margin-bottom-sm">\
                                 <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
                                 <input type="text" name="keg_d_jumlah" id="keg_d_jumlah" class="form-control" placeholder="Jumlah Kirim" />\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal pengiriman</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <input type="text" name="keg_d_tgl" id="tanggal_modal_editkirim" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
                                 </div>\
                                 </div>\
                         </div>\
@@ -307,7 +471,7 @@ $(document).ready(function() {
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
                             <i class="fa fa-television modal-icon"></i>\
                             <h4 id="dataKirimLabel" class="modal-title">Konfirmasi Penerimaan</h4>\
-                            <small class="font-bold">form pengiriman laporan kegiatan dari kabupaten ke provinsi</small>\
+                            <small class="font-bold">form penerimaan laporan kegiatan dari kabupaten ke provinsi</small>\
                         </div>\
                         <div class="modal-body">\
                         <form id="formTerimaTarget" name="formTerimaTarget" action="' + href + '"  method="post" class="form-horizontal" role="form">\
@@ -342,20 +506,20 @@ $(document).ready(function() {
                             </div>\
                         </div>\
                         <div class="form-group">\
-                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal penerimaan</label>\
-                                <div class="col-lg-9 col-sm-9">\
-                                    <div class="input-group margin-bottom-sm">\
-                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
-                                <input type="text" name="keg_d_tgl" id="tanggal_modal_terima" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
-                                </div>\
-                                </div>\
-                        </div>\
-                        <div class="form-group">\
                             <label for="keg_d_jumlah" class="col-sm-3 control-label">Jumlah</label>\
                                 <div class="col-lg-9 col-sm-9">\
                                     <div class="input-group margin-bottom-sm">\
                                 <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
                                 <input type="text" name="keg_d_jumlah" class="form-control" placeholder="Jumlah diterima" />\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal penerimaan</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <input type="text" name="keg_d_tgl" id="tanggal_modal_terima" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
                                 </div>\
                                 </div>\
                         </div>\
@@ -395,6 +559,103 @@ $(document).ready(function() {
         $('#dataKirimModal').find('#keg_d_target').val(targetKegiatan);
         $('#dataKirimModal').find('#keg_d_target_sudah').val(targetSudahTerima);
         $('#dataTerimaModal').modal({show:true});
+        return false;
+    });
+});
+$(document).ready(function() {
+    $('a[data-editterima]').click(function(ev) {
+        var href = $(this).attr('href');
+        var dataEditTerima = $(this).attr('data-editterima');
+        if (!$('#dataEditTerimaModal').length) {
+            $('body').append('<div id="dataEditTerimaModal" class="modal inmodal" tabindex="-1" role="dialog" aria-labelledby="dataEditTerimaModal" aria-hidden="true">\
+                <div class="modal-dialog">\
+                    <div class="modal-content animated bounceInRight">\
+                        <div class="modal-header">\
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+                            <i class="fa fa-television modal-icon"></i>\
+                            <h4 id="dataKirimLabel" class="modal-title">Edit Penerimaan</h4>\
+                            <small class="font-bold">form edit penerimaan laporan kegiatan dari kabupaten ke provinsi</small>\
+                        </div>\
+                        <div class="modal-body">\
+                        <form id="formTerimaTarget" name="formTerimaTarget" action="' + href + '"  method="post" class="form-horizontal" role="form">\
+                        <div class="form-group">\
+                            <label for="keg_nama" class="col-sm-3 control-label">Nama Kegiatan</label>\
+                                <div class="col-lg-9 col-sm-9 keg_nama_value"></div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_nama" class="col-sm-3 control-label">Batas Waktu</label>\
+                                <div class="col-lg-9 col-sm-9 keg_waktu_value"></div>\
+                        </div>\
+                        <div class="form-group">\
+                        <label for="keg_unitkerja" class="col-sm-3 control-label">Unit Kerja</label>\
+                                <div class="col-sm-9 unit_kerja"></div>\
+                        </div>\
+                            <div class="form-group">\
+                            <label for="keg_t_target" class="col-sm-3 control-label">Target</label>\
+                                <div class="col-sm-5">\
+                                <div class="input-group margin-bottom-sm">\
+                            <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                            <input type="text" class="form-control" id="keg_t_target_nilai" value="" disabled="" />\
+                            </div>\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_jumlah" class="col-sm-3 control-label">Jumlah</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <input type="text" name="keg_d_jumlah" id="keg_d_jumlah" class="form-control" placeholder="Jumlah diterima" />\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="keg_d_tgl" class="col-sm-3 control-label">Tanggal penerimaan</label>\
+                                <div class="col-lg-9 col-sm-9">\
+                                    <div class="input-group margin-bottom-sm">\
+                                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>\
+                                <input type="text" name="keg_d_tgl" id="tanggal_modal_editterima" class="form-control modal_tanggal" autocomplete="off" placeholder="Format : YYYY-MM-DD" />\
+                                </div>\
+                                </div>\
+                        </div>\
+                        <input type="hidden" name="keg_id" id="keg_id" value="" />\
+                        <input type="hidden" name="detil_id" id="detil_id" value="" />\
+                        <input type="hidden" name="keg_d_unitkerja" id="keg_d_unitkerja" value="" />\
+                        <input type="hidden" name="keg_d_target" id="keg_d_target" value="" />\
+                        <div class="form-group">\
+                            <div class="col-sm-offset-3 col-sm-9">\
+                            <button type="submit" id="submit_keg" name="submit_keg" value="terima" class="btn btn-primary">UPDATE</button>\
+                            </div>\
+                        </div>\
+                        </form>\
+                        </div>\
+                        <div class="modal-footer">\
+                            <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">close</button>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>');
+        }
+        var dataEditTerimaNilai = dataEditTerima.split(";");
+        var kodeKegiatan = dataEditTerimaNilai[0];
+        var namaKegiatan = dataEditTerimaNilai[1];
+        var kodeUnitKerja = dataEditTerimaNilai[2];
+        var unitKegiatan = dataEditTerimaNilai[3];
+        var waktuKegiatan = dataEditTerimaNilai[4];
+        var targetKegiatan = dataEditTerimaNilai[5];
+        var detilID = dataEditTerimaNilai[6];
+        var detilJumlah = dataEditTerimaNilai[7];
+        var detilTanggal = dataEditTerimaNilai[8];
+        $('#dataEditTerimaModal').find('.keg_nama_value').text('['+kodeKegiatan+'] '+ namaKegiatan);
+        $('#dataEditTerimaModal').find('.keg_waktu_value').text(waktuKegiatan);
+        $('#dataEditTerimaModal').find('.unit_kerja').text('['+kodeUnitKerja+'] '+ unitKegiatan);
+        $('#dataEditTerimaModal').find('#keg_t_target_nilai').val(targetKegiatan);
+        $('#dataEditTerimaModal').find('#keg_id').val(kodeKegiatan);
+        $('#dataEditTerimaModal').find('#keg_d_unitkerja').val(kodeUnitKerja);
+        $('#dataEditTerimaModal').find('#keg_d_target').val(targetKegiatan);
+        $('#dataEditTerimaModal').find('#tanggal_modal_editterima').val(detilTanggal);
+        $('#dataEditTerimaModal').find('#keg_d_jumlah').val(detilJumlah);
+        $('#dataEditTerimaModal').find('#detil_id').val(detilID);
+        $('#dataEditTerimaModal').modal({show:true});
         return false;
     });
 });
@@ -505,7 +766,8 @@ $(document).ready(function(){
              },
              keg_spj: "required",
              keg_kabkota: "required",
-             spj_kabkota: "required"
+             spj_kabkota: "required",
+             keg_tipe: "required"
          },
          messages: {
                 keg_nama: {
@@ -521,7 +783,8 @@ $(document).ready(function(){
                 keg_tglmulai: "Silakan isi tanggal mulai",
                 keg_tglakhir: "silakan isi tanggal selesai",
                 keg_satuan: "Silakan isi satuan kegiatan",
-                keg_spj: "Silakan pilih salah satu"
+                keg_spj: "Silakan pilih salah satu",
+                keg_tipe: "Silakan pilih salah satu"
 
             }
 

@@ -61,15 +61,47 @@
                                 //check tipe kegiatan
                                 //1=kegiatan provinsi dan 2 kegiatan kabupaten
                                 if ($keg_tipe==1) {
-                                    echo '<div class="alert alert-success">';
-                                    $unit_nama=get_nama_unit($keg_unitkerja);
-                                    $s_kabkota=save_target_kabkota($keg_id,$keg_unitkerja,$keg_t,$unit_nama);
-                                    echo '<p>'.$s_kabkota["pesan_error"].'</p>';
-                                    if ($keg_spj==1) {
-                                        $s_spj=save_target_spj($keg_id,$keg_unitkerja,$keg_spj_target,$unit_nama); //perlu di edit target spj
-                                        echo '<p>'.$s_spj["pesan_error"].'</p>';
+                                    //bidang/bagian di provinsi
+                                    $bidang_target=$_POST['keg_bidang'];
+                                    $bidang_spj=$_POST['spj_bidang'];
+                                    $r_bidang=list_unitkerja(0,false,false,true,0);
+                                    if ($r_bidang["error"]==false) {
+                                        $bnyk_unit=$r_bidang["unit_total"];
+                                        $target_spj=0;
+                                        $target_kabkota=0;
+                                        $unit_nama='';
+                                        $keg_target=0;
+                                        echo '<div class="alert alert-success">';
+                                        for ($u=1;$u<=$bnyk_unit;$u++) {
+                                            $target_bidang=$bidang_target[$r_bidang["item"][$u]["unit_kode"]];
+                                            $target_spj=$bidang_spj[$r_bidang["item"][$u]["unit_kode"]];
+                                            $unit_nama=$r_bidang["item"][$u]["unit_nama"];
+
+                                            if ($target_bidang>0) {
+                                                $keg_target=$target_bidang;
+                                            }
+                                            else {
+                                                $keg_target=0;
+                                            }
+                                            $s_kabkota=save_target_kabkota($keg_id,$r_bidang["item"][$u]["unit_kode"],$keg_target,$unit_nama);
+                                            echo '<p>'.$s_kabkota["pesan_error"].'</p>';
+                                            
+                                            if ($target_spj>0) {
+                                                $spj_target=$target_spj;
+                                            }
+                                            else {
+                                                $spj_target=0;
+                                            }
+                                            
+                                            if ($keg_spj==1) {
+                                            $s_spj=save_target_spj($keg_id,$r_bidang["item"][$u]["unit_kode"],$spj_target,$unit_nama);
+                                            echo '<p>'.$s_spj["pesan_error"].'</p>';
+                                            }
+                                            //echo 'Target Kabkota : '.$kabkota_target[$r_bidang["item"][$u]["unit_kode"]].'<br />';
+                                            //echo 'Target SPJ : '.$kabkota_spj[$r_bidang["item"][$u]["unit_kode"]].'<br />';
+                                        }
+                                        echo '</div>';
                                     }
-                                    echo '</div>';
                                 }
                                 else {
                                     //kalo kegiatan tipe 2

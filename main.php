@@ -50,7 +50,6 @@
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="<?php echo $url; ?>/profile/">Profil</a></li>
                             <li><a href="<?php echo $url; ?>/gantipass/">Ganti Password</a></li>
-                            <?php if ($_SESSION['sesi_provkab']==1) { ?><li><a href="<?php echo $url; ?>/absen/view/me/">Absen Hari Ini</a></li><?php } ?>
                             <li class="divider"></li>
                             <li><a href="<?php echo $url; ?>/logout/">Logout</a></li>
                         </ul>
@@ -68,7 +67,7 @@
                 <li <?php if ($page=='kegiatan') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/kegiatan/"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Kegiatan</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-						<li><a href="<?php echo $url; ?>/kegiatan/add/">Tambah Kegiatan</a></li>
+                    <?php if ($_SESSION['sesi_level'] > 2) { ?><li><a href="<?php echo $url; ?>/kegiatan/add/">Tambah Kegiatan</a></li> <?php } ?>
                         <li><a href="<?php echo $url; ?>/kegiatan/bidang/">Bidang/Bagian</a></li>
                         <li><a href="<?php echo $url; ?>/kegiatan/">Semua</a></li>
                     </ul>
@@ -77,8 +76,9 @@
                 <li <?php if ($page=='unitkerja') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/unitkerja/"><i class="fa fa-cubes"></i> <span class="nav-label">Unitkerja</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="<?php echo $url; ?>/unitkerja/">Provinsi</a></li>
+                        <li><a href="<?php echo $url; ?>/unitkerja/provinsi/">Bidang/Bagian</a></li>
                         <li><a href="<?php echo $url; ?>/unitkerja/kabkota/">Kabupaten/Kota</a></li>
+                        <li><a href="<?php echo $url; ?>/unitkerja/">Semua</a></li>
                     </ul>
                 </li>
                  <li <?php if ($page=='laporan') { echo $link_aktif; } ?>>
