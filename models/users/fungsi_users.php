@@ -251,4 +251,74 @@ function list_users($user_no,$detil=false) {
 	return $users_list;
 	$conn_users->close();
 }
+function update_profile($user_no,$user_nama,$user_email) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+    $created=$_SESSION['sesi_user_id'];
+
+	$db_users = new db();
+	$conn_users = $db_users -> connect();
+	$sql_cek_user = $conn_users -> query("select * from users where user_no='$user_no'") or die(mysqli_error($conn_users));
+	$cek = $sql_cek_user -> num_rows;
+	$r_update = array("error"=>false);
+	if ($cek>0) {
+		$r_update["error"]=false;
+		//update sql
+		$sql_save_user = $conn_users -> query("update users set user_nama='$user_nama',user_email='$user_email',user_diupdate_oleh='$created',user_diupdate_waktu='$waktu_lokal' where user_no='$user_no'") or die(mysqli_error($conn_users));
+		
+		
+		if ($sql_save_user) {
+			//berhasil di update
+			$r_update["error"]=false;
+			$r_update["pesan_error"]='<div class="alert alert-success"><strong>(SUCCESS)</strong> : berhasil untuk melakukan update</div>';
+		}
+		else {
+			//error di update
+			$r_update["error"]=true;
+			$r_update["pesan_error"]='<div class="alert alert-danger"><strong>(ERROR)</strong : Gagal untuk melakukan update</div>';
+		}
+	}
+	else {
+		//error user tidak ada
+		$r_update["error"]=true;
+		$r_update["pesan_error"]='<div class="alert alert-success"><strong>(ERROR)</strong : User No '.$user_no.' tidak tersedia</div>';
+	}
+	return $r_update;
+	$conn_users->close();
+}
+function ganti_password($passwd_lama,$passwd_baru) {
+	global $ip;
+	$created=$_SESSION['sesi_user_id'];
+	$db = new db();
+	$conn = $db->connect();
+	$user_no=$_SESSION["sesi_user_no"];
+	$passwd_lama_md5=gen_passwd($passwd_lama);
+	$passwd_baru_md5=gen_passwd($passwd_baru);
+
+	$sql_cek = $conn -> query("select * from users where user_no='$user_no' and user_passwd='$passwd_lama_md5'");
+	$cek=$sql_cek->num_rows;
+	$r_ganti=array("error"=>false);
+	if ($cek>0) {
+		$waktu_lokal=date("Y-m-d H:i:s");
+		$sql_update_passwd=$conn -> query("update users set user_passwd='$passwd_baru_md5', user_diupdate_waktu='$waktu_lokal', user_diupdate_oleh='$created',user_lastip='$ip' where user_no='$user_no'") or die(mysqli_error($conn));
+		if ($sql_update_passwd) {
+			$r_ganti["error"]=false;
+			$r_ganti["pesan_error"]="Password berhasil diubah";
+			unset($_SESSION['sesi_passwd_md5']);
+          	unset($_SESSION['sesi_passwd_ori']);
+          	$_SESSION['sesi_passwd_md5']=$passwd_baru_md5;
+            $_SESSION['sesi_passwd_ori']=$passwd_baru;
+		}
+		else {
+			$r_ganti["error"]=true;
+			$r_ganti["pesan_error"]="Password tidak berhasil diubah";
+		}
+		
+	}
+	else {
+		$r_ganti["error"]=true;
+		$r_ganti["pesan_error"]="Password lama salah!";
+	}
+	return $r_ganti;
+	$db->close();
+}
 ?>

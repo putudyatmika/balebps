@@ -141,9 +141,10 @@ function update_unitkerja($unit_kode,$unit_nama,$unit_parent,$unit_jenis,$unit_e
     return $up_data;
 	$conn_unit->close();
 }
-function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false,$kode_eselon) {
+function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false,$kode_eselon,$sesuaiunit=false) {
 	//$jenis false = provinsi, $jenis true = kabkota
 	//$eselon3 false = semua eselon di provinsi, $eselon3 true = semua eselon 3 provinsi
+	$eselon_akses=get_eselon_unit($_SESSION['sesi_unitkerja']);
 	$db_unit = new db();
 	$conn_unit = $db_unit -> connect();
 	if ($detil==true) {
@@ -152,13 +153,24 @@ function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false,$kod
 	else {
 		if ($jenis==false) {
 			if ($eselon3==false) {
-				if ($kode_eselon>0) {
-					$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' and unit_eselon='$kode_eselon' order by unit_kode asc");
+				if ($sesuaiunit==false) { //untuk select sesuai eselon untuk form kegiatan
+					if ($kode_eselon>0) {
+						$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' and unit_eselon='$kode_eselon' order by unit_kode asc");
+					}
+					else {
+						$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' order by unit_kode asc");
+					}
 				}
 				else {
-					$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' order by unit_kode asc");
+					//untuk select sesuai eselon yg entri
+					if ($eselon_akses==4) {
+						$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_kode='".$_SESSION['sesi_unitkerja']."' order by unit_kode asc");
+					}
+					else {
+						$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis=1 and unit_eselon=4 and unit_parent='".$_SESSION['sesi_unitkerja']."' order by unit_kode asc");
+					}
+					
 				}
-				
 			}
 			else {
 				$sql_unit = $conn_unit -> query("select * from unitkerja left join (select unit_kode as parent_kode, unit_nama as parent_nama from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc) as unitparent on unitkerja.unit_parent=unitparent.parent_kode where unit_jenis='1' and unit_eselon='3' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc");	

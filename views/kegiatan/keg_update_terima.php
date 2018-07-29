@@ -9,7 +9,7 @@
         <a href="<?php echo $url; ?>/kegiatan/">Kegiatan</a>
     </li>
 	<li class="active">
-		<strong>Update konfirmasi pengiriman</strong>
+		<strong>Update konfirmasi penerimaan</strong>
 	</li>
 
 	</ol>
@@ -37,30 +37,36 @@
                     <div class="ibox-content">
                         <?php
                         if ($_POST['submit_keg']) {
+
                             $keg_id=$_POST['keg_id'];
                             $keg_d_unitkerja=$_POST['keg_d_unitkerja'];
                             $keg_d_tgl=$_POST['keg_d_tgl'];
                             $keg_d_jumlah=$_POST['keg_d_jumlah'];
-                            $keg_d_ket=trim($_POST['keg_d_ket']);
-                            $keg_d_link=trim($_POST['keg_d_link']);
-                            $keg_d_id=$_POST['detil_id'];                                                        
+                            $keg_d_id=$_POST['detil_id'];
+                            
+                            /*
+                            echo 'keg_id '.$keg_id.' <br />
+                            keg_d_unitkerja '. $keg_d_unitkerja .'<br />
+                            keg_d_tgl '. $keg_d_tgl .' <br />
+                            keg_d_jumlah '.$keg_d_jumlah .'<br />
+                            keg_d_id '.$keg_d_id;
+                              */                          
                             
                             if ($keg_d_tgl=='' or $keg_d_jumlah=='') {
-                                echo '<div class="alert alert-danger">isian tanggal pengiriman atau isian jumlah yang dikirim tidak boleh kosong</div>';
+                                echo '<div class="alert alert-danger">isian tanggal penerimaan atau isian jumlah yang diterima tidak boleh kosong</div>';
                             }
                             else {
-                                $r_updatekirim=update_konfirmasi_pengiriman($keg_d_id,$keg_d_tgl,$keg_d_jumlah,$keg_d_ket,$keg_d_link);
-                                if ($r_updatekirim["error"]==false) {
+                                $r_updateterima=update_konfirmasi_terima($keg_d_id,$keg_d_tgl,$keg_d_jumlah);
+                                if ($r_updateterima["error"]==false) {
                                     //sukses
-                                    echo '<div class="alert alert-success">'. $r_updatekirim["pesan_error"].'</div>';
+                                    echo '<div class="alert alert-success">'. $r_updateterima["pesan_error"].'</div>';
                                 }
                                 else {
                                     //error simpan konfirmasi
-                                    echo '<div class="alert alert-danger">'. $r_updatekirim["pesan_error"].'</div>';
+                                    echo '<div class="alert alert-danger">'. $r_updateterima["pesan_error"].'</div>';
                                 }
                             }
                             
-                           
                         }
                         ?>
                         <a href="<?php echo $url.'/kegiatan/view/'.$keg_id; ?>" class="btn btn-primary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>

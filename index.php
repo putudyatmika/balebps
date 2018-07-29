@@ -35,12 +35,7 @@ require('models/url/fungsi_url_lokal.php');
 //require('models/url/fungsi_url_net.php');
 
 if ($page=="json") {
-	require_once 'page/json/m_json.php';
-	exit();
-}
-
-if ($page=="uploadabsen") {
-	require_once 'page/uploadabsen/m_index.php';
+	require_once 'view/json/m_json.php';
 	exit();
 }
 

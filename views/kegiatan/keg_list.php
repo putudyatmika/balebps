@@ -87,7 +87,7 @@
                                 <th class="text-center">Satuan</th>
                                 <th class="text-center">SPJ</th>
                                 <th class="text-center" width="5%">Progress Kirim</th>
-                                <th width="5%">&nbsp;</th>
+                            <?php if ($_SESSION['sesi_level'] > 2) { ?><th width="5%">&nbsp;</th> <?php } ?>
                             </tr>
                             </thead>
                             <tbody>
@@ -146,10 +146,10 @@
 						                <td>'.$StatusSPJ[$r_keg["item"][$i]["keg_spj"]].'</td>
                                         <td class="bg-warning"> <div class="progress progress-striped active m-b-sm">
                                                 <div style="width: '.$progress_kirim.'%;" class="progress-bar"></div>
-                                            </div></td>
-						                <td class="text-center"><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>
-						            </tr>
-						            ';
+                                            </div></td>';
+                                            if ($_SESSION['sesi_level'] > 2) {
+                                    echo '<td class="text-center"><div class="tooltip-bps"><a href="'.$url.'/'.$page.'/edit/'.$r_keg["item"][$i]["keg_id"].'" class="btn btn-warning btn-rounded btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Kegiatan"><i class="fa fa-pencil" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r_keg["item"][$i]["keg_id"].'" data-confirm="Apakah data ('.$r_keg["item"][$i]["keg_id"].') '.$r_keg["item"][$i]["keg_nama"].' ini akan di hapus?" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Hapus Kegiatan"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></td>'; }
+						            echo '</tr>';
 						        }
                             }
                             else {
@@ -170,7 +170,7 @@
                                 <th class="text-center">Satuan</th>
                                 <th class="text-center">SPJ</th>
                                 <th class="text-center">Progress Kirim</th>
-                                <th>&nbsp;</th>
+                                <?php if ($_SESSION['sesi_level'] > 2) { ?><th width="5%">&nbsp;</th> <?php } ?>
                             </tr>
                             </tfoot>
                             </table>

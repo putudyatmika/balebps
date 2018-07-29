@@ -1,0 +1,23 @@
+SMKO v2.0
+
+Database v2.0
+1. Tambah info lanjutan kegiatan field keg_info(text)
+2. Tambah tipe kegiatan field keg_tipe(tinyint(1))
+3. tambah spj target field keg_spj_target (int(5))
+
+Fitur v2.0
+1. Info Lanjutan kegiatan : menambahkan informasi mengenai satu kegiatan 
+2. Tipe kegiatan : untuk mengakomodir kegiatan dilingkup BPS Provinsi ditambahkan tipe kegiatannya apakah Provinsi (1) atau Kabupaten(2)
+3. Target SPJ: berapa total SPJ yang menjadi target dalam satu kegiatan bila ada permintaan laporan SPJ
+4. Penilaian untuk Kabag/Kabid dilingkup BPS Provinsi NTB 
+4.1 Masing-masing bidang/bagian yang memiliki kegiatan dimana target pengumpulannya dari masing-masing bidang/bagian 
+4.2 Kegiatan di input dari eselon IV ditagihkan ke masing-masing bidang/bagian termasuk dimana seksi tersebut berada
+4.3 Penilaian untuk Kabag/kabid sama dgn penilaian untuk kepala kab/kota
+5. Tampilan SMKO diperbaharui lebih responsive, enak dipandang, dan popup menu
+6. Security / hak akses masing-masing user diperbaharui dimana :
+6.1 Level pemantau hanya bisa view dan tidak bisa berinteraksi kedalam sistem
+6.2 Level Operator Kabkota hanya bisa untuk kirim/edit/hapus kegiatan yg menjadi targetnya saja
+6.2 Level Operator Provinsi bisa menambahkan kegiatan untuk Kabupaten/Kota atau Bidang/Bagian yang menjadi wilayah kerjanya sampai level eselon III
+6.3 Level Admin dan Superadmin bisa menghandle semua proses dalam sistem
+7. Laporan bisa langsung di export ke tipe csv,pdf dan excel
+8. penambahan progress bar untuk semua kegiatan baik penerimaan / pengiriman
