@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2018 at 01:15 PM
+-- Generation Time: Aug 23, 2018 at 04:57 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -10611,7 +10611,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_no`, `user_id`, `user_nama`, `user_passwd`, `user_email`, `user_unitkerja`, `user_dibuat_waktu`, `user_lastlogin`, `user_lastip`, `user_dibuat_oleh`, `user_status`, `user_diupdate_waktu`, `user_diupdate_oleh`, `user_level`) VALUES
-(1, 'mika', 'I Putu Dyatmika', 'c153f0a492b91e16adc06e38206b2ccb', 'dyatmika@bps.go.id', 52563, '2016-12-06 08:02:45', '2018-07-27 18:56:07', '10.52.6.31', 'mika', 1, '2017-02-24 14:41:07', 'mika', 5),
+(1, 'mika', 'I Putu Dyatmika', 'c153f0a492b91e16adc06e38206b2ccb', 'dyatmika@bps.go.id', 52563, '2016-12-06 08:02:45', '2018-08-23 10:40:24', '10.52.6.31', 'mika', 1, '2017-02-24 14:41:07', 'mika', 5),
 (7, 'endang', 'Endang Tri Wahyuningsih', '715e8efadb0019bf7e885934fef9460d', 'endang_t@bps.go.id', 52000, '2016-12-07 16:45:36', '2018-07-24 10:44:29', '125.167.146.83', 'mika', 1, '2016-12-13 15:54:44', 'mika', 1),
 (8, 'supratna', 'Lalu Supratna', 'b57fd1497a390d03389db5c2d2ceb7c9', 'supratna@bps.go.id', 52510, '2016-12-07 16:46:12', '0000-00-00 00:00:00', '', 'mika', 1, '2018-03-01 15:31:27', 'ipds', 1),
 (10, 'meta', 'Meta', '4a2f6ca06815700a4f806f7b6dbdc317', 'meta@bps.go.id', 52530, '2016-12-10 13:44:58', '2018-07-09 17:41:04', '203.78.118.172', 'mika', 1, '2017-02-22 07:41:42', 'cassli', 3),

@@ -22,4 +22,6 @@ require 'aktivitas/fungsi_aktivitas.php';
 
 //model aktivitas
 require 'kegiatan/fungsi_kegiatan.php';
+//model laporan
+require 'laporan/fungsi_laporan.php';
 ?>

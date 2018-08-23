@@ -14,6 +14,9 @@ elseif ($page=="unitkerja") {
 elseif ($page=="laporan") {
         include 'views/laporan/m_laporan.php';
     }
+elseif ($page=="ranking") {
+        include 'views/ranking/m_ranking.php';
+    }
 elseif ($page=="logout") {
     include 'views/login/logout.php';
 }

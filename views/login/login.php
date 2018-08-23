@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SMKO | Login</title>
+    <title><?php echo $prg_name; ?> | Login</title>
 
     <link href="<?php echo $url; ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -70,7 +70,7 @@
             if ($loginku==false) {
             ?>
 
-            <h3>Sistem Monitoring Kegiatan Online</h3>
+            <h3><?php echo $prg_desc; ?></h3>
             <p>BPS Provinsi Nusa Tenggara Barat</p>
 			<p>Silakan login untuk menggunakan sistem ini</p>
             <form class="m-t" role="form" method="post" action="<?php echo $url; ?>/login/ceklogin">
