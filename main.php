@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Bli Mika - I Putu Dyatmika <pdyatmika@gmail.com>">
 	<meta name="language" content="id,en" />
-    <title>Sistem Monitoring Kegiatan Online - BPS Provinsi Nusa Tenggara Barat</title>
+    <title><?php echo $prg_desc; ?> - BPS Provinsi Nusa Tenggara Barat</title>
     <link href="<?php echo $url; ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo $url; ?>/css/animate.css" rel="stylesheet">
@@ -81,11 +81,19 @@
                         <li><a href="<?php echo $url; ?>/unitkerja/">Semua</a></li>
                     </ul>
                 </li>
-                 <li <?php if ($page=='laporan') { echo $link_aktif; } ?>>
+                <li <?php if ($page=='laporan') { echo $link_aktif; } ?>>
                     <a href="<?php echo $url; ?>/laporan/"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Laporan</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="<?php echo $url; ?>/laporan/">Provinsi</a></li>
-                        <li><a href="<?php echo $url; ?>/laporan/kabkota/">Kabupaten/Kota</a></li>
+                        <li><a href="<?php echo $url; ?>/laporan/kabkota/">by Kabupaten/Kota</a></li>
+                        <li><a href="<?php echo $url; ?>/laporan/bidang/">by Bidang/Bagian</a></li>
+                        <li><a href="<?php echo $url; ?>/laporan/">by Provinsi</a></li>
+                    </ul>
+                </li>
+                <li <?php if ($page=='ranking') { echo $link_aktif; } ?>>
+                    <a href="<?php echo $url; ?>/laporan/"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Ranking dan Nilai</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="<?php echo $url; ?>/ranking/waktu/">by Waktu</a></li>
+                        <li><a href="<?php echo $url; ?>/ranking/">by Bidang/Bagian</a></li>
                     </ul>
                 </li>
                 <?php 
@@ -136,7 +144,7 @@
             </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Sistem Monitoring Kegiatan Online - BPS Provinsi Nusa Tenggara Barat</span>
+                    <span class="m-r-sm text-muted welcome-message"><?php echo $prg_desc; ?> - BPS Provinsi Nusa Tenggara Barat</span>
                 </li>
                 
                 <li>
@@ -155,7 +163,7 @@
         <!--footer-->
             <div class="footer">
                 <div class="pull-right">
-                    <strong>versi app : <?php echo $ver_app; ?> | versi db : <?php echo $ver_db; ?></strong>
+                    <strong><?php echo $prg_name; ?> versi app : <?php echo $ver_app; ?> | versi db : <?php echo $ver_db; ?></strong>
                 </div>
                 <div>
                     <strong>Copyright</strong> Bidang IPDS &copy; 2017-<?php echo date('Y'); ?>

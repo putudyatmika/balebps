@@ -10,6 +10,8 @@ Tgl 1 Desember 2016
 $ver_app='2.0.0';
 $ver_db='2.0.0';
 date_default_timezone_set('Asia/Makassar');
+$prg_name="SiRinJaNi";
+$prg_desc="SIstem monitoRINg kinerJA oNlIne";
 //variabel-variabel
 $pengacak='Jb##ndhBN**adj##%)%hdn8xx60;:0621##213.#..12??//><LSjjds31-+~~=276';
 $cryptKey  = 'huxLLLnHHJjdfa652jdhHHGKnzhanleipz$$@a9832VZQzzsmpohahdg156';
